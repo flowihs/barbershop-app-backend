@@ -1,0 +1,67 @@
+name: Build Check
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: 123456
+          POSTGRES_DB: barbershop-app
+        ports:
+          - 5436:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7
+        ports:
+          - 6380:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      NODE_ENV: development
+      APPLICATION_PORT: 6000
+      APPLICATION_URL: http://localhost:6000
+      ALLOWED_ORIGIN: http://localhost:3000
+      COOKIES_SECRET: secret
+      REDIS_USER: default
+      REDIS_HOST: localhost
+      REDIS_PORT: 6380
+      REDIS_PASSWORD: 123456
+      REDIS_URI: redis://:123456@localhost:6380/0
+      POSTGRES_PORT: 5436
+      POSTGRES_URI: postgresql://root:123456@localhost:5436/barbershop-app
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma
+        run: npx prisma generate
+
+      - name: Build
+        run: npm run build
