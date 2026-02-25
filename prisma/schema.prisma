@@ -8,10 +8,29 @@ datasource db {
   url      = env("POSTGRES_URI")
 }
 
-model firstModel {
-  id        String   @id @default(cuid())
+model User {
+  id BigInt @id
+
+  firstName   String  @map("first_name")
+  username    String?
+  description String?
+  email       String? @unique
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("first_model")
+  @@map("users")
+}
+model Provision {
+  id BigInt @id @default(autoincrement())
+
+  title       String
+  discription String
+  prive       Int
+  time        DateTime
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("provisions")
 }

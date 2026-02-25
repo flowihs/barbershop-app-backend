@@ -3,6 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 
 import { PrismaModule } from "./prisma/prisma.module";
 import { RedisModule } from "./redis/redis.module";
+import { AccountModule } from "@/src/modules/account/account.module";
 import { IS_DEV_ENV } from "@/src/shared/utils/is-dev.util";
 
 @Module({
@@ -12,7 +13,8 @@ import { IS_DEV_ENV } from "@/src/shared/utils/is-dev.util";
 			ignoreEnvFile: !IS_DEV_ENV,
 			isGlobal: true
 		}),
-		RedisModule
+		RedisModule,
+		AccountModule
 	],
 	controllers: [],
 	providers: []

@@ -18,6 +18,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  * 
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
+/**
+ * Model Provision
+ * 
+ */
+export type Provision = $Result.DefaultSelection<Prisma.$ProvisionPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -151,6 +156,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs>;
+
+  /**
+   * `prisma.provision`: Exposes CRUD operations for the **Provision** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Provisions
+    * const provisions = await prisma.provision.findMany()
+    * ```
+    */
+  get provision(): Prisma.ProvisionDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -592,7 +607,8 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    User: 'User'
+    User: 'User',
+    Provision: 'Provision'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -608,7 +624,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user"
+      modelProps: "user" | "provision"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -679,6 +695,76 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Provision: {
+        payload: Prisma.$ProvisionPayload<ExtArgs>
+        fields: Prisma.ProvisionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProvisionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProvisionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProvisionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProvisionPayload>
+          }
+          findFirst: {
+            args: Prisma.ProvisionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProvisionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProvisionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProvisionPayload>
+          }
+          findMany: {
+            args: Prisma.ProvisionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProvisionPayload>[]
+          }
+          create: {
+            args: Prisma.ProvisionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProvisionPayload>
+          }
+          createMany: {
+            args: Prisma.ProvisionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProvisionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProvisionPayload>[]
+          }
+          delete: {
+            args: Prisma.ProvisionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProvisionPayload>
+          }
+          update: {
+            args: Prisma.ProvisionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProvisionPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProvisionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProvisionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ProvisionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProvisionPayload>
+          }
+          aggregate: {
+            args: Prisma.ProvisionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProvision>
+          }
+          groupBy: {
+            args: Prisma.ProvisionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProvisionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProvisionCountArgs<ExtArgs>
+            result: $Utils.Optional<ProvisionCountAggregateOutputType> | number
           }
         }
       }
@@ -849,80 +935,86 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
 
+  export type UserAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    id: bigint | null
+  }
+
   export type UserMinAggregateOutputType = {
-    id: string | null
-    email: string | null
-    password: string | null
+    id: bigint | null
+    firstName: string | null
     username: string | null
-    displayName: string | null
-    avatar: string | null
-    bio: string | null
+    description: string | null
+    email: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
-    id: string | null
-    email: string | null
-    password: string | null
+    id: bigint | null
+    firstName: string | null
     username: string | null
-    displayName: string | null
-    avatar: string | null
-    bio: string | null
+    description: string | null
+    email: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
-    email: number
-    password: number
+    firstName: number
     username: number
-    displayName: number
-    avatar: number
-    bio: number
+    description: number
+    email: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
 
+  export type UserAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    id?: true
+  }
+
   export type UserMinAggregateInputType = {
     id?: true
-    email?: true
-    password?: true
+    firstName?: true
     username?: true
-    displayName?: true
-    avatar?: true
-    bio?: true
+    description?: true
+    email?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type UserMaxAggregateInputType = {
     id?: true
-    email?: true
-    password?: true
+    firstName?: true
     username?: true
-    displayName?: true
-    avatar?: true
-    bio?: true
+    description?: true
+    email?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type UserCountAggregateInputType = {
     id?: true
-    email?: true
-    password?: true
+    firstName?: true
     username?: true
-    displayName?: true
-    avatar?: true
-    bio?: true
+    description?: true
+    email?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -966,6 +1058,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -996,21 +1100,23 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
 
   export type UserGroupByOutputType = {
-    id: string
-    email: string
-    password: string
-    username: string
-    displayName: string
-    avatar: string | null
-    bio: string | null
+    id: bigint
+    firstName: string
+    username: string | null
+    description: string | null
+    email: string | null
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -1031,36 +1137,30 @@ export namespace Prisma {
 
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    email?: boolean
-    password?: boolean
+    firstName?: boolean
     username?: boolean
-    displayName?: boolean
-    avatar?: boolean
-    bio?: boolean
+    description?: boolean
+    email?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    email?: boolean
-    password?: boolean
+    firstName?: boolean
     username?: boolean
-    displayName?: boolean
-    avatar?: boolean
-    bio?: boolean
+    description?: boolean
+    email?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
     id?: boolean
-    email?: boolean
-    password?: boolean
+    firstName?: boolean
     username?: boolean
-    displayName?: boolean
-    avatar?: boolean
-    bio?: boolean
+    description?: boolean
+    email?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -1070,13 +1170,11 @@ export namespace Prisma {
     name: "User"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
-      id: string
-      email: string
-      password: string
-      username: string
-      displayName: string
-      avatar: string | null
-      bio: string | null
+      id: bigint
+      firstName: string
+      username: string | null
+      description: string | null
+      email: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -1472,13 +1570,11 @@ export namespace Prisma {
    * Fields of the User model
    */ 
   interface UserFieldRefs {
-    readonly id: FieldRef<"User", 'String'>
-    readonly email: FieldRef<"User", 'String'>
-    readonly password: FieldRef<"User", 'String'>
+    readonly id: FieldRef<"User", 'BigInt'>
+    readonly firstName: FieldRef<"User", 'String'>
     readonly username: FieldRef<"User", 'String'>
-    readonly displayName: FieldRef<"User", 'String'>
-    readonly avatar: FieldRef<"User", 'String'>
-    readonly bio: FieldRef<"User", 'String'>
+    readonly description: FieldRef<"User", 'String'>
+    readonly email: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -1770,6 +1866,946 @@ export namespace Prisma {
 
 
   /**
+   * Model Provision
+   */
+
+  export type AggregateProvision = {
+    _count: ProvisionCountAggregateOutputType | null
+    _avg: ProvisionAvgAggregateOutputType | null
+    _sum: ProvisionSumAggregateOutputType | null
+    _min: ProvisionMinAggregateOutputType | null
+    _max: ProvisionMaxAggregateOutputType | null
+  }
+
+  export type ProvisionAvgAggregateOutputType = {
+    id: number | null
+    prive: number | null
+  }
+
+  export type ProvisionSumAggregateOutputType = {
+    id: bigint | null
+    prive: number | null
+  }
+
+  export type ProvisionMinAggregateOutputType = {
+    id: bigint | null
+    title: string | null
+    discription: string | null
+    prive: number | null
+    time: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProvisionMaxAggregateOutputType = {
+    id: bigint | null
+    title: string | null
+    discription: string | null
+    prive: number | null
+    time: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProvisionCountAggregateOutputType = {
+    id: number
+    title: number
+    discription: number
+    prive: number
+    time: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ProvisionAvgAggregateInputType = {
+    id?: true
+    prive?: true
+  }
+
+  export type ProvisionSumAggregateInputType = {
+    id?: true
+    prive?: true
+  }
+
+  export type ProvisionMinAggregateInputType = {
+    id?: true
+    title?: true
+    discription?: true
+    prive?: true
+    time?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProvisionMaxAggregateInputType = {
+    id?: true
+    title?: true
+    discription?: true
+    prive?: true
+    time?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProvisionCountAggregateInputType = {
+    id?: true
+    title?: true
+    discription?: true
+    prive?: true
+    time?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ProvisionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Provision to aggregate.
+     */
+    where?: ProvisionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Provisions to fetch.
+     */
+    orderBy?: ProvisionOrderByWithRelationInput | ProvisionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProvisionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Provisions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Provisions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Provisions
+    **/
+    _count?: true | ProvisionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ProvisionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProvisionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProvisionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProvisionMaxAggregateInputType
+  }
+
+  export type GetProvisionAggregateType<T extends ProvisionAggregateArgs> = {
+        [P in keyof T & keyof AggregateProvision]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProvision[P]>
+      : GetScalarType<T[P], AggregateProvision[P]>
+  }
+
+
+
+
+  export type ProvisionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProvisionWhereInput
+    orderBy?: ProvisionOrderByWithAggregationInput | ProvisionOrderByWithAggregationInput[]
+    by: ProvisionScalarFieldEnum[] | ProvisionScalarFieldEnum
+    having?: ProvisionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProvisionCountAggregateInputType | true
+    _avg?: ProvisionAvgAggregateInputType
+    _sum?: ProvisionSumAggregateInputType
+    _min?: ProvisionMinAggregateInputType
+    _max?: ProvisionMaxAggregateInputType
+  }
+
+  export type ProvisionGroupByOutputType = {
+    id: bigint
+    title: string
+    discription: string
+    prive: number
+    time: Date
+    createdAt: Date
+    updatedAt: Date
+    _count: ProvisionCountAggregateOutputType | null
+    _avg: ProvisionAvgAggregateOutputType | null
+    _sum: ProvisionSumAggregateOutputType | null
+    _min: ProvisionMinAggregateOutputType | null
+    _max: ProvisionMaxAggregateOutputType | null
+  }
+
+  type GetProvisionGroupByPayload<T extends ProvisionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProvisionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProvisionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProvisionGroupByOutputType[P]>
+            : GetScalarType<T[P], ProvisionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProvisionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    discription?: boolean
+    prive?: boolean
+    time?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["provision"]>
+
+  export type ProvisionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    discription?: boolean
+    prive?: boolean
+    time?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["provision"]>
+
+  export type ProvisionSelectScalar = {
+    id?: boolean
+    title?: boolean
+    discription?: boolean
+    prive?: boolean
+    time?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $ProvisionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Provision"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: bigint
+      title: string
+      discription: string
+      prive: number
+      time: Date
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["provision"]>
+    composites: {}
+  }
+
+  type ProvisionGetPayload<S extends boolean | null | undefined | ProvisionDefaultArgs> = $Result.GetResult<Prisma.$ProvisionPayload, S>
+
+  type ProvisionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ProvisionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ProvisionCountAggregateInputType | true
+    }
+
+  export interface ProvisionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Provision'], meta: { name: 'Provision' } }
+    /**
+     * Find zero or one Provision that matches the filter.
+     * @param {ProvisionFindUniqueArgs} args - Arguments to find a Provision
+     * @example
+     * // Get one Provision
+     * const provision = await prisma.provision.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProvisionFindUniqueArgs>(args: SelectSubset<T, ProvisionFindUniqueArgs<ExtArgs>>): Prisma__ProvisionClient<$Result.GetResult<Prisma.$ProvisionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Provision that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ProvisionFindUniqueOrThrowArgs} args - Arguments to find a Provision
+     * @example
+     * // Get one Provision
+     * const provision = await prisma.provision.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProvisionFindUniqueOrThrowArgs>(args: SelectSubset<T, ProvisionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProvisionClient<$Result.GetResult<Prisma.$ProvisionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Provision that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProvisionFindFirstArgs} args - Arguments to find a Provision
+     * @example
+     * // Get one Provision
+     * const provision = await prisma.provision.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProvisionFindFirstArgs>(args?: SelectSubset<T, ProvisionFindFirstArgs<ExtArgs>>): Prisma__ProvisionClient<$Result.GetResult<Prisma.$ProvisionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Provision that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProvisionFindFirstOrThrowArgs} args - Arguments to find a Provision
+     * @example
+     * // Get one Provision
+     * const provision = await prisma.provision.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProvisionFindFirstOrThrowArgs>(args?: SelectSubset<T, ProvisionFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProvisionClient<$Result.GetResult<Prisma.$ProvisionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Provisions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProvisionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Provisions
+     * const provisions = await prisma.provision.findMany()
+     * 
+     * // Get first 10 Provisions
+     * const provisions = await prisma.provision.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const provisionWithIdOnly = await prisma.provision.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProvisionFindManyArgs>(args?: SelectSubset<T, ProvisionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProvisionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Provision.
+     * @param {ProvisionCreateArgs} args - Arguments to create a Provision.
+     * @example
+     * // Create one Provision
+     * const Provision = await prisma.provision.create({
+     *   data: {
+     *     // ... data to create a Provision
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProvisionCreateArgs>(args: SelectSubset<T, ProvisionCreateArgs<ExtArgs>>): Prisma__ProvisionClient<$Result.GetResult<Prisma.$ProvisionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Provisions.
+     * @param {ProvisionCreateManyArgs} args - Arguments to create many Provisions.
+     * @example
+     * // Create many Provisions
+     * const provision = await prisma.provision.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProvisionCreateManyArgs>(args?: SelectSubset<T, ProvisionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Provisions and returns the data saved in the database.
+     * @param {ProvisionCreateManyAndReturnArgs} args - Arguments to create many Provisions.
+     * @example
+     * // Create many Provisions
+     * const provision = await prisma.provision.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Provisions and only return the `id`
+     * const provisionWithIdOnly = await prisma.provision.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProvisionCreateManyAndReturnArgs>(args?: SelectSubset<T, ProvisionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProvisionPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Provision.
+     * @param {ProvisionDeleteArgs} args - Arguments to delete one Provision.
+     * @example
+     * // Delete one Provision
+     * const Provision = await prisma.provision.delete({
+     *   where: {
+     *     // ... filter to delete one Provision
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProvisionDeleteArgs>(args: SelectSubset<T, ProvisionDeleteArgs<ExtArgs>>): Prisma__ProvisionClient<$Result.GetResult<Prisma.$ProvisionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Provision.
+     * @param {ProvisionUpdateArgs} args - Arguments to update one Provision.
+     * @example
+     * // Update one Provision
+     * const provision = await prisma.provision.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProvisionUpdateArgs>(args: SelectSubset<T, ProvisionUpdateArgs<ExtArgs>>): Prisma__ProvisionClient<$Result.GetResult<Prisma.$ProvisionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Provisions.
+     * @param {ProvisionDeleteManyArgs} args - Arguments to filter Provisions to delete.
+     * @example
+     * // Delete a few Provisions
+     * const { count } = await prisma.provision.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProvisionDeleteManyArgs>(args?: SelectSubset<T, ProvisionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Provisions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProvisionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Provisions
+     * const provision = await prisma.provision.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProvisionUpdateManyArgs>(args: SelectSubset<T, ProvisionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Provision.
+     * @param {ProvisionUpsertArgs} args - Arguments to update or create a Provision.
+     * @example
+     * // Update or create a Provision
+     * const provision = await prisma.provision.upsert({
+     *   create: {
+     *     // ... data to create a Provision
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Provision we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProvisionUpsertArgs>(args: SelectSubset<T, ProvisionUpsertArgs<ExtArgs>>): Prisma__ProvisionClient<$Result.GetResult<Prisma.$ProvisionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Provisions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProvisionCountArgs} args - Arguments to filter Provisions to count.
+     * @example
+     * // Count the number of Provisions
+     * const count = await prisma.provision.count({
+     *   where: {
+     *     // ... the filter for the Provisions we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProvisionCountArgs>(
+      args?: Subset<T, ProvisionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProvisionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Provision.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProvisionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProvisionAggregateArgs>(args: Subset<T, ProvisionAggregateArgs>): Prisma.PrismaPromise<GetProvisionAggregateType<T>>
+
+    /**
+     * Group by Provision.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProvisionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProvisionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProvisionGroupByArgs['orderBy'] }
+        : { orderBy?: ProvisionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProvisionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProvisionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Provision model
+   */
+  readonly fields: ProvisionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Provision.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProvisionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Provision model
+   */ 
+  interface ProvisionFieldRefs {
+    readonly id: FieldRef<"Provision", 'BigInt'>
+    readonly title: FieldRef<"Provision", 'String'>
+    readonly discription: FieldRef<"Provision", 'String'>
+    readonly prive: FieldRef<"Provision", 'Int'>
+    readonly time: FieldRef<"Provision", 'DateTime'>
+    readonly createdAt: FieldRef<"Provision", 'DateTime'>
+    readonly updatedAt: FieldRef<"Provision", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Provision findUnique
+   */
+  export type ProvisionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Provision
+     */
+    select?: ProvisionSelect<ExtArgs> | null
+    /**
+     * Filter, which Provision to fetch.
+     */
+    where: ProvisionWhereUniqueInput
+  }
+
+  /**
+   * Provision findUniqueOrThrow
+   */
+  export type ProvisionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Provision
+     */
+    select?: ProvisionSelect<ExtArgs> | null
+    /**
+     * Filter, which Provision to fetch.
+     */
+    where: ProvisionWhereUniqueInput
+  }
+
+  /**
+   * Provision findFirst
+   */
+  export type ProvisionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Provision
+     */
+    select?: ProvisionSelect<ExtArgs> | null
+    /**
+     * Filter, which Provision to fetch.
+     */
+    where?: ProvisionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Provisions to fetch.
+     */
+    orderBy?: ProvisionOrderByWithRelationInput | ProvisionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Provisions.
+     */
+    cursor?: ProvisionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Provisions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Provisions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Provisions.
+     */
+    distinct?: ProvisionScalarFieldEnum | ProvisionScalarFieldEnum[]
+  }
+
+  /**
+   * Provision findFirstOrThrow
+   */
+  export type ProvisionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Provision
+     */
+    select?: ProvisionSelect<ExtArgs> | null
+    /**
+     * Filter, which Provision to fetch.
+     */
+    where?: ProvisionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Provisions to fetch.
+     */
+    orderBy?: ProvisionOrderByWithRelationInput | ProvisionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Provisions.
+     */
+    cursor?: ProvisionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Provisions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Provisions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Provisions.
+     */
+    distinct?: ProvisionScalarFieldEnum | ProvisionScalarFieldEnum[]
+  }
+
+  /**
+   * Provision findMany
+   */
+  export type ProvisionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Provision
+     */
+    select?: ProvisionSelect<ExtArgs> | null
+    /**
+     * Filter, which Provisions to fetch.
+     */
+    where?: ProvisionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Provisions to fetch.
+     */
+    orderBy?: ProvisionOrderByWithRelationInput | ProvisionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Provisions.
+     */
+    cursor?: ProvisionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Provisions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Provisions.
+     */
+    skip?: number
+    distinct?: ProvisionScalarFieldEnum | ProvisionScalarFieldEnum[]
+  }
+
+  /**
+   * Provision create
+   */
+  export type ProvisionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Provision
+     */
+    select?: ProvisionSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Provision.
+     */
+    data: XOR<ProvisionCreateInput, ProvisionUncheckedCreateInput>
+  }
+
+  /**
+   * Provision createMany
+   */
+  export type ProvisionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Provisions.
+     */
+    data: ProvisionCreateManyInput | ProvisionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Provision createManyAndReturn
+   */
+  export type ProvisionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Provision
+     */
+    select?: ProvisionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Provisions.
+     */
+    data: ProvisionCreateManyInput | ProvisionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Provision update
+   */
+  export type ProvisionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Provision
+     */
+    select?: ProvisionSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Provision.
+     */
+    data: XOR<ProvisionUpdateInput, ProvisionUncheckedUpdateInput>
+    /**
+     * Choose, which Provision to update.
+     */
+    where: ProvisionWhereUniqueInput
+  }
+
+  /**
+   * Provision updateMany
+   */
+  export type ProvisionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Provisions.
+     */
+    data: XOR<ProvisionUpdateManyMutationInput, ProvisionUncheckedUpdateManyInput>
+    /**
+     * Filter which Provisions to update
+     */
+    where?: ProvisionWhereInput
+  }
+
+  /**
+   * Provision upsert
+   */
+  export type ProvisionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Provision
+     */
+    select?: ProvisionSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Provision to update in case it exists.
+     */
+    where: ProvisionWhereUniqueInput
+    /**
+     * In case the Provision found by the `where` argument doesn't exist, create a new Provision with this data.
+     */
+    create: XOR<ProvisionCreateInput, ProvisionUncheckedCreateInput>
+    /**
+     * In case the Provision was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProvisionUpdateInput, ProvisionUncheckedUpdateInput>
+  }
+
+  /**
+   * Provision delete
+   */
+  export type ProvisionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Provision
+     */
+    select?: ProvisionSelect<ExtArgs> | null
+    /**
+     * Filter which Provision to delete.
+     */
+    where: ProvisionWhereUniqueInput
+  }
+
+  /**
+   * Provision deleteMany
+   */
+  export type ProvisionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Provisions to delete
+     */
+    where?: ProvisionWhereInput
+  }
+
+  /**
+   * Provision without action
+   */
+  export type ProvisionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Provision
+     */
+    select?: ProvisionSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -1785,17 +2821,28 @@ export namespace Prisma {
 
   export const UserScalarFieldEnum: {
     id: 'id',
-    email: 'email',
-    password: 'password',
+    firstName: 'firstName',
     username: 'username',
-    displayName: 'displayName',
-    avatar: 'avatar',
-    bio: 'bio',
+    description: 'description',
+    email: 'email',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const ProvisionScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    discription: 'discription',
+    prive: 'prive',
+    time: 'time',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ProvisionScalarFieldEnum = (typeof ProvisionScalarFieldEnum)[keyof typeof ProvisionScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -1825,6 +2872,20 @@ export namespace Prisma {
   /**
    * Field references 
    */
+
+
+  /**
+   * Reference to a field of type 'BigInt'
+   */
+  export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
+    
+
+
+  /**
+   * Reference to a field of type 'BigInt[]'
+   */
+  export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
+    
 
 
   /**
@@ -1867,6 +2928,20 @@ export namespace Prisma {
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
   /**
    * Deep Input Types
    */
@@ -1876,156 +2951,279 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    id?: StringFilter<"User"> | string
-    email?: StringFilter<"User"> | string
-    password?: StringFilter<"User"> | string
-    username?: StringFilter<"User"> | string
-    displayName?: StringFilter<"User"> | string
-    avatar?: StringNullableFilter<"User"> | string | null
-    bio?: StringNullableFilter<"User"> | string | null
+    id?: BigIntFilter<"User"> | bigint | number
+    firstName?: StringFilter<"User"> | string
+    username?: StringNullableFilter<"User"> | string | null
+    description?: StringNullableFilter<"User"> | string | null
+    email?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    username?: SortOrder
-    displayName?: SortOrder
-    avatar?: SortOrderInput | SortOrder
-    bio?: SortOrderInput | SortOrder
+    firstName?: SortOrder
+    username?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
+    id?: bigint | number
     email?: string
-    username?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    password?: StringFilter<"User"> | string
-    displayName?: StringFilter<"User"> | string
-    avatar?: StringNullableFilter<"User"> | string | null
-    bio?: StringNullableFilter<"User"> | string | null
+    firstName?: StringFilter<"User"> | string
+    username?: StringNullableFilter<"User"> | string | null
+    description?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-  }, "id" | "email" | "username">
+  }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    username?: SortOrder
-    displayName?: SortOrder
-    avatar?: SortOrderInput | SortOrder
-    bio?: SortOrderInput | SortOrder
+    firstName?: SortOrder
+    username?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
     AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"User"> | string
-    email?: StringWithAggregatesFilter<"User"> | string
-    password?: StringWithAggregatesFilter<"User"> | string
-    username?: StringWithAggregatesFilter<"User"> | string
-    displayName?: StringWithAggregatesFilter<"User"> | string
-    avatar?: StringNullableWithAggregatesFilter<"User"> | string | null
-    bio?: StringNullableWithAggregatesFilter<"User"> | string | null
+    id?: BigIntWithAggregatesFilter<"User"> | bigint | number
+    firstName?: StringWithAggregatesFilter<"User"> | string
+    username?: StringNullableWithAggregatesFilter<"User"> | string | null
+    description?: StringNullableWithAggregatesFilter<"User"> | string | null
+    email?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
+  export type ProvisionWhereInput = {
+    AND?: ProvisionWhereInput | ProvisionWhereInput[]
+    OR?: ProvisionWhereInput[]
+    NOT?: ProvisionWhereInput | ProvisionWhereInput[]
+    id?: BigIntFilter<"Provision"> | bigint | number
+    title?: StringFilter<"Provision"> | string
+    discription?: StringFilter<"Provision"> | string
+    prive?: IntFilter<"Provision"> | number
+    time?: DateTimeFilter<"Provision"> | Date | string
+    createdAt?: DateTimeFilter<"Provision"> | Date | string
+    updatedAt?: DateTimeFilter<"Provision"> | Date | string
+  }
+
+  export type ProvisionOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    discription?: SortOrder
+    prive?: SortOrder
+    time?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProvisionWhereUniqueInput = Prisma.AtLeast<{
+    id?: bigint | number
+    AND?: ProvisionWhereInput | ProvisionWhereInput[]
+    OR?: ProvisionWhereInput[]
+    NOT?: ProvisionWhereInput | ProvisionWhereInput[]
+    title?: StringFilter<"Provision"> | string
+    discription?: StringFilter<"Provision"> | string
+    prive?: IntFilter<"Provision"> | number
+    time?: DateTimeFilter<"Provision"> | Date | string
+    createdAt?: DateTimeFilter<"Provision"> | Date | string
+    updatedAt?: DateTimeFilter<"Provision"> | Date | string
+  }, "id">
+
+  export type ProvisionOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    discription?: SortOrder
+    prive?: SortOrder
+    time?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ProvisionCountOrderByAggregateInput
+    _avg?: ProvisionAvgOrderByAggregateInput
+    _max?: ProvisionMaxOrderByAggregateInput
+    _min?: ProvisionMinOrderByAggregateInput
+    _sum?: ProvisionSumOrderByAggregateInput
+  }
+
+  export type ProvisionScalarWhereWithAggregatesInput = {
+    AND?: ProvisionScalarWhereWithAggregatesInput | ProvisionScalarWhereWithAggregatesInput[]
+    OR?: ProvisionScalarWhereWithAggregatesInput[]
+    NOT?: ProvisionScalarWhereWithAggregatesInput | ProvisionScalarWhereWithAggregatesInput[]
+    id?: BigIntWithAggregatesFilter<"Provision"> | bigint | number
+    title?: StringWithAggregatesFilter<"Provision"> | string
+    discription?: StringWithAggregatesFilter<"Provision"> | string
+    prive?: IntWithAggregatesFilter<"Provision"> | number
+    time?: DateTimeWithAggregatesFilter<"Provision"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"Provision"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Provision"> | Date | string
+  }
+
   export type UserCreateInput = {
-    id?: string
-    email: string
-    password: string
-    username: string
-    displayName: string
-    avatar?: string | null
-    bio?: string | null
+    id: bigint | number
+    firstName: string
+    username?: string | null
+    description?: string | null
+    email?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type UserUncheckedCreateInput = {
-    id?: string
-    email: string
-    password: string
-    username: string
-    displayName: string
-    avatar?: string | null
-    bio?: string | null
+    id: bigint | number
+    firstName: string
+    username?: string | null
+    description?: string | null
+    email?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type UserUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    displayName?: StringFieldUpdateOperationsInput | string
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    firstName?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    displayName?: StringFieldUpdateOperationsInput | string
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    firstName?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateManyInput = {
-    id?: string
-    email: string
-    password: string
-    username: string
-    displayName: string
-    avatar?: string | null
-    bio?: string | null
+    id: bigint | number
+    firstName: string
+    username?: string | null
+    description?: string | null
+    email?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type UserUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    displayName?: StringFieldUpdateOperationsInput | string
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    firstName?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    displayName?: StringFieldUpdateOperationsInput | string
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    firstName?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProvisionCreateInput = {
+    id?: bigint | number
+    title: string
+    discription: string
+    prive: number
+    time: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProvisionUncheckedCreateInput = {
+    id?: bigint | number
+    title: string
+    discription: string
+    prive: number
+    time: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProvisionUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    title?: StringFieldUpdateOperationsInput | string
+    discription?: StringFieldUpdateOperationsInput | string
+    prive?: IntFieldUpdateOperationsInput | number
+    time?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProvisionUncheckedUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    title?: StringFieldUpdateOperationsInput | string
+    discription?: StringFieldUpdateOperationsInput | string
+    prive?: IntFieldUpdateOperationsInput | number
+    time?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProvisionCreateManyInput = {
+    id?: bigint | number
+    title: string
+    discription: string
+    prive: number
+    time: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProvisionUpdateManyMutationInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    title?: StringFieldUpdateOperationsInput | string
+    discription?: StringFieldUpdateOperationsInput | string
+    prive?: IntFieldUpdateOperationsInput | number
+    time?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProvisionUncheckedUpdateManyInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    title?: StringFieldUpdateOperationsInput | string
+    discription?: StringFieldUpdateOperationsInput | string
+    prive?: IntFieldUpdateOperationsInput | number
+    time?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BigIntFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -2076,38 +3274,56 @@ export namespace Prisma {
 
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
+    firstName?: SortOrder
     username?: SortOrder
-    displayName?: SortOrder
-    avatar?: SortOrder
-    bio?: SortOrder
+    description?: SortOrder
+    email?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
+  export type UserAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
+    firstName?: SortOrder
     username?: SortOrder
-    displayName?: SortOrder
-    avatar?: SortOrder
-    bio?: SortOrder
+    description?: SortOrder
+    email?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
+    firstName?: SortOrder
     username?: SortOrder
-    displayName?: SortOrder
-    avatar?: SortOrder
-    bio?: SortOrder
+    description?: SortOrder
+    email?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2160,6 +3376,81 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type ProvisionCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    discription?: SortOrder
+    prive?: SortOrder
+    time?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProvisionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    prive?: SortOrder
+  }
+
+  export type ProvisionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    discription?: SortOrder
+    prive?: SortOrder
+    time?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProvisionMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    discription?: SortOrder
+    prive?: SortOrder
+    time?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProvisionSumOrderByAggregateInput = {
+    id?: SortOrder
+    prive?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type BigIntFieldUpdateOperationsInput = {
+    set?: bigint | number
+    increment?: bigint | number
+    decrement?: bigint | number
+    multiply?: bigint | number
+    divide?: bigint | number
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -2170,6 +3461,25 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type NestedBigIntFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -2211,6 +3521,44 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedBigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -2226,17 +3574,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -2281,6 +3618,22 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
 
 
   /**
@@ -2290,6 +3643,10 @@ export namespace Prisma {
      * @deprecated Use UserDefaultArgs instead
      */
     export type UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ProvisionDefaultArgs instead
+     */
+    export type ProvisionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ProvisionDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

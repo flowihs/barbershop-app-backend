@@ -9,17 +9,29 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
+  id BigInt @id
 
-  email    String @unique
-  password String
-
-  username    String @unique
-  displayName String @map("display_name")
-
-  avatar String?
-  bio    String?
+  firstName   String  @map("first_name")
+  username    String?
+  description String?
+  email       String? @unique
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Provision {
+  id BigInt @id @default(autoincrement())
+
+  title       String
+  discription String
+  prive       Int
+  time        DateTime
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("provisions")
 }
