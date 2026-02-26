@@ -21,6 +21,7 @@ model User {
 
   @@map("users")
 }
+
 model Provision {
   id BigInt @id @default(autoincrement())
 

@@ -36,11 +36,7 @@ async function bootstrap() {
 	SwaggerModule.setup("swagger", app, swaggerDocument);
 
 	app.enableCors({
-		origin: [
-			config.getOrThrow<string>("ALLOWED_ORIGIN"),
-			"http://localhost:3000",
-			"https://equivalent-drink-hockey-happening.trycloudflare.com"
-		],
+		origin: [config.getOrThrow<string>("ALLOWED_ORIGIN")],
 		credentials: true,
 		exposedHeaders: ["set-cookie"]
 	});

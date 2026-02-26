@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 
 import { PrismaService } from "@/src/core/prisma/prisma.service";
-import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
-import { UpdateProfileDto } from "@/src/modules/account/dto/update-profile.dto";
-import {
+import type { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
+import type { UpdateProfileDto } from "@/src/modules/account/dto/update-profile.dto";
+import type {
 	UpdateProfileResponse,
 	UserUpdateData
 } from "@/src/shared/types/telegram.types";
