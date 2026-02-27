@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpStatus, Patch } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 
-import type { AccountService } from "./account.service";
+import { AccountService } from "./account.service";
 import type { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
 import type { UpdateProfileDto } from "@/src/modules/account/dto/update-profile.dto";
 import { Authorization } from "@/src/shared/decorators/authorization.decorator";

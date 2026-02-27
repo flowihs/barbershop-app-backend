@@ -135,9 +135,18 @@ exports.Prisma.UserScalarFieldEnum = {
 exports.Prisma.ProvisionScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  discription: 'discription',
-  prive: 'prive',
+  description: 'description',
+  price: 'price',
+  image: 'image',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SlotScalarFieldEnum = {
+  id: 'id',
   time: 'time',
+  provisionId: 'provisionId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -160,7 +169,8 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Provision: 'Provision'
+  Provision: 'Provision',
+  Slot: 'Slot'
 };
 
 /**

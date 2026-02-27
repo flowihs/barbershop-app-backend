@@ -35,15 +35,7 @@ export class AccountService {
 		userTg: TelegramUserDto,
 		dto: UpdateProfileDto
 	): Promise<UpdateProfileResponse> {
-		const user = await this.prismaService.user.findUnique({
-			where: {
-				id: BigInt(userTg.id)
-			}
-		});
-
-		if (!user) {
-			throw new NotFoundException("Пользователь не был найден");
-		}
+		await this.findById(userTg.id);
 
 		const updateData: UserUpdateData = {};
 
@@ -68,5 +60,19 @@ export class AccountService {
 			},
 			data: updateData
 		});
+	}
+
+	public async findById(id: number) {
+		const user = await this.prismaService.user.findUnique({
+			where: {
+				id: id
+			}
+		});
+
+		if (!user) {
+			throw new NotFoundException("Пользователь не был найден");
+		}
+
+		return user;
 	}
 }

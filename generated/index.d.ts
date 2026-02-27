@@ -23,6 +23,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  * 
  */
 export type Provision = $Result.DefaultSelection<Prisma.$ProvisionPayload>
+/**
+ * Model Slot
+ * 
+ */
+export type Slot = $Result.DefaultSelection<Prisma.$SlotPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -166,6 +171,16 @@ export class PrismaClient<
     * ```
     */
   get provision(): Prisma.ProvisionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.slot`: Exposes CRUD operations for the **Slot** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Slots
+    * const slots = await prisma.slot.findMany()
+    * ```
+    */
+  get slot(): Prisma.SlotDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -608,7 +623,8 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
-    Provision: 'Provision'
+    Provision: 'Provision',
+    Slot: 'Slot'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -624,7 +640,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "provision"
+      modelProps: "user" | "provision" | "slot"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -765,6 +781,76 @@ export namespace Prisma {
           count: {
             args: Prisma.ProvisionCountArgs<ExtArgs>
             result: $Utils.Optional<ProvisionCountAggregateOutputType> | number
+          }
+        }
+      }
+      Slot: {
+        payload: Prisma.$SlotPayload<ExtArgs>
+        fields: Prisma.SlotFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SlotFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SlotFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload>
+          }
+          findFirst: {
+            args: Prisma.SlotFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SlotFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload>
+          }
+          findMany: {
+            args: Prisma.SlotFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload>[]
+          }
+          create: {
+            args: Prisma.SlotCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload>
+          }
+          createMany: {
+            args: Prisma.SlotCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SlotCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload>[]
+          }
+          delete: {
+            args: Prisma.SlotDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload>
+          }
+          update: {
+            args: Prisma.SlotUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload>
+          }
+          deleteMany: {
+            args: Prisma.SlotDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SlotUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SlotUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload>
+          }
+          aggregate: {
+            args: Prisma.SlotAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSlot>
+          }
+          groupBy: {
+            args: Prisma.SlotGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SlotGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SlotCountArgs<ExtArgs>
+            result: $Utils.Optional<SlotCountAggregateOutputType> | number
           }
         }
       }
@@ -923,6 +1009,67 @@ export namespace Prisma {
    * Count Types
    */
 
+
+  /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    provisions: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    provisions?: boolean | UserCountOutputTypeCountProvisionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountProvisionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProvisionWhereInput
+  }
+
+
+  /**
+   * Count Type ProvisionCountOutputType
+   */
+
+  export type ProvisionCountOutputType = {
+    slots: number
+  }
+
+  export type ProvisionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    slots?: boolean | ProvisionCountOutputTypeCountSlotsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ProvisionCountOutputType without action
+   */
+  export type ProvisionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProvisionCountOutputType
+     */
+    select?: ProvisionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ProvisionCountOutputType without action
+   */
+  export type ProvisionCountOutputTypeCountSlotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SlotWhereInput
+  }
 
 
   /**
@@ -1143,6 +1290,8 @@ export namespace Prisma {
     email?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    provisions?: boolean | User$provisionsArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1165,10 +1314,17 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    provisions?: boolean | User$provisionsArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
-    objects: {}
+    objects: {
+      provisions: Prisma.$ProvisionPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
       firstName: string
@@ -1541,6 +1697,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    provisions<T extends User$provisionsArgs<ExtArgs> = {}>(args?: Subset<T, User$provisionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProvisionPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1590,6 +1747,10 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -1604,6 +1765,10 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -1617,6 +1782,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the User
      */
     select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * Filter, which User to fetch.
      */
@@ -1662,6 +1831,10 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where?: UserWhereInput
@@ -1706,6 +1879,10 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which Users to fetch.
      */
     where?: UserWhereInput
@@ -1744,6 +1921,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the User
      */
     select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * The data needed to create a User.
      */
@@ -1785,6 +1966,10 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * The data needed to update a User.
      */
     data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
@@ -1817,6 +2002,10 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * The filter to search for the User to update in case it exists.
      */
     where: UserWhereUniqueInput
@@ -1839,6 +2028,10 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter which User to delete.
      */
     where: UserWhereUniqueInput
@@ -1855,6 +2048,26 @@ export namespace Prisma {
   }
 
   /**
+   * User.provisions
+   */
+  export type User$provisionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Provision
+     */
+    select?: ProvisionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProvisionInclude<ExtArgs> | null
+    where?: ProvisionWhereInput
+    orderBy?: ProvisionOrderByWithRelationInput | ProvisionOrderByWithRelationInput[]
+    cursor?: ProvisionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProvisionScalarFieldEnum | ProvisionScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1862,6 +2075,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the User
      */
     select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
   }
 
 
@@ -1879,20 +2096,23 @@ export namespace Prisma {
 
   export type ProvisionAvgAggregateOutputType = {
     id: number | null
-    prive: number | null
+    price: number | null
+    userId: number | null
   }
 
   export type ProvisionSumAggregateOutputType = {
     id: bigint | null
-    prive: number | null
+    price: number | null
+    userId: bigint | null
   }
 
   export type ProvisionMinAggregateOutputType = {
     id: bigint | null
     title: string | null
-    discription: string | null
-    prive: number | null
-    time: Date | null
+    description: string | null
+    price: number | null
+    image: string | null
+    userId: bigint | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1900,9 +2120,10 @@ export namespace Prisma {
   export type ProvisionMaxAggregateOutputType = {
     id: bigint | null
     title: string | null
-    discription: string | null
-    prive: number | null
-    time: Date | null
+    description: string | null
+    price: number | null
+    image: string | null
+    userId: bigint | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1910,9 +2131,10 @@ export namespace Prisma {
   export type ProvisionCountAggregateOutputType = {
     id: number
     title: number
-    discription: number
-    prive: number
-    time: number
+    description: number
+    price: number
+    image: number
+    userId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1921,20 +2143,23 @@ export namespace Prisma {
 
   export type ProvisionAvgAggregateInputType = {
     id?: true
-    prive?: true
+    price?: true
+    userId?: true
   }
 
   export type ProvisionSumAggregateInputType = {
     id?: true
-    prive?: true
+    price?: true
+    userId?: true
   }
 
   export type ProvisionMinAggregateInputType = {
     id?: true
     title?: true
-    discription?: true
-    prive?: true
-    time?: true
+    description?: true
+    price?: true
+    image?: true
+    userId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1942,9 +2167,10 @@ export namespace Prisma {
   export type ProvisionMaxAggregateInputType = {
     id?: true
     title?: true
-    discription?: true
-    prive?: true
-    time?: true
+    description?: true
+    price?: true
+    image?: true
+    userId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1952,9 +2178,10 @@ export namespace Prisma {
   export type ProvisionCountAggregateInputType = {
     id?: true
     title?: true
-    discription?: true
-    prive?: true
-    time?: true
+    description?: true
+    price?: true
+    image?: true
+    userId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2049,9 +2276,10 @@ export namespace Prisma {
   export type ProvisionGroupByOutputType = {
     id: bigint
     title: string
-    discription: string
-    prive: number
-    time: Date
+    description: string
+    price: number
+    image: string
+    userId: bigint
     createdAt: Date
     updatedAt: Date
     _count: ProvisionCountAggregateOutputType | null
@@ -2078,43 +2306,62 @@ export namespace Prisma {
   export type ProvisionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    discription?: boolean
-    prive?: boolean
-    time?: boolean
+    description?: boolean
+    price?: boolean
+    image?: boolean
+    userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    slots?: boolean | Provision$slotsArgs<ExtArgs>
+    _count?: boolean | ProvisionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["provision"]>
 
   export type ProvisionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    discription?: boolean
-    prive?: boolean
-    time?: boolean
+    description?: boolean
+    price?: boolean
+    image?: boolean
+    userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["provision"]>
 
   export type ProvisionSelectScalar = {
     id?: boolean
     title?: boolean
-    discription?: boolean
-    prive?: boolean
-    time?: boolean
+    description?: boolean
+    price?: boolean
+    image?: boolean
+    userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
+  export type ProvisionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    slots?: boolean | Provision$slotsArgs<ExtArgs>
+    _count?: boolean | ProvisionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ProvisionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
 
   export type $ProvisionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Provision"
-    objects: {}
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      slots: Prisma.$SlotPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
       title: string
-      discription: string
-      prive: number
-      time: Date
+      description: string
+      price: number
+      image: string
+      userId: bigint
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["provision"]>
@@ -2481,6 +2728,8 @@ export namespace Prisma {
    */
   export interface Prisma__ProvisionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    slots<T extends Provision$slotsArgs<ExtArgs> = {}>(args?: Subset<T, Provision$slotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2512,9 +2761,10 @@ export namespace Prisma {
   interface ProvisionFieldRefs {
     readonly id: FieldRef<"Provision", 'BigInt'>
     readonly title: FieldRef<"Provision", 'String'>
-    readonly discription: FieldRef<"Provision", 'String'>
-    readonly prive: FieldRef<"Provision", 'Int'>
-    readonly time: FieldRef<"Provision", 'DateTime'>
+    readonly description: FieldRef<"Provision", 'String'>
+    readonly price: FieldRef<"Provision", 'Int'>
+    readonly image: FieldRef<"Provision", 'String'>
+    readonly userId: FieldRef<"Provision", 'BigInt'>
     readonly createdAt: FieldRef<"Provision", 'DateTime'>
     readonly updatedAt: FieldRef<"Provision", 'DateTime'>
   }
@@ -2530,6 +2780,10 @@ export namespace Prisma {
      */
     select?: ProvisionSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProvisionInclude<ExtArgs> | null
+    /**
      * Filter, which Provision to fetch.
      */
     where: ProvisionWhereUniqueInput
@@ -2544,6 +2798,10 @@ export namespace Prisma {
      */
     select?: ProvisionSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProvisionInclude<ExtArgs> | null
+    /**
      * Filter, which Provision to fetch.
      */
     where: ProvisionWhereUniqueInput
@@ -2557,6 +2815,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Provision
      */
     select?: ProvisionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProvisionInclude<ExtArgs> | null
     /**
      * Filter, which Provision to fetch.
      */
@@ -2602,6 +2864,10 @@ export namespace Prisma {
      */
     select?: ProvisionSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProvisionInclude<ExtArgs> | null
+    /**
      * Filter, which Provision to fetch.
      */
     where?: ProvisionWhereInput
@@ -2646,6 +2912,10 @@ export namespace Prisma {
      */
     select?: ProvisionSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProvisionInclude<ExtArgs> | null
+    /**
      * Filter, which Provisions to fetch.
      */
     where?: ProvisionWhereInput
@@ -2685,6 +2955,10 @@ export namespace Prisma {
      */
     select?: ProvisionSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProvisionInclude<ExtArgs> | null
+    /**
      * The data needed to create a Provision.
      */
     data: XOR<ProvisionCreateInput, ProvisionUncheckedCreateInput>
@@ -2714,6 +2988,10 @@ export namespace Prisma {
      */
     data: ProvisionCreateManyInput | ProvisionCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProvisionIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -2724,6 +3002,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Provision
      */
     select?: ProvisionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProvisionInclude<ExtArgs> | null
     /**
      * The data needed to update a Provision.
      */
@@ -2757,6 +3039,10 @@ export namespace Prisma {
      */
     select?: ProvisionSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProvisionInclude<ExtArgs> | null
+    /**
      * The filter to search for the Provision to update in case it exists.
      */
     where: ProvisionWhereUniqueInput
@@ -2779,6 +3065,10 @@ export namespace Prisma {
      */
     select?: ProvisionSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProvisionInclude<ExtArgs> | null
+    /**
      * Filter which Provision to delete.
      */
     where: ProvisionWhereUniqueInput
@@ -2795,6 +3085,26 @@ export namespace Prisma {
   }
 
   /**
+   * Provision.slots
+   */
+  export type Provision$slotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    where?: SlotWhereInput
+    orderBy?: SlotOrderByWithRelationInput | SlotOrderByWithRelationInput[]
+    cursor?: SlotWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SlotScalarFieldEnum | SlotScalarFieldEnum[]
+  }
+
+  /**
    * Provision without action
    */
   export type ProvisionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2802,6 +3112,981 @@ export namespace Prisma {
      * Select specific fields to fetch from the Provision
      */
     select?: ProvisionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProvisionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Slot
+   */
+
+  export type AggregateSlot = {
+    _count: SlotCountAggregateOutputType | null
+    _avg: SlotAvgAggregateOutputType | null
+    _sum: SlotSumAggregateOutputType | null
+    _min: SlotMinAggregateOutputType | null
+    _max: SlotMaxAggregateOutputType | null
+  }
+
+  export type SlotAvgAggregateOutputType = {
+    id: number | null
+    provisionId: number | null
+  }
+
+  export type SlotSumAggregateOutputType = {
+    id: bigint | null
+    provisionId: bigint | null
+  }
+
+  export type SlotMinAggregateOutputType = {
+    id: bigint | null
+    time: Date | null
+    provisionId: bigint | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SlotMaxAggregateOutputType = {
+    id: bigint | null
+    time: Date | null
+    provisionId: bigint | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SlotCountAggregateOutputType = {
+    id: number
+    time: number
+    provisionId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SlotAvgAggregateInputType = {
+    id?: true
+    provisionId?: true
+  }
+
+  export type SlotSumAggregateInputType = {
+    id?: true
+    provisionId?: true
+  }
+
+  export type SlotMinAggregateInputType = {
+    id?: true
+    time?: true
+    provisionId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SlotMaxAggregateInputType = {
+    id?: true
+    time?: true
+    provisionId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SlotCountAggregateInputType = {
+    id?: true
+    time?: true
+    provisionId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SlotAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Slot to aggregate.
+     */
+    where?: SlotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Slots to fetch.
+     */
+    orderBy?: SlotOrderByWithRelationInput | SlotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SlotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Slots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Slots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Slots
+    **/
+    _count?: true | SlotCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SlotAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SlotSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SlotMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SlotMaxAggregateInputType
+  }
+
+  export type GetSlotAggregateType<T extends SlotAggregateArgs> = {
+        [P in keyof T & keyof AggregateSlot]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSlot[P]>
+      : GetScalarType<T[P], AggregateSlot[P]>
+  }
+
+
+
+
+  export type SlotGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SlotWhereInput
+    orderBy?: SlotOrderByWithAggregationInput | SlotOrderByWithAggregationInput[]
+    by: SlotScalarFieldEnum[] | SlotScalarFieldEnum
+    having?: SlotScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SlotCountAggregateInputType | true
+    _avg?: SlotAvgAggregateInputType
+    _sum?: SlotSumAggregateInputType
+    _min?: SlotMinAggregateInputType
+    _max?: SlotMaxAggregateInputType
+  }
+
+  export type SlotGroupByOutputType = {
+    id: bigint
+    time: Date
+    provisionId: bigint
+    createdAt: Date
+    updatedAt: Date
+    _count: SlotCountAggregateOutputType | null
+    _avg: SlotAvgAggregateOutputType | null
+    _sum: SlotSumAggregateOutputType | null
+    _min: SlotMinAggregateOutputType | null
+    _max: SlotMaxAggregateOutputType | null
+  }
+
+  type GetSlotGroupByPayload<T extends SlotGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SlotGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SlotGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SlotGroupByOutputType[P]>
+            : GetScalarType<T[P], SlotGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SlotSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    time?: boolean
+    provisionId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    provision?: boolean | ProvisionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["slot"]>
+
+  export type SlotSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    time?: boolean
+    provisionId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    provision?: boolean | ProvisionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["slot"]>
+
+  export type SlotSelectScalar = {
+    id?: boolean
+    time?: boolean
+    provisionId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SlotInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    provision?: boolean | ProvisionDefaultArgs<ExtArgs>
+  }
+  export type SlotIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    provision?: boolean | ProvisionDefaultArgs<ExtArgs>
+  }
+
+  export type $SlotPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Slot"
+    objects: {
+      provision: Prisma.$ProvisionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: bigint
+      time: Date
+      provisionId: bigint
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["slot"]>
+    composites: {}
+  }
+
+  type SlotGetPayload<S extends boolean | null | undefined | SlotDefaultArgs> = $Result.GetResult<Prisma.$SlotPayload, S>
+
+  type SlotCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<SlotFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: SlotCountAggregateInputType | true
+    }
+
+  export interface SlotDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Slot'], meta: { name: 'Slot' } }
+    /**
+     * Find zero or one Slot that matches the filter.
+     * @param {SlotFindUniqueArgs} args - Arguments to find a Slot
+     * @example
+     * // Get one Slot
+     * const slot = await prisma.slot.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SlotFindUniqueArgs>(args: SelectSubset<T, SlotFindUniqueArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Slot that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {SlotFindUniqueOrThrowArgs} args - Arguments to find a Slot
+     * @example
+     * // Get one Slot
+     * const slot = await prisma.slot.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SlotFindUniqueOrThrowArgs>(args: SelectSubset<T, SlotFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Slot that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SlotFindFirstArgs} args - Arguments to find a Slot
+     * @example
+     * // Get one Slot
+     * const slot = await prisma.slot.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SlotFindFirstArgs>(args?: SelectSubset<T, SlotFindFirstArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Slot that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SlotFindFirstOrThrowArgs} args - Arguments to find a Slot
+     * @example
+     * // Get one Slot
+     * const slot = await prisma.slot.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SlotFindFirstOrThrowArgs>(args?: SelectSubset<T, SlotFindFirstOrThrowArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Slots that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SlotFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Slots
+     * const slots = await prisma.slot.findMany()
+     * 
+     * // Get first 10 Slots
+     * const slots = await prisma.slot.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const slotWithIdOnly = await prisma.slot.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SlotFindManyArgs>(args?: SelectSubset<T, SlotFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Slot.
+     * @param {SlotCreateArgs} args - Arguments to create a Slot.
+     * @example
+     * // Create one Slot
+     * const Slot = await prisma.slot.create({
+     *   data: {
+     *     // ... data to create a Slot
+     *   }
+     * })
+     * 
+     */
+    create<T extends SlotCreateArgs>(args: SelectSubset<T, SlotCreateArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Slots.
+     * @param {SlotCreateManyArgs} args - Arguments to create many Slots.
+     * @example
+     * // Create many Slots
+     * const slot = await prisma.slot.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SlotCreateManyArgs>(args?: SelectSubset<T, SlotCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Slots and returns the data saved in the database.
+     * @param {SlotCreateManyAndReturnArgs} args - Arguments to create many Slots.
+     * @example
+     * // Create many Slots
+     * const slot = await prisma.slot.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Slots and only return the `id`
+     * const slotWithIdOnly = await prisma.slot.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SlotCreateManyAndReturnArgs>(args?: SelectSubset<T, SlotCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Slot.
+     * @param {SlotDeleteArgs} args - Arguments to delete one Slot.
+     * @example
+     * // Delete one Slot
+     * const Slot = await prisma.slot.delete({
+     *   where: {
+     *     // ... filter to delete one Slot
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SlotDeleteArgs>(args: SelectSubset<T, SlotDeleteArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Slot.
+     * @param {SlotUpdateArgs} args - Arguments to update one Slot.
+     * @example
+     * // Update one Slot
+     * const slot = await prisma.slot.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SlotUpdateArgs>(args: SelectSubset<T, SlotUpdateArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Slots.
+     * @param {SlotDeleteManyArgs} args - Arguments to filter Slots to delete.
+     * @example
+     * // Delete a few Slots
+     * const { count } = await prisma.slot.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SlotDeleteManyArgs>(args?: SelectSubset<T, SlotDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Slots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SlotUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Slots
+     * const slot = await prisma.slot.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SlotUpdateManyArgs>(args: SelectSubset<T, SlotUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Slot.
+     * @param {SlotUpsertArgs} args - Arguments to update or create a Slot.
+     * @example
+     * // Update or create a Slot
+     * const slot = await prisma.slot.upsert({
+     *   create: {
+     *     // ... data to create a Slot
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Slot we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SlotUpsertArgs>(args: SelectSubset<T, SlotUpsertArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Slots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SlotCountArgs} args - Arguments to filter Slots to count.
+     * @example
+     * // Count the number of Slots
+     * const count = await prisma.slot.count({
+     *   where: {
+     *     // ... the filter for the Slots we want to count
+     *   }
+     * })
+    **/
+    count<T extends SlotCountArgs>(
+      args?: Subset<T, SlotCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SlotCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Slot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SlotAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SlotAggregateArgs>(args: Subset<T, SlotAggregateArgs>): Prisma.PrismaPromise<GetSlotAggregateType<T>>
+
+    /**
+     * Group by Slot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SlotGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SlotGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SlotGroupByArgs['orderBy'] }
+        : { orderBy?: SlotGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SlotGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSlotGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Slot model
+   */
+  readonly fields: SlotFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Slot.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SlotClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    provision<T extends ProvisionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProvisionDefaultArgs<ExtArgs>>): Prisma__ProvisionClient<$Result.GetResult<Prisma.$ProvisionPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Slot model
+   */ 
+  interface SlotFieldRefs {
+    readonly id: FieldRef<"Slot", 'BigInt'>
+    readonly time: FieldRef<"Slot", 'DateTime'>
+    readonly provisionId: FieldRef<"Slot", 'BigInt'>
+    readonly createdAt: FieldRef<"Slot", 'DateTime'>
+    readonly updatedAt: FieldRef<"Slot", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Slot findUnique
+   */
+  export type SlotFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    /**
+     * Filter, which Slot to fetch.
+     */
+    where: SlotWhereUniqueInput
+  }
+
+  /**
+   * Slot findUniqueOrThrow
+   */
+  export type SlotFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    /**
+     * Filter, which Slot to fetch.
+     */
+    where: SlotWhereUniqueInput
+  }
+
+  /**
+   * Slot findFirst
+   */
+  export type SlotFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    /**
+     * Filter, which Slot to fetch.
+     */
+    where?: SlotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Slots to fetch.
+     */
+    orderBy?: SlotOrderByWithRelationInput | SlotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Slots.
+     */
+    cursor?: SlotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Slots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Slots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Slots.
+     */
+    distinct?: SlotScalarFieldEnum | SlotScalarFieldEnum[]
+  }
+
+  /**
+   * Slot findFirstOrThrow
+   */
+  export type SlotFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    /**
+     * Filter, which Slot to fetch.
+     */
+    where?: SlotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Slots to fetch.
+     */
+    orderBy?: SlotOrderByWithRelationInput | SlotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Slots.
+     */
+    cursor?: SlotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Slots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Slots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Slots.
+     */
+    distinct?: SlotScalarFieldEnum | SlotScalarFieldEnum[]
+  }
+
+  /**
+   * Slot findMany
+   */
+  export type SlotFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    /**
+     * Filter, which Slots to fetch.
+     */
+    where?: SlotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Slots to fetch.
+     */
+    orderBy?: SlotOrderByWithRelationInput | SlotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Slots.
+     */
+    cursor?: SlotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Slots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Slots.
+     */
+    skip?: number
+    distinct?: SlotScalarFieldEnum | SlotScalarFieldEnum[]
+  }
+
+  /**
+   * Slot create
+   */
+  export type SlotCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Slot.
+     */
+    data: XOR<SlotCreateInput, SlotUncheckedCreateInput>
+  }
+
+  /**
+   * Slot createMany
+   */
+  export type SlotCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Slots.
+     */
+    data: SlotCreateManyInput | SlotCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Slot createManyAndReturn
+   */
+  export type SlotCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Slots.
+     */
+    data: SlotCreateManyInput | SlotCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Slot update
+   */
+  export type SlotUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Slot.
+     */
+    data: XOR<SlotUpdateInput, SlotUncheckedUpdateInput>
+    /**
+     * Choose, which Slot to update.
+     */
+    where: SlotWhereUniqueInput
+  }
+
+  /**
+   * Slot updateMany
+   */
+  export type SlotUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Slots.
+     */
+    data: XOR<SlotUpdateManyMutationInput, SlotUncheckedUpdateManyInput>
+    /**
+     * Filter which Slots to update
+     */
+    where?: SlotWhereInput
+  }
+
+  /**
+   * Slot upsert
+   */
+  export type SlotUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Slot to update in case it exists.
+     */
+    where: SlotWhereUniqueInput
+    /**
+     * In case the Slot found by the `where` argument doesn't exist, create a new Slot with this data.
+     */
+    create: XOR<SlotCreateInput, SlotUncheckedCreateInput>
+    /**
+     * In case the Slot was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SlotUpdateInput, SlotUncheckedUpdateInput>
+  }
+
+  /**
+   * Slot delete
+   */
+  export type SlotDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    /**
+     * Filter which Slot to delete.
+     */
+    where: SlotWhereUniqueInput
+  }
+
+  /**
+   * Slot deleteMany
+   */
+  export type SlotDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Slots to delete
+     */
+    where?: SlotWhereInput
+  }
+
+  /**
+   * Slot without action
+   */
+  export type SlotDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
   }
 
 
@@ -2835,14 +4120,26 @@ export namespace Prisma {
   export const ProvisionScalarFieldEnum: {
     id: 'id',
     title: 'title',
-    discription: 'discription',
-    prive: 'prive',
-    time: 'time',
+    description: 'description',
+    price: 'price',
+    image: 'image',
+    userId: 'userId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
   export type ProvisionScalarFieldEnum = (typeof ProvisionScalarFieldEnum)[keyof typeof ProvisionScalarFieldEnum]
+
+
+  export const SlotScalarFieldEnum: {
+    id: 'id',
+    time: 'time',
+    provisionId: 'provisionId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SlotScalarFieldEnum = (typeof SlotScalarFieldEnum)[keyof typeof SlotScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -2958,6 +4255,7 @@ export namespace Prisma {
     email?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    provisions?: ProvisionListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -2968,6 +4266,7 @@ export namespace Prisma {
     email?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    provisions?: ProvisionOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -2981,6 +4280,7 @@ export namespace Prisma {
     description?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    provisions?: ProvisionListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -3017,21 +4317,27 @@ export namespace Prisma {
     NOT?: ProvisionWhereInput | ProvisionWhereInput[]
     id?: BigIntFilter<"Provision"> | bigint | number
     title?: StringFilter<"Provision"> | string
-    discription?: StringFilter<"Provision"> | string
-    prive?: IntFilter<"Provision"> | number
-    time?: DateTimeFilter<"Provision"> | Date | string
+    description?: StringFilter<"Provision"> | string
+    price?: IntFilter<"Provision"> | number
+    image?: StringFilter<"Provision"> | string
+    userId?: BigIntFilter<"Provision"> | bigint | number
     createdAt?: DateTimeFilter<"Provision"> | Date | string
     updatedAt?: DateTimeFilter<"Provision"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    slots?: SlotListRelationFilter
   }
 
   export type ProvisionOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
-    discription?: SortOrder
-    prive?: SortOrder
-    time?: SortOrder
+    description?: SortOrder
+    price?: SortOrder
+    image?: SortOrder
+    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    slots?: SlotOrderByRelationAggregateInput
   }
 
   export type ProvisionWhereUniqueInput = Prisma.AtLeast<{
@@ -3040,19 +4346,23 @@ export namespace Prisma {
     OR?: ProvisionWhereInput[]
     NOT?: ProvisionWhereInput | ProvisionWhereInput[]
     title?: StringFilter<"Provision"> | string
-    discription?: StringFilter<"Provision"> | string
-    prive?: IntFilter<"Provision"> | number
-    time?: DateTimeFilter<"Provision"> | Date | string
+    description?: StringFilter<"Provision"> | string
+    price?: IntFilter<"Provision"> | number
+    image?: StringFilter<"Provision"> | string
+    userId?: BigIntFilter<"Provision"> | bigint | number
     createdAt?: DateTimeFilter<"Provision"> | Date | string
     updatedAt?: DateTimeFilter<"Provision"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    slots?: SlotListRelationFilter
   }, "id">
 
   export type ProvisionOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
-    discription?: SortOrder
-    prive?: SortOrder
-    time?: SortOrder
+    description?: SortOrder
+    price?: SortOrder
+    image?: SortOrder
+    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ProvisionCountOrderByAggregateInput
@@ -3068,11 +4378,69 @@ export namespace Prisma {
     NOT?: ProvisionScalarWhereWithAggregatesInput | ProvisionScalarWhereWithAggregatesInput[]
     id?: BigIntWithAggregatesFilter<"Provision"> | bigint | number
     title?: StringWithAggregatesFilter<"Provision"> | string
-    discription?: StringWithAggregatesFilter<"Provision"> | string
-    prive?: IntWithAggregatesFilter<"Provision"> | number
-    time?: DateTimeWithAggregatesFilter<"Provision"> | Date | string
+    description?: StringWithAggregatesFilter<"Provision"> | string
+    price?: IntWithAggregatesFilter<"Provision"> | number
+    image?: StringWithAggregatesFilter<"Provision"> | string
+    userId?: BigIntWithAggregatesFilter<"Provision"> | bigint | number
     createdAt?: DateTimeWithAggregatesFilter<"Provision"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Provision"> | Date | string
+  }
+
+  export type SlotWhereInput = {
+    AND?: SlotWhereInput | SlotWhereInput[]
+    OR?: SlotWhereInput[]
+    NOT?: SlotWhereInput | SlotWhereInput[]
+    id?: BigIntFilter<"Slot"> | bigint | number
+    time?: DateTimeFilter<"Slot"> | Date | string
+    provisionId?: BigIntFilter<"Slot"> | bigint | number
+    createdAt?: DateTimeFilter<"Slot"> | Date | string
+    updatedAt?: DateTimeFilter<"Slot"> | Date | string
+    provision?: XOR<ProvisionRelationFilter, ProvisionWhereInput>
+  }
+
+  export type SlotOrderByWithRelationInput = {
+    id?: SortOrder
+    time?: SortOrder
+    provisionId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    provision?: ProvisionOrderByWithRelationInput
+  }
+
+  export type SlotWhereUniqueInput = Prisma.AtLeast<{
+    id?: bigint | number
+    AND?: SlotWhereInput | SlotWhereInput[]
+    OR?: SlotWhereInput[]
+    NOT?: SlotWhereInput | SlotWhereInput[]
+    time?: DateTimeFilter<"Slot"> | Date | string
+    provisionId?: BigIntFilter<"Slot"> | bigint | number
+    createdAt?: DateTimeFilter<"Slot"> | Date | string
+    updatedAt?: DateTimeFilter<"Slot"> | Date | string
+    provision?: XOR<ProvisionRelationFilter, ProvisionWhereInput>
+  }, "id">
+
+  export type SlotOrderByWithAggregationInput = {
+    id?: SortOrder
+    time?: SortOrder
+    provisionId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SlotCountOrderByAggregateInput
+    _avg?: SlotAvgOrderByAggregateInput
+    _max?: SlotMaxOrderByAggregateInput
+    _min?: SlotMinOrderByAggregateInput
+    _sum?: SlotSumOrderByAggregateInput
+  }
+
+  export type SlotScalarWhereWithAggregatesInput = {
+    AND?: SlotScalarWhereWithAggregatesInput | SlotScalarWhereWithAggregatesInput[]
+    OR?: SlotScalarWhereWithAggregatesInput[]
+    NOT?: SlotScalarWhereWithAggregatesInput | SlotScalarWhereWithAggregatesInput[]
+    id?: BigIntWithAggregatesFilter<"Slot"> | bigint | number
+    time?: DateTimeWithAggregatesFilter<"Slot"> | Date | string
+    provisionId?: BigIntWithAggregatesFilter<"Slot"> | bigint | number
+    createdAt?: DateTimeWithAggregatesFilter<"Slot"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Slot"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -3083,6 +4451,7 @@ export namespace Prisma {
     email?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    provisions?: ProvisionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -3093,6 +4462,7 @@ export namespace Prisma {
     email?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    provisions?: ProvisionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -3103,6 +4473,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    provisions?: ProvisionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -3113,6 +4484,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    provisions?: ProvisionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -3148,49 +4520,58 @@ export namespace Prisma {
   export type ProvisionCreateInput = {
     id?: bigint | number
     title: string
-    discription: string
-    prive: number
-    time: Date | string
+    description: string
+    price: number
+    image: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutProvisionsInput
+    slots?: SlotCreateNestedManyWithoutProvisionInput
   }
 
   export type ProvisionUncheckedCreateInput = {
     id?: bigint | number
     title: string
-    discription: string
-    prive: number
-    time: Date | string
+    description: string
+    price: number
+    image: string
+    userId: bigint | number
     createdAt?: Date | string
     updatedAt?: Date | string
+    slots?: SlotUncheckedCreateNestedManyWithoutProvisionInput
   }
 
   export type ProvisionUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     title?: StringFieldUpdateOperationsInput | string
-    discription?: StringFieldUpdateOperationsInput | string
-    prive?: IntFieldUpdateOperationsInput | number
-    time?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    image?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutProvisionsNestedInput
+    slots?: SlotUpdateManyWithoutProvisionNestedInput
   }
 
   export type ProvisionUncheckedUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     title?: StringFieldUpdateOperationsInput | string
-    discription?: StringFieldUpdateOperationsInput | string
-    prive?: IntFieldUpdateOperationsInput | number
-    time?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    image?: StringFieldUpdateOperationsInput | string
+    userId?: BigIntFieldUpdateOperationsInput | bigint | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    slots?: SlotUncheckedUpdateManyWithoutProvisionNestedInput
   }
 
   export type ProvisionCreateManyInput = {
     id?: bigint | number
     title: string
-    discription: string
-    prive: number
-    time: Date | string
+    description: string
+    price: number
+    image: string
+    userId: bigint | number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -3198,9 +4579,9 @@ export namespace Prisma {
   export type ProvisionUpdateManyMutationInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     title?: StringFieldUpdateOperationsInput | string
-    discription?: StringFieldUpdateOperationsInput | string
-    prive?: IntFieldUpdateOperationsInput | number
-    time?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    image?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3208,9 +4589,65 @@ export namespace Prisma {
   export type ProvisionUncheckedUpdateManyInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     title?: StringFieldUpdateOperationsInput | string
-    discription?: StringFieldUpdateOperationsInput | string
-    prive?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    image?: StringFieldUpdateOperationsInput | string
+    userId?: BigIntFieldUpdateOperationsInput | bigint | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SlotCreateInput = {
+    id?: bigint | number
+    time: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    provision: ProvisionCreateNestedOneWithoutSlotsInput
+  }
+
+  export type SlotUncheckedCreateInput = {
+    id?: bigint | number
+    time: Date | string
+    provisionId: bigint | number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SlotUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
     time?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    provision?: ProvisionUpdateOneRequiredWithoutSlotsNestedInput
+  }
+
+  export type SlotUncheckedUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    time?: DateTimeFieldUpdateOperationsInput | Date | string
+    provisionId?: BigIntFieldUpdateOperationsInput | bigint | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SlotCreateManyInput = {
+    id?: bigint | number
+    time: Date | string
+    provisionId: bigint | number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SlotUpdateManyMutationInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    time?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SlotUncheckedUpdateManyInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    time?: DateTimeFieldUpdateOperationsInput | Date | string
+    provisionId?: BigIntFieldUpdateOperationsInput | bigint | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3267,9 +4704,19 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type ProvisionListRelationFilter = {
+    every?: ProvisionWhereInput
+    some?: ProvisionWhereInput
+    none?: ProvisionWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type ProvisionOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type UserCountOrderByAggregateInput = {
@@ -3387,27 +4834,45 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type UserRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type SlotListRelationFilter = {
+    every?: SlotWhereInput
+    some?: SlotWhereInput
+    none?: SlotWhereInput
+  }
+
+  export type SlotOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type ProvisionCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    discription?: SortOrder
-    prive?: SortOrder
-    time?: SortOrder
+    description?: SortOrder
+    price?: SortOrder
+    image?: SortOrder
+    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type ProvisionAvgOrderByAggregateInput = {
     id?: SortOrder
-    prive?: SortOrder
+    price?: SortOrder
+    userId?: SortOrder
   }
 
   export type ProvisionMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    discription?: SortOrder
-    prive?: SortOrder
-    time?: SortOrder
+    description?: SortOrder
+    price?: SortOrder
+    image?: SortOrder
+    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -3415,16 +4880,18 @@ export namespace Prisma {
   export type ProvisionMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    discription?: SortOrder
-    prive?: SortOrder
-    time?: SortOrder
+    description?: SortOrder
+    price?: SortOrder
+    image?: SortOrder
+    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type ProvisionSumOrderByAggregateInput = {
     id?: SortOrder
-    prive?: SortOrder
+    price?: SortOrder
+    userId?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -3441,6 +4908,59 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type ProvisionRelationFilter = {
+    is?: ProvisionWhereInput
+    isNot?: ProvisionWhereInput
+  }
+
+  export type SlotCountOrderByAggregateInput = {
+    id?: SortOrder
+    time?: SortOrder
+    provisionId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SlotAvgOrderByAggregateInput = {
+    id?: SortOrder
+    provisionId?: SortOrder
+  }
+
+  export type SlotMaxOrderByAggregateInput = {
+    id?: SortOrder
+    time?: SortOrder
+    provisionId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SlotMinOrderByAggregateInput = {
+    id?: SortOrder
+    time?: SortOrder
+    provisionId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SlotSumOrderByAggregateInput = {
+    id?: SortOrder
+    provisionId?: SortOrder
+  }
+
+  export type ProvisionCreateNestedManyWithoutUserInput = {
+    create?: XOR<ProvisionCreateWithoutUserInput, ProvisionUncheckedCreateWithoutUserInput> | ProvisionCreateWithoutUserInput[] | ProvisionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ProvisionCreateOrConnectWithoutUserInput | ProvisionCreateOrConnectWithoutUserInput[]
+    createMany?: ProvisionCreateManyUserInputEnvelope
+    connect?: ProvisionWhereUniqueInput | ProvisionWhereUniqueInput[]
+  }
+
+  export type ProvisionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ProvisionCreateWithoutUserInput, ProvisionUncheckedCreateWithoutUserInput> | ProvisionCreateWithoutUserInput[] | ProvisionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ProvisionCreateOrConnectWithoutUserInput | ProvisionCreateOrConnectWithoutUserInput[]
+    createMany?: ProvisionCreateManyUserInputEnvelope
+    connect?: ProvisionWhereUniqueInput | ProvisionWhereUniqueInput[]
   }
 
   export type BigIntFieldUpdateOperationsInput = {
@@ -3463,12 +4983,110 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type ProvisionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ProvisionCreateWithoutUserInput, ProvisionUncheckedCreateWithoutUserInput> | ProvisionCreateWithoutUserInput[] | ProvisionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ProvisionCreateOrConnectWithoutUserInput | ProvisionCreateOrConnectWithoutUserInput[]
+    upsert?: ProvisionUpsertWithWhereUniqueWithoutUserInput | ProvisionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ProvisionCreateManyUserInputEnvelope
+    set?: ProvisionWhereUniqueInput | ProvisionWhereUniqueInput[]
+    disconnect?: ProvisionWhereUniqueInput | ProvisionWhereUniqueInput[]
+    delete?: ProvisionWhereUniqueInput | ProvisionWhereUniqueInput[]
+    connect?: ProvisionWhereUniqueInput | ProvisionWhereUniqueInput[]
+    update?: ProvisionUpdateWithWhereUniqueWithoutUserInput | ProvisionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ProvisionUpdateManyWithWhereWithoutUserInput | ProvisionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ProvisionScalarWhereInput | ProvisionScalarWhereInput[]
+  }
+
+  export type ProvisionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ProvisionCreateWithoutUserInput, ProvisionUncheckedCreateWithoutUserInput> | ProvisionCreateWithoutUserInput[] | ProvisionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ProvisionCreateOrConnectWithoutUserInput | ProvisionCreateOrConnectWithoutUserInput[]
+    upsert?: ProvisionUpsertWithWhereUniqueWithoutUserInput | ProvisionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ProvisionCreateManyUserInputEnvelope
+    set?: ProvisionWhereUniqueInput | ProvisionWhereUniqueInput[]
+    disconnect?: ProvisionWhereUniqueInput | ProvisionWhereUniqueInput[]
+    delete?: ProvisionWhereUniqueInput | ProvisionWhereUniqueInput[]
+    connect?: ProvisionWhereUniqueInput | ProvisionWhereUniqueInput[]
+    update?: ProvisionUpdateWithWhereUniqueWithoutUserInput | ProvisionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ProvisionUpdateManyWithWhereWithoutUserInput | ProvisionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ProvisionScalarWhereInput | ProvisionScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutProvisionsInput = {
+    create?: XOR<UserCreateWithoutProvisionsInput, UserUncheckedCreateWithoutProvisionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutProvisionsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type SlotCreateNestedManyWithoutProvisionInput = {
+    create?: XOR<SlotCreateWithoutProvisionInput, SlotUncheckedCreateWithoutProvisionInput> | SlotCreateWithoutProvisionInput[] | SlotUncheckedCreateWithoutProvisionInput[]
+    connectOrCreate?: SlotCreateOrConnectWithoutProvisionInput | SlotCreateOrConnectWithoutProvisionInput[]
+    createMany?: SlotCreateManyProvisionInputEnvelope
+    connect?: SlotWhereUniqueInput | SlotWhereUniqueInput[]
+  }
+
+  export type SlotUncheckedCreateNestedManyWithoutProvisionInput = {
+    create?: XOR<SlotCreateWithoutProvisionInput, SlotUncheckedCreateWithoutProvisionInput> | SlotCreateWithoutProvisionInput[] | SlotUncheckedCreateWithoutProvisionInput[]
+    connectOrCreate?: SlotCreateOrConnectWithoutProvisionInput | SlotCreateOrConnectWithoutProvisionInput[]
+    createMany?: SlotCreateManyProvisionInputEnvelope
+    connect?: SlotWhereUniqueInput | SlotWhereUniqueInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type UserUpdateOneRequiredWithoutProvisionsNestedInput = {
+    create?: XOR<UserCreateWithoutProvisionsInput, UserUncheckedCreateWithoutProvisionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutProvisionsInput
+    upsert?: UserUpsertWithoutProvisionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProvisionsInput, UserUpdateWithoutProvisionsInput>, UserUncheckedUpdateWithoutProvisionsInput>
+  }
+
+  export type SlotUpdateManyWithoutProvisionNestedInput = {
+    create?: XOR<SlotCreateWithoutProvisionInput, SlotUncheckedCreateWithoutProvisionInput> | SlotCreateWithoutProvisionInput[] | SlotUncheckedCreateWithoutProvisionInput[]
+    connectOrCreate?: SlotCreateOrConnectWithoutProvisionInput | SlotCreateOrConnectWithoutProvisionInput[]
+    upsert?: SlotUpsertWithWhereUniqueWithoutProvisionInput | SlotUpsertWithWhereUniqueWithoutProvisionInput[]
+    createMany?: SlotCreateManyProvisionInputEnvelope
+    set?: SlotWhereUniqueInput | SlotWhereUniqueInput[]
+    disconnect?: SlotWhereUniqueInput | SlotWhereUniqueInput[]
+    delete?: SlotWhereUniqueInput | SlotWhereUniqueInput[]
+    connect?: SlotWhereUniqueInput | SlotWhereUniqueInput[]
+    update?: SlotUpdateWithWhereUniqueWithoutProvisionInput | SlotUpdateWithWhereUniqueWithoutProvisionInput[]
+    updateMany?: SlotUpdateManyWithWhereWithoutProvisionInput | SlotUpdateManyWithWhereWithoutProvisionInput[]
+    deleteMany?: SlotScalarWhereInput | SlotScalarWhereInput[]
+  }
+
+  export type SlotUncheckedUpdateManyWithoutProvisionNestedInput = {
+    create?: XOR<SlotCreateWithoutProvisionInput, SlotUncheckedCreateWithoutProvisionInput> | SlotCreateWithoutProvisionInput[] | SlotUncheckedCreateWithoutProvisionInput[]
+    connectOrCreate?: SlotCreateOrConnectWithoutProvisionInput | SlotCreateOrConnectWithoutProvisionInput[]
+    upsert?: SlotUpsertWithWhereUniqueWithoutProvisionInput | SlotUpsertWithWhereUniqueWithoutProvisionInput[]
+    createMany?: SlotCreateManyProvisionInputEnvelope
+    set?: SlotWhereUniqueInput | SlotWhereUniqueInput[]
+    disconnect?: SlotWhereUniqueInput | SlotWhereUniqueInput[]
+    delete?: SlotWhereUniqueInput | SlotWhereUniqueInput[]
+    connect?: SlotWhereUniqueInput | SlotWhereUniqueInput[]
+    update?: SlotUpdateWithWhereUniqueWithoutProvisionInput | SlotUpdateWithWhereUniqueWithoutProvisionInput[]
+    updateMany?: SlotUpdateManyWithWhereWithoutProvisionInput | SlotUpdateManyWithWhereWithoutProvisionInput[]
+    deleteMany?: SlotScalarWhereInput | SlotScalarWhereInput[]
+  }
+
+  export type ProvisionCreateNestedOneWithoutSlotsInput = {
+    create?: XOR<ProvisionCreateWithoutSlotsInput, ProvisionUncheckedCreateWithoutSlotsInput>
+    connectOrCreate?: ProvisionCreateOrConnectWithoutSlotsInput
+    connect?: ProvisionWhereUniqueInput
+  }
+
+  export type ProvisionUpdateOneRequiredWithoutSlotsNestedInput = {
+    create?: XOR<ProvisionCreateWithoutSlotsInput, ProvisionUncheckedCreateWithoutSlotsInput>
+    connectOrCreate?: ProvisionCreateOrConnectWithoutSlotsInput
+    upsert?: ProvisionUpsertWithoutSlotsInput
+    connect?: ProvisionWhereUniqueInput
+    update?: XOR<XOR<ProvisionUpdateToOneWithWhereWithoutSlotsInput, ProvisionUpdateWithoutSlotsInput>, ProvisionUncheckedUpdateWithoutSlotsInput>
   }
 
   export type NestedBigIntFilter<$PrismaModel = never> = {
@@ -3634,11 +5252,318 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type ProvisionCreateWithoutUserInput = {
+    id?: bigint | number
+    title: string
+    description: string
+    price: number
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    slots?: SlotCreateNestedManyWithoutProvisionInput
+  }
+
+  export type ProvisionUncheckedCreateWithoutUserInput = {
+    id?: bigint | number
+    title: string
+    description: string
+    price: number
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    slots?: SlotUncheckedCreateNestedManyWithoutProvisionInput
+  }
+
+  export type ProvisionCreateOrConnectWithoutUserInput = {
+    where: ProvisionWhereUniqueInput
+    create: XOR<ProvisionCreateWithoutUserInput, ProvisionUncheckedCreateWithoutUserInput>
+  }
+
+  export type ProvisionCreateManyUserInputEnvelope = {
+    data: ProvisionCreateManyUserInput | ProvisionCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProvisionUpsertWithWhereUniqueWithoutUserInput = {
+    where: ProvisionWhereUniqueInput
+    update: XOR<ProvisionUpdateWithoutUserInput, ProvisionUncheckedUpdateWithoutUserInput>
+    create: XOR<ProvisionCreateWithoutUserInput, ProvisionUncheckedCreateWithoutUserInput>
+  }
+
+  export type ProvisionUpdateWithWhereUniqueWithoutUserInput = {
+    where: ProvisionWhereUniqueInput
+    data: XOR<ProvisionUpdateWithoutUserInput, ProvisionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ProvisionUpdateManyWithWhereWithoutUserInput = {
+    where: ProvisionScalarWhereInput
+    data: XOR<ProvisionUpdateManyMutationInput, ProvisionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ProvisionScalarWhereInput = {
+    AND?: ProvisionScalarWhereInput | ProvisionScalarWhereInput[]
+    OR?: ProvisionScalarWhereInput[]
+    NOT?: ProvisionScalarWhereInput | ProvisionScalarWhereInput[]
+    id?: BigIntFilter<"Provision"> | bigint | number
+    title?: StringFilter<"Provision"> | string
+    description?: StringFilter<"Provision"> | string
+    price?: IntFilter<"Provision"> | number
+    image?: StringFilter<"Provision"> | string
+    userId?: BigIntFilter<"Provision"> | bigint | number
+    createdAt?: DateTimeFilter<"Provision"> | Date | string
+    updatedAt?: DateTimeFilter<"Provision"> | Date | string
+  }
+
+  export type UserCreateWithoutProvisionsInput = {
+    id: bigint | number
+    firstName: string
+    username?: string | null
+    description?: string | null
+    email?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUncheckedCreateWithoutProvisionsInput = {
+    id: bigint | number
+    firstName: string
+    username?: string | null
+    description?: string | null
+    email?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCreateOrConnectWithoutProvisionsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutProvisionsInput, UserUncheckedCreateWithoutProvisionsInput>
+  }
+
+  export type SlotCreateWithoutProvisionInput = {
+    id?: bigint | number
+    time: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SlotUncheckedCreateWithoutProvisionInput = {
+    id?: bigint | number
+    time: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SlotCreateOrConnectWithoutProvisionInput = {
+    where: SlotWhereUniqueInput
+    create: XOR<SlotCreateWithoutProvisionInput, SlotUncheckedCreateWithoutProvisionInput>
+  }
+
+  export type SlotCreateManyProvisionInputEnvelope = {
+    data: SlotCreateManyProvisionInput | SlotCreateManyProvisionInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutProvisionsInput = {
+    update: XOR<UserUpdateWithoutProvisionsInput, UserUncheckedUpdateWithoutProvisionsInput>
+    create: XOR<UserCreateWithoutProvisionsInput, UserUncheckedCreateWithoutProvisionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutProvisionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutProvisionsInput, UserUncheckedUpdateWithoutProvisionsInput>
+  }
+
+  export type UserUpdateWithoutProvisionsInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    firstName?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateWithoutProvisionsInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    firstName?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SlotUpsertWithWhereUniqueWithoutProvisionInput = {
+    where: SlotWhereUniqueInput
+    update: XOR<SlotUpdateWithoutProvisionInput, SlotUncheckedUpdateWithoutProvisionInput>
+    create: XOR<SlotCreateWithoutProvisionInput, SlotUncheckedCreateWithoutProvisionInput>
+  }
+
+  export type SlotUpdateWithWhereUniqueWithoutProvisionInput = {
+    where: SlotWhereUniqueInput
+    data: XOR<SlotUpdateWithoutProvisionInput, SlotUncheckedUpdateWithoutProvisionInput>
+  }
+
+  export type SlotUpdateManyWithWhereWithoutProvisionInput = {
+    where: SlotScalarWhereInput
+    data: XOR<SlotUpdateManyMutationInput, SlotUncheckedUpdateManyWithoutProvisionInput>
+  }
+
+  export type SlotScalarWhereInput = {
+    AND?: SlotScalarWhereInput | SlotScalarWhereInput[]
+    OR?: SlotScalarWhereInput[]
+    NOT?: SlotScalarWhereInput | SlotScalarWhereInput[]
+    id?: BigIntFilter<"Slot"> | bigint | number
+    time?: DateTimeFilter<"Slot"> | Date | string
+    provisionId?: BigIntFilter<"Slot"> | bigint | number
+    createdAt?: DateTimeFilter<"Slot"> | Date | string
+    updatedAt?: DateTimeFilter<"Slot"> | Date | string
+  }
+
+  export type ProvisionCreateWithoutSlotsInput = {
+    id?: bigint | number
+    title: string
+    description: string
+    price: number
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutProvisionsInput
+  }
+
+  export type ProvisionUncheckedCreateWithoutSlotsInput = {
+    id?: bigint | number
+    title: string
+    description: string
+    price: number
+    image: string
+    userId: bigint | number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProvisionCreateOrConnectWithoutSlotsInput = {
+    where: ProvisionWhereUniqueInput
+    create: XOR<ProvisionCreateWithoutSlotsInput, ProvisionUncheckedCreateWithoutSlotsInput>
+  }
+
+  export type ProvisionUpsertWithoutSlotsInput = {
+    update: XOR<ProvisionUpdateWithoutSlotsInput, ProvisionUncheckedUpdateWithoutSlotsInput>
+    create: XOR<ProvisionCreateWithoutSlotsInput, ProvisionUncheckedCreateWithoutSlotsInput>
+    where?: ProvisionWhereInput
+  }
+
+  export type ProvisionUpdateToOneWithWhereWithoutSlotsInput = {
+    where?: ProvisionWhereInput
+    data: XOR<ProvisionUpdateWithoutSlotsInput, ProvisionUncheckedUpdateWithoutSlotsInput>
+  }
+
+  export type ProvisionUpdateWithoutSlotsInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutProvisionsNestedInput
+  }
+
+  export type ProvisionUncheckedUpdateWithoutSlotsInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    image?: StringFieldUpdateOperationsInput | string
+    userId?: BigIntFieldUpdateOperationsInput | bigint | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProvisionCreateManyUserInput = {
+    id?: bigint | number
+    title: string
+    description: string
+    price: number
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProvisionUpdateWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    slots?: SlotUpdateManyWithoutProvisionNestedInput
+  }
+
+  export type ProvisionUncheckedUpdateWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    slots?: SlotUncheckedUpdateManyWithoutProvisionNestedInput
+  }
+
+  export type ProvisionUncheckedUpdateManyWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SlotCreateManyProvisionInput = {
+    id?: bigint | number
+    time: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SlotUpdateWithoutProvisionInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    time?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SlotUncheckedUpdateWithoutProvisionInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    time?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SlotUncheckedUpdateManyWithoutProvisionInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    time?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
    * Aliases for legacy arg types
    */
+    /**
+     * @deprecated Use UserCountOutputTypeDefaultArgs instead
+     */
+    export type UserCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ProvisionCountOutputTypeDefaultArgs instead
+     */
+    export type ProvisionCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ProvisionCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use UserDefaultArgs instead
      */
@@ -3647,6 +5572,10 @@ export namespace Prisma {
      * @deprecated Use ProvisionDefaultArgs instead
      */
     export type ProvisionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ProvisionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SlotDefaultArgs instead
+     */
+    export type SlotArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SlotDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany
