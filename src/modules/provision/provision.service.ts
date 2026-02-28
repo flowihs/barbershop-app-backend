@@ -4,6 +4,7 @@ import { PrismaService } from "@/src/core/prisma/prisma.service";
 import { AccountService } from "@/src/modules/account/account.service";
 import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
 import { CreateProvisionDto } from "@/src/modules/provision/dto/create-provision.dto";
+import { SortProvisionPriceDto } from "@/src/modules/provision/dto/sort-provision-price.dto";
 
 @Injectable()
 export class ProvisionService {
@@ -12,37 +13,17 @@ export class ProvisionService {
 		private readonly accountService: AccountService
 	) {}
 
-	public async findAll() {
-		return this.prismaService.provision.findMany();
-	}
-
-	public async findById(id: number) {
-		const provision = await this.prismaService.provision.findUnique({
-			where: {
-				id: BigInt(id)
-			}
-		});
-
-		if (!provision) {
-			throw new NotFoundException("Услуга не была найдена");
-		}
-
-		return provision;
-	}
-
 	public async create(dto: CreateProvisionDto, userTg: TelegramUserDto) {
 		await this.accountService.findById(userTg.id);
 
 		const slotsData = dto.time.map(timeStr => ({
-			time: new Date(timeStr)
+			time: new Date(timeStr),
+			isBooking: false
 		}));
 
 		const provision = await this.prismaService.provision.create({
 			data: {
-				title: dto.title,
-				description: dto.description,
-				price: dto.price,
-				image: dto.image,
+				...dto,
 				user: {
 					connect: {
 						id: BigInt(userTg.id)
@@ -65,5 +46,67 @@ export class ProvisionService {
 		});
 
 		return provision;
+	}
+
+	public async deleteById(id: number) {
+		await this.findById(id);
+
+		return this.prismaService.provision.delete({
+			where: {
+				id
+			}
+		});
+	}
+
+	public async deleteByUser(userTg: TelegramUserDto) {
+		await this.findByUser(userTg.id);
+
+		return this.prismaService.provision.deleteMany({
+			where: {
+				userId: userTg.id
+			}
+		});
+	}
+
+	public async findAll() {
+		return this.prismaService.provision.findMany();
+	}
+
+	public async findAllSortedByPrice(query: SortProvisionPriceDto) {
+		return this.prismaService.provision.findMany({
+			orderBy: {
+				price: query.order
+			}
+		});
+	}
+
+	public async findById(id: number) {
+		const provision = await this.prismaService.provision.findUnique({
+			where: {
+				id: BigInt(id)
+			}
+		});
+
+		if (!provision) {
+			throw new NotFoundException("Услуга не была найдена");
+		}
+
+		return provision;
+	}
+
+	public async findByUser(userId: number) {
+		const provisions = await this.prismaService.provision.findMany({
+			where: {
+				userId: userId
+			}
+		});
+
+		if (!provisions) {
+			throw new NotFoundException(
+				"Записи данного пользователя не были найдены"
+			);
+		}
+
+		return provisions;
 	}
 }

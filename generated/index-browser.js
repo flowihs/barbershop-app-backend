@@ -146,6 +146,7 @@ exports.Prisma.ProvisionScalarFieldEnum = {
 exports.Prisma.SlotScalarFieldEnum = {
   id: 'id',
   time: 'time',
+  isBooking: 'isBooking',
   provisionId: 'provisionId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

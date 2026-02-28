@@ -3144,6 +3144,7 @@ export namespace Prisma {
   export type SlotMinAggregateOutputType = {
     id: bigint | null
     time: Date | null
+    isBooking: boolean | null
     provisionId: bigint | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3152,6 +3153,7 @@ export namespace Prisma {
   export type SlotMaxAggregateOutputType = {
     id: bigint | null
     time: Date | null
+    isBooking: boolean | null
     provisionId: bigint | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3160,6 +3162,7 @@ export namespace Prisma {
   export type SlotCountAggregateOutputType = {
     id: number
     time: number
+    isBooking: number
     provisionId: number
     createdAt: number
     updatedAt: number
@@ -3180,6 +3183,7 @@ export namespace Prisma {
   export type SlotMinAggregateInputType = {
     id?: true
     time?: true
+    isBooking?: true
     provisionId?: true
     createdAt?: true
     updatedAt?: true
@@ -3188,6 +3192,7 @@ export namespace Prisma {
   export type SlotMaxAggregateInputType = {
     id?: true
     time?: true
+    isBooking?: true
     provisionId?: true
     createdAt?: true
     updatedAt?: true
@@ -3196,6 +3201,7 @@ export namespace Prisma {
   export type SlotCountAggregateInputType = {
     id?: true
     time?: true
+    isBooking?: true
     provisionId?: true
     createdAt?: true
     updatedAt?: true
@@ -3291,6 +3297,7 @@ export namespace Prisma {
   export type SlotGroupByOutputType = {
     id: bigint
     time: Date
+    isBooking: boolean
     provisionId: bigint
     createdAt: Date
     updatedAt: Date
@@ -3318,6 +3325,7 @@ export namespace Prisma {
   export type SlotSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     time?: boolean
+    isBooking?: boolean
     provisionId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -3327,6 +3335,7 @@ export namespace Prisma {
   export type SlotSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     time?: boolean
+    isBooking?: boolean
     provisionId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -3336,6 +3345,7 @@ export namespace Prisma {
   export type SlotSelectScalar = {
     id?: boolean
     time?: boolean
+    isBooking?: boolean
     provisionId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -3356,6 +3366,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
       time: Date
+      isBooking: boolean
       provisionId: bigint
       createdAt: Date
       updatedAt: Date
@@ -3755,6 +3766,7 @@ export namespace Prisma {
   interface SlotFieldRefs {
     readonly id: FieldRef<"Slot", 'BigInt'>
     readonly time: FieldRef<"Slot", 'DateTime'>
+    readonly isBooking: FieldRef<"Slot", 'Boolean'>
     readonly provisionId: FieldRef<"Slot", 'BigInt'>
     readonly createdAt: FieldRef<"Slot", 'DateTime'>
     readonly updatedAt: FieldRef<"Slot", 'DateTime'>
@@ -4134,6 +4146,7 @@ export namespace Prisma {
   export const SlotScalarFieldEnum: {
     id: 'id',
     time: 'time',
+    isBooking: 'isBooking',
     provisionId: 'provisionId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -4224,6 +4237,13 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -4392,6 +4412,7 @@ export namespace Prisma {
     NOT?: SlotWhereInput | SlotWhereInput[]
     id?: BigIntFilter<"Slot"> | bigint | number
     time?: DateTimeFilter<"Slot"> | Date | string
+    isBooking?: BoolFilter<"Slot"> | boolean
     provisionId?: BigIntFilter<"Slot"> | bigint | number
     createdAt?: DateTimeFilter<"Slot"> | Date | string
     updatedAt?: DateTimeFilter<"Slot"> | Date | string
@@ -4401,6 +4422,7 @@ export namespace Prisma {
   export type SlotOrderByWithRelationInput = {
     id?: SortOrder
     time?: SortOrder
+    isBooking?: SortOrder
     provisionId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -4413,6 +4435,7 @@ export namespace Prisma {
     OR?: SlotWhereInput[]
     NOT?: SlotWhereInput | SlotWhereInput[]
     time?: DateTimeFilter<"Slot"> | Date | string
+    isBooking?: BoolFilter<"Slot"> | boolean
     provisionId?: BigIntFilter<"Slot"> | bigint | number
     createdAt?: DateTimeFilter<"Slot"> | Date | string
     updatedAt?: DateTimeFilter<"Slot"> | Date | string
@@ -4422,6 +4445,7 @@ export namespace Prisma {
   export type SlotOrderByWithAggregationInput = {
     id?: SortOrder
     time?: SortOrder
+    isBooking?: SortOrder
     provisionId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -4438,6 +4462,7 @@ export namespace Prisma {
     NOT?: SlotScalarWhereWithAggregatesInput | SlotScalarWhereWithAggregatesInput[]
     id?: BigIntWithAggregatesFilter<"Slot"> | bigint | number
     time?: DateTimeWithAggregatesFilter<"Slot"> | Date | string
+    isBooking?: BoolWithAggregatesFilter<"Slot"> | boolean
     provisionId?: BigIntWithAggregatesFilter<"Slot"> | bigint | number
     createdAt?: DateTimeWithAggregatesFilter<"Slot"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Slot"> | Date | string
@@ -4600,6 +4625,7 @@ export namespace Prisma {
   export type SlotCreateInput = {
     id?: bigint | number
     time: Date | string
+    isBooking?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     provision: ProvisionCreateNestedOneWithoutSlotsInput
@@ -4608,6 +4634,7 @@ export namespace Prisma {
   export type SlotUncheckedCreateInput = {
     id?: bigint | number
     time: Date | string
+    isBooking?: boolean
     provisionId: bigint | number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -4616,6 +4643,7 @@ export namespace Prisma {
   export type SlotUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     time?: DateTimeFieldUpdateOperationsInput | Date | string
+    isBooking?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     provision?: ProvisionUpdateOneRequiredWithoutSlotsNestedInput
@@ -4624,6 +4652,7 @@ export namespace Prisma {
   export type SlotUncheckedUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     time?: DateTimeFieldUpdateOperationsInput | Date | string
+    isBooking?: BoolFieldUpdateOperationsInput | boolean
     provisionId?: BigIntFieldUpdateOperationsInput | bigint | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4632,6 +4661,7 @@ export namespace Prisma {
   export type SlotCreateManyInput = {
     id?: bigint | number
     time: Date | string
+    isBooking?: boolean
     provisionId: bigint | number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -4640,6 +4670,7 @@ export namespace Prisma {
   export type SlotUpdateManyMutationInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     time?: DateTimeFieldUpdateOperationsInput | Date | string
+    isBooking?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4647,6 +4678,7 @@ export namespace Prisma {
   export type SlotUncheckedUpdateManyInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     time?: DateTimeFieldUpdateOperationsInput | Date | string
+    isBooking?: BoolFieldUpdateOperationsInput | boolean
     provisionId?: BigIntFieldUpdateOperationsInput | bigint | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4910,6 +4942,11 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type ProvisionRelationFilter = {
     is?: ProvisionWhereInput
     isNot?: ProvisionWhereInput
@@ -4918,6 +4955,7 @@ export namespace Prisma {
   export type SlotCountOrderByAggregateInput = {
     id?: SortOrder
     time?: SortOrder
+    isBooking?: SortOrder
     provisionId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -4931,6 +4969,7 @@ export namespace Prisma {
   export type SlotMaxOrderByAggregateInput = {
     id?: SortOrder
     time?: SortOrder
+    isBooking?: SortOrder
     provisionId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -4939,6 +4978,7 @@ export namespace Prisma {
   export type SlotMinOrderByAggregateInput = {
     id?: SortOrder
     time?: SortOrder
+    isBooking?: SortOrder
     provisionId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -4947,6 +4987,14 @@ export namespace Prisma {
   export type SlotSumOrderByAggregateInput = {
     id?: SortOrder
     provisionId?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type ProvisionCreateNestedManyWithoutUserInput = {
@@ -5079,6 +5127,10 @@ export namespace Prisma {
     create?: XOR<ProvisionCreateWithoutSlotsInput, ProvisionUncheckedCreateWithoutSlotsInput>
     connectOrCreate?: ProvisionCreateOrConnectWithoutSlotsInput
     connect?: ProvisionWhereUniqueInput
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type ProvisionUpdateOneRequiredWithoutSlotsNestedInput = {
@@ -5252,6 +5304,19 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type ProvisionCreateWithoutUserInput = {
     id?: bigint | number
     title: string
@@ -5342,6 +5407,7 @@ export namespace Prisma {
   export type SlotCreateWithoutProvisionInput = {
     id?: bigint | number
     time: Date | string
+    isBooking?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -5349,6 +5415,7 @@ export namespace Prisma {
   export type SlotUncheckedCreateWithoutProvisionInput = {
     id?: bigint | number
     time: Date | string
+    isBooking?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -5416,6 +5483,7 @@ export namespace Prisma {
     NOT?: SlotScalarWhereInput | SlotScalarWhereInput[]
     id?: BigIntFilter<"Slot"> | bigint | number
     time?: DateTimeFilter<"Slot"> | Date | string
+    isBooking?: BoolFilter<"Slot"> | boolean
     provisionId?: BigIntFilter<"Slot"> | bigint | number
     createdAt?: DateTimeFilter<"Slot"> | Date | string
     updatedAt?: DateTimeFilter<"Slot"> | Date | string
@@ -5526,6 +5594,7 @@ export namespace Prisma {
   export type SlotCreateManyProvisionInput = {
     id?: bigint | number
     time: Date | string
+    isBooking?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -5533,6 +5602,7 @@ export namespace Prisma {
   export type SlotUpdateWithoutProvisionInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     time?: DateTimeFieldUpdateOperationsInput | Date | string
+    isBooking?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5540,6 +5610,7 @@ export namespace Prisma {
   export type SlotUncheckedUpdateWithoutProvisionInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     time?: DateTimeFieldUpdateOperationsInput | Date | string
+    isBooking?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5547,6 +5618,7 @@ export namespace Prisma {
   export type SlotUncheckedUpdateManyWithoutProvisionInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     time?: DateTimeFieldUpdateOperationsInput | Date | string
+    isBooking?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

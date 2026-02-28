@@ -47,6 +47,7 @@ model Slot {
   id BigInt @id @default(autoincrement())
 
   time DateTime
+  isBooking Boolean @default(false)
 
   provision Provision @relation(fields: [provisionId], references: [id])
   provisionId BigInt
@@ -54,5 +55,6 @@ model Slot {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  @@index([isBooking, time, provisionId])
   @@map("slots")
 }
