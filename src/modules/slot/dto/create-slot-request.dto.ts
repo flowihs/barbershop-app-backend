@@ -1,6 +1,6 @@
 import { IsBoolean, IsDateString, IsNotEmpty, IsNumber } from "class-validator";
 
-export class CreateSlotDto {
+export class CreateSlotRequestDto {
 	@IsDateString()
 	@IsNotEmpty()
 	time: string;

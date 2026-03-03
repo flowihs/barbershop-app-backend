@@ -2,11 +2,12 @@ import { Body, Controller, Get, HttpStatus, Patch } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 
 import { AccountService } from "./account.service";
+import { TelegramProfileDto } from "@/src/modules/account/dto/telegram-profile.dto";
 import type { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
-import type { UpdateProfileDto } from "@/src/modules/account/dto/update-profile.dto";
+import type { UpdateProfileRequestDto } from "@/src/modules/account/dto/update-profile-request.dto";
+import { UpdateProfileResponseDto } from "@/src/modules/account/dto/update-profile-response.dto";
 import { Authorization } from "@/src/shared/decorators/authorization.decorator";
 import { UserInfo } from "@/src/shared/decorators/user.decorator";
-import type { UpdateProfileResponse } from "@/src/shared/types/telegram.types";
 
 @ApiTags("Account")
 @Controller("account")
@@ -20,9 +21,12 @@ export class AccountController {
 	})
 	@ApiResponse({
 		status: HttpStatus.OK,
-		description: "Данные профиля были успешно получены"
+		description: "Данные профиля были успешно получены",
+		type: TelegramProfileDto
 	})
-	public async getMe(@UserInfo() user: TelegramUserDto) {
+	public async getMe(
+		@UserInfo() user: TelegramUserDto
+	): Promise<TelegramProfileDto> {
 		return this.accountService.getMe(user);
 	}
 
@@ -44,8 +48,8 @@ export class AccountController {
 	})
 	public async update(
 		@UserInfo() userTg: TelegramUserDto,
-		@Body() dto: UpdateProfileDto
-	): Promise<UpdateProfileResponse> {
+		@Body() dto: UpdateProfileRequestDto
+	): Promise<UpdateProfileResponseDto> {
 		return this.accountService.update(userTg, dto);
 	}
 }
