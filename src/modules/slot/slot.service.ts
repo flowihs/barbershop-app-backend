@@ -38,6 +38,21 @@ export class SlotService {
 		});
 	}
 
+	public async getByIdAndFreeSlotsAndProvisionId(
+		provisionId: number,
+		order: "asc" | "desc" = "asc"
+	) {
+		return this.prismaService.slot.findMany({
+			where: {
+				isBooking: false,
+				provisionId: provisionId,
+			},
+			orderBy: {
+				time: order
+			}
+		});
+	}
+
 	public async deleteById(id: number) {
 		await this.findById(id);
 

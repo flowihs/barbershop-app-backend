@@ -5,12 +5,14 @@ import { AccountService } from "@/src/modules/account/account.service";
 import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
 import { CreateProvisionDto } from "@/src/modules/provision/dto/create-provision.dto";
 import { SortProvisionPriceDto } from "@/src/modules/provision/dto/sort-provision-price.dto";
+import { SlotService } from "@/src/modules/slot/slot.service";
 
 @Injectable()
 export class ProvisionService {
 	constructor(
 		private readonly prismaService: PrismaService,
-		private readonly accountService: AccountService
+		private readonly accountService: AccountService,
+		private readonly slotService: SlotService
 	) {}
 
 	public async create(dto: CreateProvisionDto, userTg: TelegramUserDto) {
@@ -108,5 +110,15 @@ export class ProvisionService {
 		}
 
 		return provisions;
+	}
+
+	public async findByIdAndFreeSlots(
+		provisionId: number,
+		order?: "asc" | "desc"
+	) {
+		return this.slotService.getByIdAndFreeSlotsAndProvisionId(
+			provisionId,
+			order
+		);
 	}
 }

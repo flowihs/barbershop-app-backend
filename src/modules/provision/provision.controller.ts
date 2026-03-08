@@ -124,4 +124,26 @@ export class ProvisionController {
 	public async deleteMyProvisions(@UserInfo() user: TelegramUserDto) {
 		return this.provisionService.deleteByUser(user);
 	}
+
+	@ApiOperation({
+		summary: "Получение услуг со свободными слотами"
+	})
+	@ApiResponse({
+		status: HttpStatus.OK,
+		description: "Услуга со свободными слотами успешно получены"
+	})
+	@ApiResponse({
+		status: HttpStatus.NOT_FOUND,
+		description: "Услуга не была найдена"
+	})
+	@Get("free")
+	public async findByIdAndFreeSlots(
+		@Param() provisionId: string,
+		order?: "asc" | "desc"
+	) {
+		return await this.provisionService.findByIdAndFreeSlots(
+			Number(provisionId),
+			order
+		);
+	}
 }
