@@ -1,18 +1,15 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsOptional } from "class-validator";
 
-export enum SortOrder {
-	ASC = "asc",
-	DESC = "desc"
-}
+import { SortOrder } from "./sort-provision-price-request.dto";
 
-export class SortProvisionPriceDto {
+export class FreeSlotsRequestDto {
 	@ApiProperty({
 		enum: SortOrder,
 		required: false,
 		default: SortOrder.ASC,
 		description:
-			"Направление сортировки: asc - по возрастанию, desc - по убыванию"
+			"Сортировка слотов по времени (asc - по возрастанию, desc - по убыванию)"
 	})
 	@IsEnum(SortOrder)
 	@IsOptional()

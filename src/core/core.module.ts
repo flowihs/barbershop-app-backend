@@ -1,22 +1,15 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
-import { PrismaModule } from "./prisma/prisma.module";
-import { RedisModule } from "./redis/redis.module";
-import { AccountModule } from "@/src/modules/account/account.module";
-import { IS_DEV_ENV } from "@/src/shared/utils/is-dev.util";
+import { PrismaModule } from "@/src/core/prisma/prisma.module";
+import { RedisModule } from "@/src/core/redis/redis.module";
 
 @Module({
 	imports: [
 		PrismaModule,
-		ConfigModule.forRoot({
-			ignoreEnvFile: !IS_DEV_ENV,
-			isGlobal: true
-		}),
-		RedisModule,
-		AccountModule
+		ConfigModule.forRoot({ isGlobal: true }),
+		RedisModule
 	],
-	controllers: [],
-	providers: []
+	exports: [PrismaModule, RedisModule]
 })
 export class CoreModule {}

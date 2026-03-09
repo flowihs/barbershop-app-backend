@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class TelegramProfileDto {
 	@ApiProperty({ example: 123456789, description: "Telegram ID" })
-	id: bigint;
+	id: number;
 
 	@ApiProperty({ example: "John", description: "Имя пользователя" })
 	firstName: string;
@@ -17,8 +17,8 @@ export class TelegramProfileDto {
 	email: string | null;
 
 	@ApiProperty({ example: "2024-01-01T00:00:00Z" })
-	createdAt: Date;
+	createdAt?: Date;
 
 	@ApiProperty({ example: "2024-01-01T00:00:00Z" })
-	updatedAt: Date;
+	updatedAt?: Date;
 }

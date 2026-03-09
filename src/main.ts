@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import cookieParser from "cookie-parser";
 
-import { CoreModule } from "./core/core.module";
+import { AppModule } from "@/src/app.module";
 import { setupSwagger } from "@/src/core/swagger";
 
 (BigInt.prototype as any).toJSON = function () {
@@ -11,7 +11,7 @@ import { setupSwagger } from "@/src/core/swagger";
 };
 
 async function bootstrap() {
-	const app = await NestFactory.create(CoreModule);
+	const app = await NestFactory.create(AppModule);
 
 	const config = app.get(ConfigService);
 

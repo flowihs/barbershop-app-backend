@@ -1,10 +1,11 @@
 import { Module } from "@nestjs/common";
 
-import { SlotController } from "./slot.controller";
 import { SlotService } from "./slot.service";
+import { CoreModule } from "@/src/core/core.module";
 
 @Module({
-	controllers: [SlotController],
-	providers: [SlotService]
+	imports: [CoreModule],
+	providers: [SlotService],
+	exports: [SlotService]
 })
 export class SlotModule {}
