@@ -54,7 +54,7 @@ export class ProvisionService {
 		await this.provisionRepository.deleteById(id);
 		return {
 			success: true,
-			message: "Удаление услуги по id было выполнено успешно"
+			message: "Удаление  услуги по id было выполнено успешно"
 		};
 	}
 
