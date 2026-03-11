@@ -5,12 +5,16 @@ import { TelegramProfileDto } from "@/src/modules/account/dto/telegram-profile.d
 import type { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
 import type { UpdateProfileRequestDto } from "@/src/modules/account/dto/update-profile-request.dto";
 import { UpdateProfileResponseDto } from "@/src/modules/account/dto/update-profile-response.dto";
+import { AccountRepository } from "@/src/modules/account/repositories/account.repository";
 import { UserMapper } from "@/src/shared/mappers/user.mapper";
 import type { UserUpdateData } from "@/src/shared/types/telegram.types";
 
 @Injectable()
 export class AccountService {
-	constructor(private readonly prismaService: PrismaService) {}
+	constructor(
+		private readonly prismaService: PrismaService,
+		private readonly accountRepository: AccountRepository
+	) {}
 
 	public async getMe(tgUser: TelegramUserDto): Promise<TelegramProfileDto> {
 		const telegramId = BigInt(tgUser.id);
@@ -37,7 +41,7 @@ export class AccountService {
 		userTg: TelegramUserDto,
 		dto: UpdateProfileRequestDto
 	): Promise<UpdateProfileResponseDto> {
-		await this.findById(userTg.id);
+		await this.findById(BigInt(userTg.id));
 
 		const updateData: UserUpdateData = {};
 
@@ -70,12 +74,8 @@ export class AccountService {
 		};
 	}
 
-	public async findById(id: number): Promise<TelegramProfileDto> {
-		const user = await this.prismaService.user.findUnique({
-			where: {
-				id: BigInt(id)
-			}
-		});
+	public async findById(id: bigint): Promise<TelegramProfileDto> {
+		const user = await this.accountRepository.findById(id);
 
 		if (!user) {
 			throw new NotFoundException("Пользователь не был найден");
