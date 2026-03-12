@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 
 import { PrismaService } from "@/src/core/prisma/prisma.service";
+import { UpdateData } from "@/src/shared/types/provision.types";
 
 const DEFAULT_INCLUDE = {
 	user: true,
@@ -102,6 +103,29 @@ export class ProvisionRepository {
 					orderBy: { time: order }
 				}
 			}
+		});
+	}
+
+	public async findByCategoryId(categoryId: bigint) {
+		return this.prismaService.provision.findMany({
+			where: {
+				category: {
+					id: categoryId
+				}
+			},
+			include: DEFAULT_INCLUDE
+		});
+	}
+
+	public async update(data: UpdateData) {
+		return this.prismaService.provision.update({
+			where: {
+				id: data.id
+			},
+			data: {
+				...data
+			},
+			include: DEFAULT_INCLUDE
 		});
 	}
 }

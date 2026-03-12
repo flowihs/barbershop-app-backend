@@ -73,10 +73,12 @@ model Slot {
 model Category {
   id BigInt @id @default(autoincrement())
 
-  name String
+  name String @unique
 
-  provision Provision[]
+  provisions Provision[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("categories")
 }

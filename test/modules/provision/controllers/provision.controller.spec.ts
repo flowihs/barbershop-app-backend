@@ -7,7 +7,7 @@ import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
 import { ProvisionController } from "@/src/modules/provision/controllers/provision.controller";
 import { CreateProvisionRequestDto } from "@/src/modules/provision/dto/create-provision-request.dto";
 import { CreateProvisionResponseDto } from "@/src/modules/provision/dto/create-provision-response.dto";
-import { DeleteResponseDto } from "@/src/modules/provision/dto/delete-response.dto";
+import { DeleteResponseDto } from "@/src/modules/provision/dto/provision-delete-response.dto";
 import { ProvisionResponseDto } from "@/src/modules/provision/dto/provision-response.dto";
 import {
 	SortOrder,

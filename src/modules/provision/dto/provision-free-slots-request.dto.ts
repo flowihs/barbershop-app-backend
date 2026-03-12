@@ -3,7 +3,7 @@ import { IsEnum, IsOptional } from "class-validator";
 
 import { SortOrder } from "./sort-provision-price-request.dto";
 
-export class FreeSlotsRequestDto {
+export class ProvisionFreeSlotsRequestDto {
 	@ApiProperty({
 		enum: SortOrder,
 		required: false,

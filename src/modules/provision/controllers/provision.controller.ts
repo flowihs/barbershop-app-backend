@@ -28,7 +28,7 @@ import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
 import { CategoryResponseDto } from "@/src/modules/category/dto/category-response.dto";
 import { CreateProvisionRequestDto } from "@/src/modules/provision/dto/create-provision-request.dto";
 import { CreateProvisionResponseDto } from "@/src/modules/provision/dto/create-provision-response.dto";
-import { DeleteResponseDto } from "@/src/modules/provision/dto/delete-response.dto";
+import { ProvisionDeleteResponseDto } from "@/src/modules/provision/dto/provision-delete-response.dto";
 import { ProvisionResponseDto } from "@/src/modules/provision/dto/provision-response.dto";
 import { SortProvisionPriceRequestDto } from "@/src/modules/provision/dto/sort-provision-price-request.dto";
 import { SlotResponseDto } from "@/src/modules/slot/dto/slot-response.dto";
@@ -191,7 +191,7 @@ export class ProvisionController {
 	@ApiResponse({
 		status: HttpStatus.OK,
 		description: "Все услуги пользователя удалены",
-		type: DeleteResponseDto
+		type: ProvisionDeleteResponseDto
 	})
 	@ApiResponse({
 		status: HttpStatus.NOT_FOUND,
@@ -199,7 +199,7 @@ export class ProvisionController {
 	})
 	public async deleteMyProvisions(
 		@UserInfo() user: TelegramUserDto
-	): Promise<DeleteResponseDto> {
+	): Promise<ProvisionDeleteResponseDto> {
 		return this.provisionService.deleteByUser(user);
 	}
 
@@ -225,15 +225,39 @@ export class ProvisionController {
 		return this.provisionService.findById(id);
 	}
 
+	@Get("category/:categoryId")
+	@ApiOperation({
+		summary: "Получение всех услуг по категории",
+		description:
+			"Возвращает все услуги связанные с категорией, включая даныне мастера и категории."
+	})
+	@ApiParam({
+		name: "categoryId",
+		required: true,
+		description: "BigInt ID категории"
+	})
+	@ApiResponse({
+		status: HttpStatus.OK,
+		description: "Услуги связанные с категориями получены",
+		type: [ProvisionResponseDto]
+	})
+	@ApiResponse({
+		status: HttpStatus.NOT_FOUND,
+		description: "Услуги с такой категорией не найдены"
+	})
+	public async findByCategoryId(@Param("id", ParseBigIntPipe) id: bigint) {
+		return this.provisionService.findByCategoryId(id);
+	}
+
 	@Delete(":id")
 	@RolesDecorator(Roles.ADMIN, Roles.BARBER)
 	@ApiOperation({ summary: "Удаление конкретной услуги" })
 	@ApiParam({ name: "id", required: true, description: "BigInt ID услуги" })
-	@ApiResponse({ status: HttpStatus.OK, type: DeleteResponseDto })
+	@ApiResponse({ status: HttpStatus.OK, type: ProvisionDeleteResponseDto })
 	public async delete(
 		@Param("id", ParseBigIntPipe) id: bigint,
 		@UserInfo() user: TelegramUserDto
-	): Promise<DeleteResponseDto> {
+	): Promise<ProvisionDeleteResponseDto> {
 		return this.provisionService.deleteById(id, user);
 	}
 }

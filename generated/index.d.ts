@@ -1181,11 +1181,11 @@ export namespace Prisma {
    */
 
   export type CategoryCountOutputType = {
-    provision: number
+    provisions: number
   }
 
   export type CategoryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    provision?: boolean | CategoryCountOutputTypeCountProvisionArgs
+    provisions?: boolean | CategoryCountOutputTypeCountProvisionsArgs
   }
 
   // Custom InputTypes
@@ -1202,7 +1202,7 @@ export namespace Prisma {
   /**
    * CategoryCountOutputType without action
    */
-  export type CategoryCountOutputTypeCountProvisionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CategoryCountOutputTypeCountProvisionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProvisionWhereInput
   }
 
@@ -4461,7 +4461,7 @@ export namespace Prisma {
     name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    provision?: boolean | Category$provisionArgs<ExtArgs>
+    provisions?: boolean | Category$provisionsArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["category"]>
 
@@ -4480,7 +4480,7 @@ export namespace Prisma {
   }
 
   export type CategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    provision?: boolean | Category$provisionArgs<ExtArgs>
+    provisions?: boolean | Category$provisionsArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CategoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4488,7 +4488,7 @@ export namespace Prisma {
   export type $CategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Category"
     objects: {
-      provision: Prisma.$ProvisionPayload<ExtArgs>[]
+      provisions: Prisma.$ProvisionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -4859,7 +4859,7 @@ export namespace Prisma {
    */
   export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    provision<T extends Category$provisionArgs<ExtArgs> = {}>(args?: Subset<T, Category$provisionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProvisionPayload<ExtArgs>, T, "findMany"> | Null>
+    provisions<T extends Category$provisionsArgs<ExtArgs> = {}>(args?: Subset<T, Category$provisionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProvisionPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5207,9 +5207,9 @@ export namespace Prisma {
   }
 
   /**
-   * Category.provision
+   * Category.provisions
    */
-  export type Category$provisionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Category$provisionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Provision
      */
@@ -5654,7 +5654,7 @@ export namespace Prisma {
     name?: StringFilter<"Category"> | string
     createdAt?: DateTimeFilter<"Category"> | Date | string
     updatedAt?: DateTimeFilter<"Category"> | Date | string
-    provision?: ProvisionListRelationFilter
+    provisions?: ProvisionListRelationFilter
   }
 
   export type CategoryOrderByWithRelationInput = {
@@ -5662,19 +5662,19 @@ export namespace Prisma {
     name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    provision?: ProvisionOrderByRelationAggregateInput
+    provisions?: ProvisionOrderByRelationAggregateInput
   }
 
   export type CategoryWhereUniqueInput = Prisma.AtLeast<{
     id?: bigint | number
+    name?: string
     AND?: CategoryWhereInput | CategoryWhereInput[]
     OR?: CategoryWhereInput[]
     NOT?: CategoryWhereInput | CategoryWhereInput[]
-    name?: StringFilter<"Category"> | string
     createdAt?: DateTimeFilter<"Category"> | Date | string
     updatedAt?: DateTimeFilter<"Category"> | Date | string
-    provision?: ProvisionListRelationFilter
-  }, "id">
+    provisions?: ProvisionListRelationFilter
+  }, "id" | "name">
 
   export type CategoryOrderByWithAggregationInput = {
     id?: SortOrder
@@ -5788,7 +5788,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutProvisionsInput
-    category: CategoryCreateNestedOneWithoutProvisionInput
+    category: CategoryCreateNestedOneWithoutProvisionsInput
     slots?: SlotCreateNestedManyWithoutProvisionInput
   }
 
@@ -5814,7 +5814,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutProvisionsNestedInput
-    category?: CategoryUpdateOneRequiredWithoutProvisionNestedInput
+    category?: CategoryUpdateOneRequiredWithoutProvisionsNestedInput
     slots?: SlotUpdateManyWithoutProvisionNestedInput
   }
 
@@ -5932,7 +5932,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    provision?: ProvisionCreateNestedManyWithoutCategoryInput
+    provisions?: ProvisionCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryUncheckedCreateInput = {
@@ -5940,7 +5940,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    provision?: ProvisionUncheckedCreateNestedManyWithoutCategoryInput
+    provisions?: ProvisionUncheckedCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryUpdateInput = {
@@ -5948,7 +5948,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    provision?: ProvisionUpdateManyWithoutCategoryNestedInput
+    provisions?: ProvisionUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryUncheckedUpdateInput = {
@@ -5956,7 +5956,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    provision?: ProvisionUncheckedUpdateManyWithoutCategoryNestedInput
+    provisions?: ProvisionUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryCreateManyInput = {
@@ -6424,9 +6424,9 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type CategoryCreateNestedOneWithoutProvisionInput = {
-    create?: XOR<CategoryCreateWithoutProvisionInput, CategoryUncheckedCreateWithoutProvisionInput>
-    connectOrCreate?: CategoryCreateOrConnectWithoutProvisionInput
+  export type CategoryCreateNestedOneWithoutProvisionsInput = {
+    create?: XOR<CategoryCreateWithoutProvisionsInput, CategoryUncheckedCreateWithoutProvisionsInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutProvisionsInput
     connect?: CategoryWhereUniqueInput
   }
 
@@ -6460,12 +6460,12 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProvisionsInput, UserUpdateWithoutProvisionsInput>, UserUncheckedUpdateWithoutProvisionsInput>
   }
 
-  export type CategoryUpdateOneRequiredWithoutProvisionNestedInput = {
-    create?: XOR<CategoryCreateWithoutProvisionInput, CategoryUncheckedCreateWithoutProvisionInput>
-    connectOrCreate?: CategoryCreateOrConnectWithoutProvisionInput
-    upsert?: CategoryUpsertWithoutProvisionInput
+  export type CategoryUpdateOneRequiredWithoutProvisionsNestedInput = {
+    create?: XOR<CategoryCreateWithoutProvisionsInput, CategoryUncheckedCreateWithoutProvisionsInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutProvisionsInput
+    upsert?: CategoryUpsertWithoutProvisionsInput
     connect?: CategoryWhereUniqueInput
-    update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutProvisionInput, CategoryUpdateWithoutProvisionInput>, CategoryUncheckedUpdateWithoutProvisionInput>
+    update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutProvisionsInput, CategoryUpdateWithoutProvisionsInput>, CategoryUncheckedUpdateWithoutProvisionsInput>
   }
 
   export type SlotUpdateManyWithoutProvisionNestedInput = {
@@ -6757,7 +6757,7 @@ export namespace Prisma {
     image: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    category: CategoryCreateNestedOneWithoutProvisionInput
+    category: CategoryCreateNestedOneWithoutProvisionsInput
     slots?: SlotCreateNestedManyWithoutProvisionInput
   }
 
@@ -6841,23 +6841,23 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutProvisionsInput, UserUncheckedCreateWithoutProvisionsInput>
   }
 
-  export type CategoryCreateWithoutProvisionInput = {
+  export type CategoryCreateWithoutProvisionsInput = {
     id?: bigint | number
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type CategoryUncheckedCreateWithoutProvisionInput = {
+  export type CategoryUncheckedCreateWithoutProvisionsInput = {
     id?: bigint | number
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type CategoryCreateOrConnectWithoutProvisionInput = {
+  export type CategoryCreateOrConnectWithoutProvisionsInput = {
     where: CategoryWhereUniqueInput
-    create: XOR<CategoryCreateWithoutProvisionInput, CategoryUncheckedCreateWithoutProvisionInput>
+    create: XOR<CategoryCreateWithoutProvisionsInput, CategoryUncheckedCreateWithoutProvisionsInput>
   }
 
   export type SlotCreateWithoutProvisionInput = {
@@ -6919,25 +6919,25 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CategoryUpsertWithoutProvisionInput = {
-    update: XOR<CategoryUpdateWithoutProvisionInput, CategoryUncheckedUpdateWithoutProvisionInput>
-    create: XOR<CategoryCreateWithoutProvisionInput, CategoryUncheckedCreateWithoutProvisionInput>
+  export type CategoryUpsertWithoutProvisionsInput = {
+    update: XOR<CategoryUpdateWithoutProvisionsInput, CategoryUncheckedUpdateWithoutProvisionsInput>
+    create: XOR<CategoryCreateWithoutProvisionsInput, CategoryUncheckedCreateWithoutProvisionsInput>
     where?: CategoryWhereInput
   }
 
-  export type CategoryUpdateToOneWithWhereWithoutProvisionInput = {
+  export type CategoryUpdateToOneWithWhereWithoutProvisionsInput = {
     where?: CategoryWhereInput
-    data: XOR<CategoryUpdateWithoutProvisionInput, CategoryUncheckedUpdateWithoutProvisionInput>
+    data: XOR<CategoryUpdateWithoutProvisionsInput, CategoryUncheckedUpdateWithoutProvisionsInput>
   }
 
-  export type CategoryUpdateWithoutProvisionInput = {
+  export type CategoryUpdateWithoutProvisionsInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CategoryUncheckedUpdateWithoutProvisionInput = {
+  export type CategoryUncheckedUpdateWithoutProvisionsInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6981,7 +6981,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutProvisionsInput
-    category: CategoryCreateNestedOneWithoutProvisionInput
+    category: CategoryCreateNestedOneWithoutProvisionsInput
   }
 
   export type ProvisionUncheckedCreateWithoutSlotsInput = {
@@ -7021,7 +7021,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutProvisionsNestedInput
-    category?: CategoryUpdateOneRequiredWithoutProvisionNestedInput
+    category?: CategoryUpdateOneRequiredWithoutProvisionsNestedInput
   }
 
   export type ProvisionUncheckedUpdateWithoutSlotsInput = {
@@ -7105,7 +7105,7 @@ export namespace Prisma {
     image?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    category?: CategoryUpdateOneRequiredWithoutProvisionNestedInput
+    category?: CategoryUpdateOneRequiredWithoutProvisionsNestedInput
     slots?: SlotUpdateManyWithoutProvisionNestedInput
   }
 
