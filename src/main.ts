@@ -1,17 +1,17 @@
 import { ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
-import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import cookieParser from "cookie-parser";
 
-import { CoreModule } from "./core/core.module";
+import { AppModule } from "@/src/app.module";
+import { setupSwagger } from "@/src/core/swagger";
 
 (BigInt.prototype as any).toJSON = function () {
 	return this.toString();
 };
 
 async function bootstrap() {
-	const app = await NestFactory.create(CoreModule);
+	const app = await NestFactory.create(AppModule);
 
 	const config = app.get(ConfigService);
 
@@ -25,15 +25,7 @@ async function bootstrap() {
 		})
 	);
 
-	const swaggerConfig = new DocumentBuilder()
-		.setTitle("Barbershop API")
-		.setDescription("API documentation for Barbershop Mini App")
-		.setVersion("1.0")
-		.addBearerAuth()
-		.build();
-
-	const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
-	SwaggerModule.setup("swagger", app, swaggerDocument);
+	setupSwagger(app);
 
 	app.enableCors({
 		origin: [config.getOrThrow<string>("ALLOWED_ORIGIN")],
