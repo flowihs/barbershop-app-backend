@@ -128,6 +128,7 @@ exports.Prisma.UserScalarFieldEnum = {
   username: 'username',
   description: 'description',
   email: 'email',
+  role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -135,9 +136,27 @@ exports.Prisma.UserScalarFieldEnum = {
 exports.Prisma.ProvisionScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  discription: 'discription',
-  prive: 'prive',
+  description: 'description',
+  price: 'price',
+  image: 'image',
+  userId: 'userId',
+  categoryId: 'categoryId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SlotScalarFieldEnum = {
+  id: 'id',
   time: 'time',
+  isBooking: 'isBooking',
+  provisionId: 'provisionId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -156,11 +175,17 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.Roles = exports.$Enums.Roles = {
+  ADMIN: 'ADMIN',
+  BARBER: 'BARBER',
+  CLIENT: 'CLIENT'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Provision: 'Provision'
+  Provision: 'Provision',
+  Slot: 'Slot',
+  Category: 'Category'
 };
 
 /**

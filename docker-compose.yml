@@ -1,6 +1,6 @@
 services:
   db:
-    container_name: db
+    container_name: db-barbershop-app
     image: postgres:15.2
     restart: always
     environment:
@@ -15,7 +15,7 @@ services:
       - barbershop-app-backend
 
   redis:
-    container_name: redis
+    container_name: redis-barbershop-app
     image: redis:5.0
     restart: always
     ports:
