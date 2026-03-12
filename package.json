@@ -21,7 +21,8 @@
 		"prisma:push": "prisma db push",
 		"prisma:studio": "prisma studio",
 		"prisma:migrate": "prisma migrate dev",
-		"vercel-build": "yarn prisma:generate && yarn build"
+		"vercel-build": "yarn prisma:generate && yarn build",
+		"postinstall": "prisma generate"
 	},
 	"dependencies": {
 		"@nestjs/common": "^11.0.1",
