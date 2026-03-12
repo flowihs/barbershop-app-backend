@@ -20,14 +20,15 @@
 		"prisma:generate": "prisma generate",
 		"prisma:push": "prisma db push",
 		"prisma:studio": "prisma studio",
-		"prisma:migrate": "prisma migrate dev"
+		"prisma:migrate": "prisma migrate dev",
+		"vercel-build": "yarn prisma:generate && yarn build"
 	},
 	"dependencies": {
 		"@nestjs/common": "^11.0.1",
 		"@nestjs/config": "^4.0.3",
 		"@nestjs/core": "^11.0.1",
 		"@nestjs/mapped-types": "*",
-		"@nestjs/platform-express": "^11.0.1",
+		"@nestjs/platform-express": "^11.1.16",
 		"@nestjs/swagger": "^11.2.6",
 		"@prisma/client": "5",
 		"@telegram-apps/init-data-node": "^2.0.10",
@@ -59,6 +60,7 @@
 		"@types/jest": "^30.0.0",
 		"@types/node": "^22.10.7",
 		"@types/supertest": "^6.0.2",
+		"@vercel/node": "^5.6.15",
 		"eslint": "^9.18.0",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-prettier": "^5.2.2",
@@ -72,7 +74,7 @@
 		"ts-loader": "^9.5.2",
 		"ts-node": "^10.9.2",
 		"tsconfig-paths": "^4.2.0",
-		"typescript": "^5.7.3",
+		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.20.0"
 	},
 	"jest": {

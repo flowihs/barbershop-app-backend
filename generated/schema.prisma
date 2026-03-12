@@ -43,7 +43,7 @@ model Provision {
   user   User   @relation(fields: [userId], references: [id])
   userId BigInt
 
-  category   Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId BigInt
 
   slots Slot[]
@@ -60,7 +60,7 @@ model Slot {
   time      DateTime
   isBooking Boolean  @default(false)
 
-  provision   Provision @relation(fields: [provisionId], references: [id])
+  provision   Provision @relation(fields: [provisionId], references: [id], onDelete: Cascade)
   provisionId BigInt
 
   createdAt DateTime @default(now()) @map("created_at")
