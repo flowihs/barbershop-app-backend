@@ -20,8 +20,6 @@ import {
 	ApiTags
 } from "@nestjs/swagger";
 
-import { ProvisionService } from "../services/provision.service";
-
 import { Roles } from "@/generated";
 import { TelegramProfileDto } from "@/src/modules/account/dto/telegram-profile.dto";
 import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
@@ -30,7 +28,9 @@ import { CreateProvisionRequestDto } from "@/src/modules/provision/dto/create-pr
 import { CreateProvisionResponseDto } from "@/src/modules/provision/dto/create-provision-response.dto";
 import { ProvisionDeleteResponseDto } from "@/src/modules/provision/dto/provision-delete-response.dto";
 import { ProvisionResponseDto } from "@/src/modules/provision/dto/provision-response.dto";
-import { SortProvisionPriceRequestDto } from "@/src/modules/provision/dto/sort-provision-price-request.dto";
+import { SortProvisionRequestDto } from "@/src/modules/provision/dto/sort-provision-request.dto";
+import { ProvisionMutationService } from "@/src/modules/provision/services/provision-mutation.service";
+import { ProvisionQueryService } from "@/src/modules/provision/services/provision-query.service";
 import { SlotResponseDto } from "@/src/modules/slot/dto/slot-response.dto";
 import { Authorization } from "@/src/shared/decorators/authorization.decorator";
 import { Roles as RolesDecorator } from "@/src/shared/decorators/roles.decorator";
@@ -50,7 +50,10 @@ import { ParseBigIntPipe } from "@/src/shared/pipes/parse-bigint.pipe";
 @Authorization()
 @UseGuards(RolesGuard)
 export class ProvisionController {
-	constructor(private readonly provisionService: ProvisionService) {}
+	constructor(
+		private readonly provisionQueryService: ProvisionQueryService,
+		private readonly provisionMutationService: ProvisionMutationService
+	) {}
 
 	@Post("create")
 	@RolesDecorator(Roles.ADMIN, Roles.BARBER)
@@ -86,7 +89,7 @@ export class ProvisionController {
 		@UserInfo() user: TelegramUserDto,
 		@Body() dto: CreateProvisionRequestDto
 	): Promise<CreateProvisionResponseDto> {
-		return this.provisionService.create(dto, user);
+		return this.provisionMutationService.create(dto, user);
 	}
 
 	@Get("all")
@@ -105,7 +108,7 @@ export class ProvisionController {
 		description: "В базе данных нет услуг"
 	})
 	public async findAll(): Promise<ProvisionResponseDto[]> {
-		return this.provisionService.findAll();
+		return this.provisionQueryService.findAll();
 	}
 
 	@Get("sorted-by-price")
@@ -126,9 +129,32 @@ export class ProvisionController {
 		type: [ProvisionResponseDto]
 	})
 	public async findAllSortByPrice(
-		@Query() query: SortProvisionPriceRequestDto
+		@Query() query: SortProvisionRequestDto
 	): Promise<ProvisionResponseDto[]> {
-		return this.provisionService.findAllSortedByPrice(query);
+		return this.provisionQueryService.findAllSortedByPrice(query);
+	}
+
+	@Get("sorted-by-price")
+	@ApiOperation({
+		summary: "Получение услуг с сортировкой по цене",
+		description:
+			"Позволяет отсортировать все услуги по возрастанию (asc) или убыванию (desc) цены."
+	})
+	@ApiQuery({
+		name: "order",
+		required: false,
+		enum: ["asc", "desc"],
+		description: "Направление сортировки (по умолчанию asc)"
+	})
+	@ApiResponse({
+		status: HttpStatus.OK,
+		description: "Отсортированный список услуг получен",
+		type: [ProvisionResponseDto]
+	})
+	public async findAllBySortByUpdatedAt(
+		@Query() query: SortProvisionRequestDto
+	): Promise<ProvisionResponseDto[]> {
+		return this.provisionQueryService.findAllSortedByPrice(query);
 	}
 
 	@Get("my")
@@ -149,7 +175,7 @@ export class ProvisionController {
 	public async findMyProvisions(
 		@UserInfo() user: TelegramUserDto
 	): Promise<ProvisionResponseDto[]> {
-		return this.provisionService.findByUser(BigInt(user.id));
+		return this.provisionQueryService.findByUser(BigInt(user.id));
 	}
 
 	@Get("free/:id")
@@ -176,9 +202,12 @@ export class ProvisionController {
 	})
 	public async findByIdAndFreeSlots(
 		@Param("id", ParseBigIntPipe) provisionId: bigint,
-		@Query("order") order?: "asc" | "desc"
+		@Query("order") order: "asc" | "desc"
 	): Promise<ProvisionResponseDto> {
-		return this.provisionService.findByIdAndFreeSlots(provisionId, order);
+		return this.provisionQueryService.findByIdAndFreeSlots(
+			provisionId,
+			order
+		);
 	}
 
 	@Delete("my")
@@ -200,7 +229,7 @@ export class ProvisionController {
 	public async deleteMyProvisions(
 		@UserInfo() user: TelegramUserDto
 	): Promise<ProvisionDeleteResponseDto> {
-		return this.provisionService.deleteByUser(user);
+		return this.provisionMutationService.deleteByUser(user);
 	}
 
 	@Get(":id")
@@ -222,7 +251,7 @@ export class ProvisionController {
 	public async findById(
 		@Param("id", ParseBigIntPipe) id: bigint
 	): Promise<ProvisionResponseDto> {
-		return this.provisionService.findById(id);
+		return this.provisionQueryService.findById(id);
 	}
 
 	@Get("category/:categoryId")
@@ -245,8 +274,8 @@ export class ProvisionController {
 		status: HttpStatus.NOT_FOUND,
 		description: "Услуги с такой категорией не найдены"
 	})
-	public async findByCategoryId(@Param("id", ParseBigIntPipe) id: bigint) {
-		return this.provisionService.findByCategoryId(id);
+	public async findAllByCategoryId(@Param("id", ParseBigIntPipe) id: bigint) {
+		return this.provisionQueryService.findAllByCategoryId(id);
 	}
 
 	@Delete(":id")
@@ -258,6 +287,6 @@ export class ProvisionController {
 		@Param("id", ParseBigIntPipe) id: bigint,
 		@UserInfo() user: TelegramUserDto
 	): Promise<ProvisionDeleteResponseDto> {
-		return this.provisionService.deleteById(id, user);
+		return this.provisionMutationService.deleteById(id, user);
 	}
 }

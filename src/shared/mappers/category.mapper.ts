@@ -1,4 +1,5 @@
 import { Category, Provision } from "@/generated";
+import { CategoryCreateResponseDto } from "@/src/modules/category/dto/category-create-response.dto";
 import { CategoryResponseDto } from "@/src/modules/category/dto/category-response.dto";
 
 export class CategoryMapper {
@@ -7,6 +8,12 @@ export class CategoryMapper {
 			id: Number(category.id),
 			name: category.name
 		};
+	}
+
+	static toReponseList(categories: Array<Category>) {
+		return categories.map((category: Category) =>
+			this.toResponse(category)
+		);
 	}
 
 	static toResponseWithProvision(
@@ -22,6 +29,13 @@ export class CategoryMapper {
 				price: prov.price,
 				image: prov.image
 			}))
+		};
+	}
+
+	static toCreateResponseDto(category: Category): CategoryCreateResponseDto {
+		return {
+			id: Number(category.id),
+			name: category.name
 		};
 	}
 }

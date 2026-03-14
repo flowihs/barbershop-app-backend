@@ -145,6 +145,13 @@ exports.Prisma.ProvisionScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SlotScalarFieldEnum = {
   id: 'id',
   time: 'time',
@@ -154,9 +161,13 @@ exports.Prisma.SlotScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.CategoryScalarFieldEnum = {
+exports.Prisma.BookingScalarFieldEnum = {
   id: 'id',
-  name: 'name',
+  slotId: 'slotId',
+  userId: 'userId',
+  status: 'status',
+  totalPrice: 'totalPrice',
+  cancelledAt: 'cancelledAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -181,11 +192,19 @@ exports.Roles = exports.$Enums.Roles = {
   CLIENT: 'CLIENT'
 };
 
+exports.BookingStatus = exports.$Enums.BookingStatus = {
+  CONFIRMED: 'CONFIRMED',
+  CANCELLED: 'CANCELLED',
+  COMPLETED: 'COMPLETED',
+  NO_SHOW: 'NO_SHOW'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Provision: 'Provision',
+  Category: 'Category',
   Slot: 'Slot',
-  Category: 'Category'
+  Booking: 'Booking'
 };
 
 /**

@@ -89,6 +89,15 @@ export class ProvisionRepository {
 		});
 	}
 
+	public async findAllSortedByUpdatedAt(order: "asc" | "desc") {
+		return this.prismaService.provision.findMany({
+			include: DEFAULT_INCLUDE,
+			orderBy: {
+				updatedAt: order
+			}
+		});
+	}
+
 	public async findByIdAndFreeSlots(
 		provisionId: bigint,
 		order: "asc" | "desc"

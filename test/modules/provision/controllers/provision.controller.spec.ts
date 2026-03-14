@@ -12,7 +12,7 @@ import { ProvisionResponseDto } from "@/src/modules/provision/dto/provision-resp
 import {
 	SortOrder,
 	SortProvisionPriceRequestDto
-} from "@/src/modules/provision/dto/sort-provision-price-request.dto";
+} from "@/src/modules/provision/dto/sort-provision-request.dto";
 import { ProvisionService } from "@/src/modules/provision/services/provision.service";
 import { TelegramAuthGuard } from "@/src/shared/guards/auth.guard";
 

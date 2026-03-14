@@ -6,7 +6,7 @@ export enum SortOrder {
 	DESC = "desc"
 }
 
-export class SortProvisionPriceRequestDto {
+export class SortProvisionRequestDto {
 	@ApiProperty({
 		enum: SortOrder,
 		required: false,

@@ -12,7 +12,7 @@ import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
 import { AccountRepository } from "@/src/modules/account/repositories/account.repository";
 import { CategoryRepository } from "@/src/modules/category/repositories/category.repository";
 import { CreateProvisionRequestDto } from "@/src/modules/provision/dto/create-provision-request.dto";
-import { SortOrder } from "@/src/modules/provision/dto/sort-provision-price-request.dto";
+import { SortOrder } from "@/src/modules/provision/dto/sort-provision-request.dto";
 import { ProvisionRepository } from "@/src/modules/provision/repositories/provision.repository";
 import { ProvisionService } from "@/src/modules/provision/services/provision.service";
 import { ProvisionMapper } from "@/src/shared/mappers/provision.mapper";
