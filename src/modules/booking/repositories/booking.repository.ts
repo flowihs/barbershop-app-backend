@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 
+import { BookingStatus } from "@/generated";
 import { PrismaService } from "@/src/core/prisma/prisma.service";
 
 interface BookingCreateData {
@@ -30,6 +31,50 @@ export class BookingRepository {
 			include: {
 				user: true,
 				slot: true
+			}
+		});
+	}
+
+	public async findById(id: bigint) {
+		return this.prismaService.booking.findUnique({
+			where: {
+				id: id
+			},
+			include: {
+				user: true,
+				slot: true
+			}
+		});
+	}
+
+	public async findAllByProvisionId(provisionId: bigint) {
+		return this.prismaService.booking.findMany({
+			where: {
+				slot: {
+					provisionId: provisionId
+				}
+			},
+			include: {
+				user: true,
+				slot: true
+			}
+		});
+	}
+
+	public async update(
+		id: bigint,
+		data: {
+			status?: BookingStatus;
+			totalPrice?: number;
+			cancelledAt?: string;
+		}
+	) {
+		return this.prismaService.booking.update({
+			where: {
+				id: id
+			},
+			data: {
+				...data
 			}
 		});
 	}
