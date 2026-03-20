@@ -19,8 +19,8 @@ import {
 	ApiResponse,
 	ApiTags
 } from "@nestjs/swagger";
+import { Roles } from "@prisma/client";
 
-import { Roles } from "@/generated";
 import { TelegramProfileDto } from "@/src/modules/account/dto/telegram-profile.dto";
 import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
 import { CategoryResponseDto } from "@/src/modules/category/dto/category-response.dto";
@@ -32,9 +32,9 @@ import { SortProvisionRequestDto } from "@/src/modules/provision/dto/sort-provis
 import { ProvisionMutationService } from "@/src/modules/provision/services/provision-mutation.service";
 import { ProvisionQueryService } from "@/src/modules/provision/services/provision-query.service";
 import { SlotResponseDto } from "@/src/modules/slot/dto/slot-response.dto";
-import { Authorization } from "@/src/shared/decorators/authorization.decorator";
 import { Roles as RolesDecorator } from "@/src/shared/decorators/roles.decorator";
 import { UserInfo } from "@/src/shared/decorators/user.decorator";
+import { TelegramAuthGuard } from "@/src/shared/guards/auth.guard";
 import { RolesGuard } from "@/src/shared/guards/roles.guard";
 import { ParseBigIntPipe } from "@/src/shared/pipes/parse-bigint.pipe";
 
@@ -47,8 +47,7 @@ import { ParseBigIntPipe } from "@/src/shared/pipes/parse-bigint.pipe";
 	ProvisionResponseDto
 )
 @Controller("provisions")
-@Authorization()
-@UseGuards(RolesGuard)
+@UseGuards(TelegramAuthGuard, RolesGuard)
 export class ProvisionController {
 	constructor(
 		private readonly provisionQueryService: ProvisionQueryService,

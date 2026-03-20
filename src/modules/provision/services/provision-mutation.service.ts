@@ -5,11 +5,9 @@ import {
 	NotFoundException
 } from "@nestjs/common";
 
-import { Roles } from "@/generated";
-import { AccountService } from "@/src/modules/account/account.service";
+import { Roles } from "@prisma/client";
 import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
 import { AccountRepository } from "@/src/modules/account/repositories/account.repository";
-import { CategoryRepository } from "@/src/modules/category/repositories/category.repository";
 import { CreateProvisionRequestDto } from "@/src/modules/provision/dto/create-provision-request.dto";
 import { CreateProvisionResponseDto } from "@/src/modules/provision/dto/create-provision-response.dto";
 import { ProvisionDeleteResponseDto } from "@/src/modules/provision/dto/provision-delete-response.dto";
@@ -17,14 +15,11 @@ import { UpdateProvisionRequestDto } from "@/src/modules/provision/dto/update-pr
 import { ProvisionRepository } from "@/src/modules/provision/repositories/provision.repository";
 import { ProvisionQueryService } from "@/src/modules/provision/services/provision-query.service";
 import { ProvisionMapper } from "@/src/shared/mappers/provision.mapper";
-import { UpdateData } from "@/src/shared/types/provision.types";
 
 @Injectable()
 export class ProvisionMutationService {
 	constructor(
 		private readonly provisionRepository: ProvisionRepository,
-		private readonly accountService: AccountService,
-		private readonly categoryRepository: CategoryRepository,
 		private readonly accountRepository: AccountRepository,
 		private readonly provisionQueryService: ProvisionQueryService
 	) {}
@@ -36,53 +31,62 @@ export class ProvisionMutationService {
 		const userId = BigInt(userTg.id);
 		const categoryId = BigInt(dto.categoryId);
 
-		await this.accountService.findById(userId);
-
-		const category = await this.categoryRepository.findById(categoryId);
-		if (!category)
-			throw new NotFoundException(
-				`Категория с ID ${categoryId} не найдена`
-			);
-
 		if (!dto.time?.length)
 			throw new BadRequestException(
 				"Массив времени (time) не может быть пустым"
 			);
 
-		const now = new Date();
-		const uniqueTimes = new Set<string>();
+		let slotsData: Array<{ time: Date; isBooking: boolean }>;
 
-		const slotsData = dto.time.map(timeStr => {
-			const slotDate = new Date(timeStr);
-			if (isNaN(slotDate.getTime()))
-				throw new BadRequestException(
-					`Некорректный формат даты: ${timeStr}`
-				);
-			if (slotDate < now)
-				throw new BadRequestException(
-					`Время слота не может быть в прошлом: ${timeStr}`
-				);
-			if (uniqueTimes.has(timeStr))
-				throw new BadRequestException(
-					`Дублирующееся время слота: ${timeStr}`
-				);
-			uniqueTimes.add(timeStr);
-			return { time: slotDate, isBooking: false };
-		});
+		try {
+			slotsData = ProvisionMapper.toSlotsCreateData(dto.time);
+		} catch (error) {
+			if (error instanceof Error) {
+				throw new BadRequestException(error.message);
+			}
+			throw new BadRequestException(
+				"Ошибка валидации времени слотов"
+			);
+		}
 
-		const provision = await this.provisionRepository.create(
-			{
-				title: dto.title,
-				description: dto.description,
-				price: dto.price,
-				image: dto.image
-			},
-			categoryId,
-			userId,
-			slotsData
-		);
+		try {
+			const provision =
+				await this.provisionRepository.createWithTransaction(
+					{
+						title: dto.title,
+						description: dto.description,
+						price: dto.price,
+						image: dto.image
+					},
+					categoryId,
+					userId,
+					slotsData
+				);
 
-		return ProvisionMapper.toResponse(provision);
+			return ProvisionMapper.toResponse(provision);
+		} catch (error) {
+			if (error instanceof Error) {
+				if (
+					error.message.includes("Category with ID") &&
+					error.message.includes("not found")
+				) {
+					throw new NotFoundException(
+						`Категория с ID ${categoryId} не найдена`
+					);
+				}
+				if (
+					error.message.includes("User with ID") &&
+					error.message.includes("not found")
+				) {
+					throw new NotFoundException(
+						`Пользователь с ID ${userId} не найден`
+					);
+				}
+			}
+			throw new BadRequestException(
+				"Ошибка при создании услуги. Транзакция откачена."
+			);
+		}
 	}
 
 	public async update(dto: UpdateProvisionRequestDto) {
@@ -90,7 +94,7 @@ export class ProvisionMutationService {
 
 		await this.provisionQueryService.findById(provisionId);
 
-		const updateData: UpdateData = this.updateDataMapper(dto);
+		const updateData = ProvisionMapper.toUpdateData(dto);
 
 		if (
 			!updateData.image &&
@@ -131,7 +135,23 @@ export class ProvisionMutationService {
 			);
 		}
 
-		await this.provisionRepository.deleteById(id);
+		try {
+			await this.provisionRepository.deleteByIdWithTransaction(id);
+		} catch (error) {
+			if (error instanceof Error) {
+				if (
+					error.message.includes("Cannot delete provision") &&
+					error.message.includes("active bookings")
+				) {
+					throw new BadRequestException(
+						"Нельзя удалить услугу с активными бронированиями"
+					);
+				}
+			}
+			throw new BadRequestException(
+				"Ошибка при удалении услуги. Транзакция откачена."
+			);
+		}
 
 		return {
 			success: true,
@@ -149,35 +169,36 @@ export class ProvisionMutationService {
 		if (!provisions.length)
 			throw new NotFoundException("У вас нет услуг для удаления");
 
-		await this.provisionRepository.deleteByUserId(userId);
+		try {
+			await this.provisionRepository.deleteByUserIdWithTransaction(
+				userId
+			);
+		} catch (error) {
+			if (error instanceof Error) {
+				if (
+					error.message.includes("Cannot delete provisions") &&
+					error.message.includes("active bookings")
+				) {
+					throw new BadRequestException(
+						"Нельзя удалить услуги с активными бронированиями"
+					);
+				}
+				if (
+					error.message.includes("User has no provisions to delete")
+				) {
+					throw new NotFoundException(
+						"У пользователя нет услуг для удаления"
+					);
+				}
+			}
+			throw new BadRequestException(
+				"Ошибка при удалении услуг. Транзакция откачена."
+			);
+		}
 
 		return {
 			success: true,
 			message: "Все ваши услуги были удалены"
 		};
-	}
-
-	private updateDataMapper(dto: UpdateProvisionRequestDto) {
-		const updateData: UpdateData = {
-			id: dto.id
-		};
-
-		if (dto.title) {
-			updateData.title = dto.title;
-		}
-
-		if (dto.description) {
-			updateData.description = dto.description;
-		}
-
-		if (dto.price) {
-			updateData.price = dto.price;
-		}
-
-		if (dto.image) {
-			updateData.image = dto.image;
-		}
-
-		return updateData;
 	}
 }

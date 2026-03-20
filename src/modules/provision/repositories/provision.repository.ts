@@ -126,6 +126,133 @@ export class ProvisionRepository {
 		});
 	}
 
+	public async createWithTransaction(
+		data: {
+			title: string;
+			description: string;
+			price: number;
+			image: string;
+		},
+		categoryId: bigint,
+		userId: bigint,
+		slotsData: Array<{
+			time: Date;
+			isBooking: boolean;
+		}>
+	) {
+		return this.prismaService.$transaction(async tx => {
+			const category = await tx.category.findUnique({
+				where: { id: categoryId }
+			});
+
+			if (!category) {
+				throw new Error(`Category with ID ${categoryId} not found`);
+			}
+
+			const user = await tx.user.findUnique({
+				where: { id: userId }
+			});
+
+			if (!user) {
+				throw new Error(`User with ID ${userId} not found`);
+			}
+
+			return tx.provision.create({
+				data: {
+					...data,
+					category: {
+						connect: { id: categoryId }
+					},
+					user: {
+						connect: { id: userId }
+					},
+					slots: {
+						create: slotsData
+					}
+				},
+				include: DEFAULT_INCLUDE
+			});
+		});
+	}
+
+	public async deleteByIdWithTransaction(id: bigint) {
+		return this.prismaService.$transaction(async tx => {
+			const activeBookings = await tx.booking.findMany({
+				where: {
+					slot: {
+						provisionId: id
+					},
+					status: {
+						in: ["CONFIRMED", "NO_SHOW"]
+					}
+				}
+			});
+
+			if (activeBookings.length > 0) {
+				throw new Error("Cannot delete provision with active bookings");
+			}
+
+			await tx.booking.deleteMany({
+				where: {
+					slot: {
+						provisionId: id
+					}
+				}
+			});
+
+			return tx.provision.delete({
+				where: { id }
+			});
+		});
+	}
+
+	public async deleteByUserIdWithTransaction(userId: bigint) {
+		return this.prismaService.$transaction(async tx => {
+			const provisions = await tx.provision.findMany({
+				where: { userId }
+			});
+
+			if (!provisions.length) {
+				throw new Error("User has no provisions to delete");
+			}
+
+			const provisionIds = provisions.map(p => p.id);
+
+			const activeBookings = await tx.booking.findMany({
+				where: {
+					slot: {
+						provisionId: {
+							in: provisionIds
+						}
+					},
+					status: {
+						in: ["CONFIRMED", "NO_SHOW"]
+					}
+				}
+			});
+
+			if (activeBookings.length > 0) {
+				throw new Error(
+					"Cannot delete provisions with active bookings"
+				);
+			}
+
+			await tx.booking.deleteMany({
+				where: {
+					slot: {
+						provisionId: {
+							in: provisionIds
+						}
+					}
+				}
+			});
+
+			return tx.provision.deleteMany({
+				where: { userId }
+			});
+		});
+	}
+
 	public async update(data: UpdateData) {
 		return this.prismaService.provision.update({
 			where: {

@@ -1,4 +1,4 @@
-import { Category, Provision } from "@/generated";
+import { Category, Provision } from "@prisma/client";
 import { CategoryCreateResponseDto } from "@/src/modules/category/dto/category-create-response.dto";
 import { CategoryResponseDto } from "@/src/modules/category/dto/category-response.dto";
 

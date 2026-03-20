@@ -1,4 +1,4 @@
-import { Provision, Slot } from "@/generated";
+import { Provision, Slot } from "@prisma/client";
 import { CreateSlotRequestDto } from "@/src/modules/slot/dto/create-slot-request.dto";
 import { CreateSlotResponseDto } from "@/src/modules/slot/dto/create-slot-response.dto";
 import { SlotResponseDto } from "@/src/modules/slot/dto/slot-response.dto";

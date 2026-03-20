@@ -5,9 +5,9 @@ import {
 	NotFoundException
 } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
+import { Roles } from "@prisma/client";
 
-import { Roles } from "@/generated";
-import { AccountService } from "@/src/modules/account/account.service";
+import { AccountService } from "@/src/modules/account/services/account.service";
 import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
 import { AccountRepository } from "@/src/modules/account/repositories/account.repository";
 import { CategoryRepository } from "@/src/modules/category/repositories/category.repository";
@@ -37,11 +37,14 @@ describe("ProvisionMutationService", () => {
 					provide: ProvisionRepository,
 					useValue: {
 						create: jest.fn(),
+						createWithTransaction: jest.fn(),
 						findById: jest.fn(),
 						findByUser: jest.fn(),
 						update: jest.fn(),
 						deleteById: jest.fn(),
-						deleteByUserId: jest.fn()
+						deleteByIdWithTransaction: jest.fn(),
+						deleteByUserId: jest.fn(),
+						deleteByUserIdWithTransaction: jest.fn()
 					}
 				},
 				{
@@ -101,17 +104,14 @@ describe("ProvisionMutationService", () => {
 			} as unknown as any);
 
 			const mockProvision = { id: 1n, title: "Haircut" };
-			provisionRepo.create.mockResolvedValueOnce(
+			provisionRepo.createWithTransaction.mockResolvedValueOnce(
 				mockProvision as unknown as any
 			);
 
 			const result = await service.create(dto, mockUserTg);
 
 			expect(result).toEqual(mockProvision);
-			expect(categoryRepo.findById).toHaveBeenCalledWith(
-				BigInt(dto.categoryId)
-			);
-			expect(provisionRepo.create).toHaveBeenCalled();
+			expect(provisionRepo.createWithTransaction).toHaveBeenCalled();
 		});
 
 		it("ошибка: категория не найдена", async () => {
@@ -125,6 +125,9 @@ describe("ProvisionMutationService", () => {
 			};
 
 			categoryRepo.findById.mockResolvedValueOnce(null);
+			provisionRepo.createWithTransaction.mockRejectedValueOnce(
+				new Error("Category with ID 999 not found")
+			);
 
 			await expect(service.create(dto, mockUserTg)).rejects.toThrow(
 				NotFoundException
@@ -184,11 +187,16 @@ describe("ProvisionMutationService", () => {
 			accountRepo.findById.mockResolvedValueOnce(
 				userBarber as unknown as any
 			);
+			provisionRepo.deleteByIdWithTransaction.mockResolvedValueOnce(
+				undefined as unknown as any
+			);
 
 			const result = await service.deleteById(provisionId, mockUserTg);
 
 			expect(result.success).toBe(true);
-			expect(provisionRepo.deleteById).toHaveBeenCalledWith(provisionId);
+			expect(
+				provisionRepo.deleteByIdWithTransaction
+			).toHaveBeenCalledWith(provisionId);
 		});
 
 		it("успех: админ удаляет чужую услугу", async () => {
@@ -201,11 +209,16 @@ describe("ProvisionMutationService", () => {
 			accountRepo.findById.mockResolvedValueOnce(
 				adminUser as unknown as any
 			);
+			provisionRepo.deleteByIdWithTransaction.mockResolvedValueOnce(
+				undefined as unknown as any
+			);
 
 			const result = await service.deleteById(provisionId, mockUserTg);
 
 			expect(result.success).toBe(true);
-			expect(provisionRepo.deleteById).toHaveBeenCalledWith(provisionId);
+			expect(
+				provisionRepo.deleteByIdWithTransaction
+			).toHaveBeenCalledWith(provisionId);
 		});
 
 		it("ошибка: чужая услуга (не админ)", async () => {
@@ -243,11 +256,16 @@ describe("ProvisionMutationService", () => {
 			provisionRepo.findByUser.mockResolvedValueOnce(
 				mockProvisions as unknown as any
 			);
+			provisionRepo.deleteByUserIdWithTransaction.mockResolvedValueOnce(
+				undefined as unknown as any
+			);
 
 			const result = await service.deleteByUser(mockUserTg);
 
 			expect(result.success).toBe(true);
-			expect(provisionRepo.deleteByUserId).toHaveBeenCalledWith(1n);
+			expect(
+				provisionRepo.deleteByUserIdWithTransaction
+			).toHaveBeenCalledWith(1n);
 		});
 
 		it("ошибка: нет услуг для удаления", async () => {

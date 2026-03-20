@@ -5,8 +5,8 @@ import {
 	NotFoundException
 } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
+import { Roles } from "@prisma/client";
 
-import { Roles } from "@/generated";
 import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
 import { ProvisionController } from "@/src/modules/provision/controllers/provision.controller";
 import { CreateProvisionRequestDto } from "@/src/modules/provision/dto/create-provision-request.dto";

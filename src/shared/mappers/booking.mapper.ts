@@ -1,4 +1,4 @@
-import { Booking, Slot, User } from "@/generated";
+import { Booking, Slot, User } from "@prisma/client";
 import { BookingResponseDto } from "@/src/modules/booking/dto/booking-response.dto";
 import { SlotMapper } from "@/src/shared/mappers/slot.mapper";
 import { UserMapper } from "@/src/shared/mappers/user.mapper";

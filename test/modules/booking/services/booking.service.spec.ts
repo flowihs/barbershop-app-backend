@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { Test, TestingModule } from "@nestjs/testing";
+import { $Enums } from "@prisma/client";
 
-import { $Enums } from "@/generated";
+import { AccountService } from "@/src/modules/account/services/account.service";
 import { BookingRepository } from "@/src/modules/booking/repositories/booking.repository";
 import { BookingService } from "@/src/modules/booking/services/booking.service";
+import { ProvisionQueryService } from "@/src/modules/provision/services/provision-query.service";
 import { SlotService } from "@/src/modules/slot/services/slot.service";
 import { BookingMapper } from "@/src/shared/mappers/booking.mapper";
 
@@ -11,6 +13,8 @@ describe("BookingService", () => {
 	let service: BookingService;
 	let slotService: jest.Mocked<SlotService>;
 	let bookingRepository: jest.Mocked<BookingRepository>;
+	let accountService: jest.Mocked<AccountService>;
+	let provisionQueryService: jest.Mocked<ProvisionQueryService>;
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
@@ -19,17 +23,29 @@ describe("BookingService", () => {
 				{
 					provide: SlotService,
 					useValue: {
-						findByIdAndIncludeProvision: jest.fn(),
-						changeSlotBookingStatusById: jest.fn()
+						findByIdAndIncludeProvision: jest.fn()
 					}
 				},
 				{
 					provide: BookingRepository,
 					useValue: {
-						create: jest.fn(),
 						findById: jest.fn(),
 						findAllByProvisionId: jest.fn(),
-						update: jest.fn()
+						bookSlotWithTransaction: jest.fn(),
+						cancelBookingWithTransaction: jest.fn(),
+						findByUser: jest.fn()
+					}
+				},
+				{
+					provide: AccountService,
+					useValue: {
+						findById: jest.fn()
+					}
+				},
+				{
+					provide: ProvisionQueryService,
+					useValue: {
+						findById: jest.fn()
 					}
 				}
 			]
@@ -38,6 +54,8 @@ describe("BookingService", () => {
 		service = module.get(BookingService);
 		slotService = module.get(SlotService);
 		bookingRepository = module.get(BookingRepository);
+		accountService = module.get(AccountService);
+		provisionQueryService = module.get(ProvisionQueryService);
 
 		jest.spyOn(BookingMapper, "toResponseList").mockImplementation(
 			v => v as unknown as any
@@ -50,6 +68,7 @@ describe("BookingService", () => {
 
 	describe("bookSlotById", () => {
 		const slotId = 1n;
+		const clientId = 123456789n;
 		const mockSlot = {
 			id: slotId,
 			isBooking: false,
@@ -59,41 +78,33 @@ describe("BookingService", () => {
 			}
 		};
 
-		const mockBooking = {
-			id: 1n,
-			slotId: slotId,
-			userId: 100n,
-			totalPrice: 5000,
-			status: $Enums.BookingStatus.COMPLETED
-		};
-
-		it("успех: слот забронирован", async () => {
+		it("успех: слот забронирован с clientId", async () => {
 			slotService.findByIdAndIncludeProvision.mockResolvedValueOnce(
 				mockSlot as unknown as any
 			);
-			slotService.changeSlotBookingStatusById.mockResolvedValueOnce({
-				status: "success",
-				message: "Статус бронирования для слота был успешно изменен"
+			bookingRepository.bookSlotWithTransaction.mockResolvedValueOnce({
+				id: 1n,
+				slotId,
+				userId: clientId,
+				totalPrice: 5000
 			} as unknown as any);
-			bookingRepository.create.mockResolvedValueOnce(
-				mockBooking as unknown as any
-			);
 
-			const result = await service.bookSlotById(slotId);
+			const result = await service.bookSlotById(slotId, clientId);
 
 			expect(result.status).toBe(200);
-			expect(result.message).toBe("Слот был успешно забронирован");
+			expect(result.message).toContain("успешно забронирован");
 			expect(
 				slotService.findByIdAndIncludeProvision
 			).toHaveBeenCalledWith(slotId);
 			expect(
-				slotService.changeSlotBookingStatusById
-			).toHaveBeenCalledWith(slotId, true);
-			expect(bookingRepository.create).toHaveBeenCalledWith({
-				slotId: slotId,
-				userId: 100n,
-				totalPrice: 5000
-			});
+				bookingRepository.bookSlotWithTransaction
+			).toHaveBeenCalledWith(
+				slotId,
+				expect.objectContaining({
+					userId: clientId,
+					totalPrice: 5000
+				})
+			);
 		});
 
 		it("ошибка: слот уже забронирован", async () => {
@@ -101,146 +112,197 @@ describe("BookingService", () => {
 			slotService.findByIdAndIncludeProvision.mockResolvedValue(
 				bookedSlot as unknown as any
 			);
-
-			await expect(service.bookSlotById(slotId)).rejects.toThrow(
-				"Слот уже забронирован"
+			bookingRepository.bookSlotWithTransaction.mockRejectedValueOnce(
+				new Error("Slot is already booked")
 			);
-		});
 
-		it("ошибка: ошибка при создании записи", async () => {
-			slotService.findByIdAndIncludeProvision.mockResolvedValue(
-				mockSlot as unknown as any
-			);
-			slotService.changeSlotBookingStatusById.mockResolvedValue({
-				status: "success",
-				message: "Статус бронирования для слота был успешно изменен"
-			} as unknown as any);
-			bookingRepository.create.mockResolvedValue(null as unknown as any);
-
-			await expect(service.bookSlotById(slotId)).rejects.toThrow(
-				"Произошла ошибка при попытке создании записи"
-			);
+			await expect(
+				service.bookSlotById(slotId, clientId)
+			).rejects.toThrow("Слот уже забронирован");
 		});
 	});
 
 	describe("cancelledBookSlotById", () => {
 		const bookingId = 1n;
+		const userId = 123456789;
 
 		it("успех: бронирование отменено", async () => {
 			const mockBooking = {
 				id: bookingId,
-				status: $Enums.BookingStatus.CONFIRMED
+				userId: BigInt(userId),
+				status: $Enums.BookingStatus.CONFIRMED,
+				slot: {
+					id: 1n,
+					provisionId: 1n
+				}
 			};
-			const updateResult = { success: true };
+
+			const mockProvision = {
+				id: 1n,
+				user: {
+					id: BigInt(userId)
+				}
+			};
 
 			bookingRepository.findById.mockResolvedValueOnce(
 				mockBooking as unknown as any
 			);
-			bookingRepository.update.mockResolvedValueOnce(
-				updateResult as unknown as any
+			provisionQueryService.findById.mockResolvedValueOnce(
+				mockProvision as unknown as any
+			);
+			accountService.findById.mockResolvedValueOnce({} as unknown as any);
+			bookingRepository.cancelBookingWithTransaction.mockResolvedValueOnce(
+				undefined
 			);
 
-			const result = await service.cancelledBookSlotById(bookingId);
-
-			expect(result).toEqual(updateResult);
-			expect(bookingRepository.findById).toHaveBeenCalledWith(bookingId);
-			expect(bookingRepository.update).toHaveBeenCalledWith(
+			const result = await service.cancelledBookSlotById(
 				bookingId,
-				expect.objectContaining({
-					status: $Enums.BookingStatus.CANCELLED
-				})
+				userId
 			);
+
+			expect(result.status).toBe(200);
+			expect(result.message).toContain("успешно отменено");
+			expect(bookingRepository.findById).toHaveBeenCalledWith(bookingId);
+			expect(
+				bookingRepository.cancelBookingWithTransaction
+			).toHaveBeenCalled();
 		});
 
 		it("ошибка: бронирование уже отменено", async () => {
 			const mockBooking = {
 				id: bookingId,
-				status: $Enums.BookingStatus.CANCELLED
+				userId: BigInt(userId),
+				status: $Enums.BookingStatus.CANCELLED,
+				slot: {
+					id: 1n,
+					provisionId: 1n
+				}
+			};
+
+			const mockProvision = {
+				id: 1n,
+				user: {
+					id: BigInt(userId)
+				}
 			};
 
 			bookingRepository.findById.mockResolvedValue(
 				mockBooking as unknown as any
 			);
+			provisionQueryService.findById.mockResolvedValueOnce(
+				mockProvision as unknown as any
+			);
+			accountService.findById.mockResolvedValueOnce({} as unknown as any);
 
 			await expect(
-				service.cancelledBookSlotById(bookingId)
+				service.cancelledBookSlotById(bookingId, userId)
 			).rejects.toThrow("Вы уже отказались от услуги");
 		});
 
 		it("ошибка: нельзя отменить выполненную услугу", async () => {
 			const mockBooking = {
 				id: bookingId,
-				status: $Enums.BookingStatus.COMPLETED
+				userId: BigInt(userId),
+				status: $Enums.BookingStatus.COMPLETED,
+				slot: {
+					id: 1n,
+					provisionId: 1n
+				}
+			};
+
+			const mockProvision = {
+				id: 1n,
+				user: {
+					id: BigInt(userId)
+				}
 			};
 
 			bookingRepository.findById.mockResolvedValue(
 				mockBooking as unknown as any
 			);
+			provisionQueryService.findById.mockResolvedValueOnce(
+				mockProvision as unknown as any
+			);
+			accountService.findById.mockResolvedValueOnce({} as unknown as any);
 
 			await expect(
-				service.cancelledBookSlotById(bookingId)
+				service.cancelledBookSlotById(bookingId, userId)
 			).rejects.toThrow("Нельзя отменить выполненную услугу");
+		});
+
+		it("ошибка: неавторизованный пользователь не может отменить", async () => {
+			const mockBooking = {
+				id: bookingId,
+				userId: 999999n,
+				status: $Enums.BookingStatus.CONFIRMED,
+				slot: {
+					id: 1n,
+					provisionId: 1n
+				}
+			};
+
+			const mockProvision = {
+				id: 1n,
+				user: {
+					id: 999999n
+				}
+			};
+
+			bookingRepository.findById.mockResolvedValue(
+				mockBooking as unknown as any
+			);
+			provisionQueryService.findById.mockResolvedValue(
+				mockProvision as unknown as any
+			);
+			accountService.findById.mockResolvedValue({} as unknown as any);
+
+			await expect(
+				service.cancelledBookSlotById(bookingId, userId)
+			).rejects.toThrow("не можете отменить");
 		});
 	});
 
-	describe("getAllByProvision", () => {
-		const provisionId = 1n;
-		const mockBookings = [
-			{
-				id: 1n,
-				slotId: 1n,
-				userId: 100n,
-				totalPrice: 5000,
-				status: $Enums.BookingStatus.COMPLETED
-			},
-			{
-				id: 2n,
-				slotId: 2n,
-				userId: 100n,
-				totalPrice: 6000,
-				status: $Enums.BookingStatus.CONFIRMED
-			}
-		];
+	describe("findByUser", () => {
+		const userId = 123456789n;
 
-		it("успех: получены все бронирования", async () => {
-			bookingRepository.findAllByProvisionId.mockResolvedValueOnce(
+		it("успех: получены все бронирования пользователя", async () => {
+			const mockBookings = [
+				{
+					id: 1n,
+					userId,
+					status: $Enums.BookingStatus.CONFIRMED,
+					totalPrice: 1500
+				}
+			];
+
+			bookingRepository.findByUser.mockResolvedValueOnce(
 				mockBookings as unknown as any
 			);
 
-			const result = await service.getAllByProvision(provisionId);
+			const result = await service.findByUser(userId);
 
-			expect(result).toEqual(mockBookings);
-			expect(bookingRepository.findAllByProvisionId).toHaveBeenCalledWith(
-				provisionId
-			);
-			expect(BookingMapper.toResponseList).toHaveBeenCalledWith(
-				mockBookings
-			);
+			expect(result).toBeDefined();
+			expect(bookingRepository.findByUser).toHaveBeenCalledWith(userId);
 		});
 
-		it("успех: пустой список бронирований", async () => {
-			bookingRepository.findAllByProvisionId.mockResolvedValueOnce([]);
+		it("ошибка: пользователь не имеет бронирований", async () => {
+			bookingRepository.findByUser.mockResolvedValue([]);
 
-			const result = await service.getAllByProvision(provisionId);
-
-			expect(result).toEqual([]);
-			expect(bookingRepository.findAllByProvisionId).toHaveBeenCalledWith(
-				provisionId
+			await expect(service.findByUser(userId)).rejects.toThrow(
+				"не были найдены забронированные услуги"
 			);
 		});
 	});
 
 	describe("findById", () => {
 		const bookingId = 1n;
-		const mockBooking = {
-			id: bookingId,
-			slotId: 1n,
-			userId: 100n,
-			totalPrice: 5000,
-			status: $Enums.BookingStatus.COMPLETED
-		};
 
 		it("успех: бронирование найдено", async () => {
+			const mockBooking = {
+				id: bookingId,
+				status: $Enums.BookingStatus.CONFIRMED
+			};
+
 			bookingRepository.findById.mockResolvedValueOnce(
 				mockBooking as unknown as any
 			);
@@ -255,7 +317,7 @@ describe("BookingService", () => {
 			bookingRepository.findById.mockResolvedValue(null);
 
 			await expect(service.findById(bookingId)).rejects.toThrow(
-				"Запись не была найдена по данному id"
+				"не была найдена по данному id"
 			);
 		});
 	});

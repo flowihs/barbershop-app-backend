@@ -1,12 +1,4 @@
-import {
-	Body,
-	Controller,
-	Delete,
-	Get,
-	Param,
-	Post,
-	Query
-} from "@nestjs/common";
+import { Body, Controller, Delete, Param, Post } from "@nestjs/common";
 
 import { SlotService } from "../services/slot.service";
 

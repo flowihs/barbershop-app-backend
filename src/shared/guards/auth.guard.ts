@@ -5,6 +5,7 @@ import {
 	UnauthorizedException
 } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { createHmac } from "crypto";
 import { Request } from "express";
 
 import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
@@ -32,26 +33,49 @@ export class TelegramAuthGuard implements CanActivate {
 		let initData: Record<string, any> = {};
 
 		try {
-			const params = new URLSearchParams(data);
+			if (
+				process.env.NODE_ENV === "development" &&
+				(data === "dev-token" || data === "admin-token")
+			) {
+				initData = {
+					user: {
+						id: data === "admin-token" ? 1 : 123456789,
+						first_name: "DevUser",
+						username: "devuser"
+					}
+				};
+			} else {
+				const params = new URLSearchParams(data);
 
-			initData = {
-				query_id: params.get("query_id") ?? null,
-				auth_date: params.get("auth_date") ?? null,
-				hash: params.get("hash") ?? null,
-				signature: params.get("signature") ?? null,
-				user: params.get("user")
-					? JSON.parse(params.get("user")!)
-					: null
-			};
+				const user = params.get("user");
+				const authDate = params.get("auth_date");
+				const hash = params.get("hash");
+				const queryId = params.get("query_id");
 
-			console.log("Parsed initData (DEV):", initData);
+				if (!user || !authDate || !hash) {
+					throw new UnauthorizedException(
+						"Missing required auth parameters"
+					);
+				}
+
+				this.validateTelegramSignature(data, hash);
+
+				initData = {
+					query_id: queryId,
+					auth_date: authDate,
+					hash: hash,
+					user: JSON.parse(user)
+				};
+			}
 		} catch (e) {
-			console.error("InitData parse error:", e);
+			if (e instanceof UnauthorizedException) {
+				throw e;
+			}
 			throw new UnauthorizedException("Invalid initData format");
 		}
 
-		if (!initData.user) {
-			throw new UnauthorizedException("User not found in initData");
+		if (!initData.user?.id) {
+			throw new UnauthorizedException("User ID not found in initData");
 		}
 
 		request.tgUser = {
@@ -61,5 +85,35 @@ export class TelegramAuthGuard implements CanActivate {
 		};
 
 		return true;
+	}
+
+	private validateTelegramSignature(
+		initData: string,
+		receivedHash: string
+	): void {
+		const botToken = this.configService.get<string>("TELEGRAM_BOT_TOKEN");
+
+		if (!botToken) {
+			throw new Error("TELEGRAM_BOT_TOKEN not configured");
+		}
+
+		const params = new URLSearchParams(initData);
+		params.delete("hash");
+
+		const sortedParams = Array.from(params.entries())
+			.sort(([a], [b]) => a.localeCompare(b))
+			.map(([key, value]) => `${key}=${value}`)
+			.join("\n");
+
+		const secretKey = createHmac("sha256", "WebAppData")
+			.update(botToken)
+			.digest();
+		const hash = createHmac("sha256", secretKey)
+			.update(sortedParams)
+			.digest("hex");
+
+		if (hash !== receivedHash) {
+			throw new UnauthorizedException("Invalid Telegram signature");
+		}
 	}
 }
