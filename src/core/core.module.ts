@@ -7,7 +7,10 @@ import { RedisModule } from "@/src/core/redis/redis.module";
 @Module({
 	imports: [
 		PrismaModule,
-		ConfigModule.forRoot({ isGlobal: true }),
+		ConfigModule.forRoot({
+			isGlobal: true,
+			envFilePath: [".env", ".env.local"]
+		}),
 		RedisModule
 	],
 	exports: [PrismaModule, RedisModule]

@@ -1,4 +1,4 @@
-import { User } from "@/generated";
+import { User } from "@prisma/client";
 import { TelegramProfileDto } from "@/src/modules/account/dto/telegram-profile.dto";
 
 export class UserMapper {

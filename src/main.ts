@@ -1,39 +1,59 @@
-import { ValidationPipe } from "@nestjs/common";
+import { ValidationPipe, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import cookieParser from "cookie-parser";
 
-import { AppModule } from "@/src/app.module";
-import { setupSwagger } from "@/src/core/swagger";
+import { AppModule } from "./app.module";
+import { setupSwagger } from "./core/swagger";
+import { GlobalExceptionFilter } from "./shared/filters/global-exception.filter";
 
 (BigInt.prototype as any).toJSON = function () {
 	return this.toString();
 };
 
 async function bootstrap() {
-	const app = await NestFactory.create(AppModule);
+	const logger = new Logger("Bootstrap");
 
-	const config = app.get(ConfigService);
+	try {
+		const app = await NestFactory.create(AppModule);
+		const config = app.get(ConfigService);
 
-	app.use(cookieParser(config.getOrThrow<string>("COOKIES_SECRET")));
+		app.useGlobalFilters(new GlobalExceptionFilter());
 
-	app.useGlobalPipes(
-		new ValidationPipe({
-			transform: true,
-			whitelist: true,
-			forbidNonWhitelisted: false
-		})
-	);
+		app.use(cookieParser(config.getOrThrow<string>("COOKIES_SECRET")));
 
-	setupSwagger(app);
+		app.useGlobalPipes(
+			new ValidationPipe({
+				transform: true,
+				whitelist: true,
+				forbidNonWhitelisted: true,
+				errorHttpStatusCode: 422
+			})
+		);
 
-	app.enableCors({
-		origin: [config.getOrThrow<string>("ALLOWED_ORIGIN")],
-		credentials: true,
-		exposedHeaders: ["set-cookie"]
-	});
+		setupSwagger(app);
 
-	await app.listen(config.getOrThrow<number>("APPLICATION_PORT") ?? 3000);
+		app.enableCors({
+			origin: [config.getOrThrow<string>("ALLOWED_ORIGIN")],
+			credentials: true,
+			exposedHeaders: ["set-cookie"]
+		});
+
+		const port = config.get<number>("APPLICATION_PORT") ?? 3000;
+		await app.listen(port);
+
+		logger.log(`✅ Server running on http://localhost:${port}`);
+		logger.log(`📚 Swagger: http://localhost:${port}/swagger`);
+	} catch (error) {
+		const logger = new Logger("Bootstrap");
+		logger.error(
+			`Failed to start: ${
+				error instanceof Error ? error.message : String(error)
+			}`,
+			error instanceof Error ? error.stack : ""
+		);
+		process.exit(1);
+	}
 }
 
 bootstrap();

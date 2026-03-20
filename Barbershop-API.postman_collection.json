@@ -1,0 +1,365 @@
+{
+  "info": {
+    "_postman_id": "barbershop-api-collection",
+    "name": "Barbershop API",
+    "description": "API коллекция для всех методов контроллеров Barbershop App Backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Account",
+      "item": [
+        {
+          "name": "Get Current User Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text",
+                "description": "Telegram User ID as bearer token"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/account/me",
+              "host": ["{{base_url}}"],
+              "path": ["account", "me"]
+            },
+            "description": "Получение данных текущего авторизованного пользователя"
+          },
+          "response": []
+        },
+        {
+          "name": "Update User Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text",
+                "description": "Telegram User ID as bearer token"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Профессиональный барбер с 10 летним опытом\",\n  \"email\": \"barber@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/account/update",
+              "host": ["{{base_url}}"],
+              "path": ["account", "update"]
+            },
+            "description": "Обновление данных профиля текущего пользователя"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Booking",
+      "item": [
+        {
+          "name": "Get User Bookings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text",
+                "description": "Telegram User ID as bearer token"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/booking",
+              "host": ["{{base_url}}"],
+              "path": ["booking"]
+            },
+            "description": "Получение всех бронирований текущего пользователя"
+          },
+          "response": []
+        },
+        {
+          "name": "Book a Time Slot",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text",
+                "description": "Telegram User ID as bearer token"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/booking/{{slotId}}",
+              "host": ["{{base_url}}"],
+              "path": ["booking", "{{slotId}}"]
+            },
+            "description": "Забронировать временной слот. Параметр slotId должен быть заменен на реальный ID слота"
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Booking",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text",
+                "description": "Telegram User ID as bearer token"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/booking/{{bookingId}}",
+              "host": ["{{base_url}}"],
+              "path": ["booking", "{{bookingId}}"]
+            },
+            "description": "Отмена бронирования по ID. Параметр bookingId должен быть заменен на реальный ID бронирования"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Category",
+      "item": [
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Стрижки\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/category/create",
+              "host": ["{{base_url}}"],
+              "path": ["category", "create"]
+            },
+            "description": "Создание новой категории услуг"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Provision (Услуги)",
+      "item": [
+        {
+          "name": "Create Provision",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text",
+                "description": "Telegram User ID as bearer token (должна быть роль ADMIN или BARBER)"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Классическая мужская стрижка\",\n  \"description\": \"Профессиональная мужская стрижка по классической технике\",\n  \"price\": 55,\n  \"categoryId\": 1,\n  \"image\": \"uploads/haircut.jpg\",\n  \"time\": [\n    \"2024-01-20T10:00:00Z\",\n    \"2024-01-20T11:00:00Z\",\n    \"2024-01-20T14:00:00Z\"\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/provisions/create",
+              "host": ["{{base_url}}"],
+              "path": ["provisions", "create"]
+            },
+            "description": "Создание новой услуги (требует роль ADMIN или BARBER)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Provisions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text",
+                "description": "Telegram User ID as bearer token"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/provisions/all",
+              "host": ["{{base_url}}"],
+              "path": ["provisions", "all"]
+            },
+            "description": "Получение списка всех услуг в системе"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Provisions Sorted by Price",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text",
+                "description": "Telegram User ID as bearer token"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/provisions/sorted-by-price?order=asc",
+              "host": ["{{base_url}}"],
+              "path": ["provisions", "sorted-by-price"],
+              "query": [
+                {
+                  "key": "order",
+                  "value": "asc",
+                  "description": "Направление сортировки: 'asc' (по возрастанию) или 'desc' (по убыванию). По умолчанию: asc"
+                }
+              ]
+            },
+            "description": "Получение услуг с сортировкой по цене"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Slot",
+      "item": [
+        {
+          "name": "Create Slot",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text",
+                "description": "Telegram User ID as bearer token"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"time\": \"2024-01-25T10:00:00Z\",\n  \"provisionId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/slot/create",
+              "host": ["{{base_url}}"],
+              "path": ["slot", "create"]
+            },
+            "description": "Создание нового временного слота для услуги"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Slot",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text",
+                "description": "Telegram User ID as bearer token"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/slot/delete/{{slotId}}",
+              "host": ["{{base_url}}"],
+              "path": ["slot", "delete", "{{slotId}}"]
+            },
+            "description": "Удаление временного слота по ID. Параметр slotId должен быть заменен на реальный ID слота"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string",
+      "description": "Base URL API сервера"
+    },
+    {
+      "key": "token",
+      "value": "123456789",
+      "type": "string",
+      "description": "Telegram User ID для авторизации (заполните реальным ID)"
+    },
+    {
+      "key": "slotId",
+      "value": "1",
+      "type": "string",
+      "description": "ID слота для операций с бронированиями"
+    },
+    {
+      "key": "bookingId",
+      "value": "1",
+      "type": "string",
+      "description": "ID бронирования для операций отмены"
+    }
+  ]
+}
