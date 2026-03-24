@@ -4,7 +4,7 @@ import {
 	Get,
 	HttpStatus,
 	Param,
-	Put
+	Post
 } from "@nestjs/common";
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 
@@ -22,7 +22,7 @@ import { ParseBigIntPipe } from "@/src/shared/pipes/parse-bigint.pipe";
 export class BookingController {
 	constructor(private readonly bookingService: BookingService) {}
 
-	@Put(":slotId")
+	@Post(":slotId")
 	@ApiOperation({
 		summary: "Book a time slot",
 		description:

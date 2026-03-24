@@ -41,6 +41,7 @@
 		"connect-redis": "^9.0.0",
 		"cookie-parser": "^1.4.7",
 		"device-detector-js": "^3.0.3",
+		"express": "^4.18.2",
 		"express-session": "^1.19.0",
 		"i18n-iso-countries": "^7.14.0",
 		"ioredis": "^5.9.3",

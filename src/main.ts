@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import { AppModule } from "./app.module";
 import { setupSwagger } from "./core/swagger";
 import { GlobalExceptionFilter } from "./shared/filters/global-exception.filter";
+import { EnvironmentConfigService } from "@/src/core/config/environment-config.service";
 
 (BigInt.prototype as any).toJSON = function () {
 	return this.toString();
@@ -17,6 +18,7 @@ async function bootstrap() {
 	try {
 		const app = await NestFactory.create(AppModule);
 		const config = app.get(ConfigService);
+		const envConfig = app.get(EnvironmentConfigService);
 
 		app.useGlobalFilters(new GlobalExceptionFilter());
 
@@ -42,8 +44,11 @@ async function bootstrap() {
 		const port = config.get<number>("APPLICATION_PORT") ?? 3000;
 		await app.listen(port);
 
-		logger.log(`✅ Server running on http://localhost:${port}`);
-		logger.log(`📚 Swagger: http://localhost:${port}/swagger`);
+		// Log environment configuration
+		envConfig.logEnvironmentConfig();
+
+		logger.log(`✅ Server running on ${envConfig.appUrl}`);
+		logger.log(`📚 Swagger: ${envConfig.appUrl}/swagger`);
 	} catch (error) {
 		const logger = new Logger("Bootstrap");
 		logger.error(
