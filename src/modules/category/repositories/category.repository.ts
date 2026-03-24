@@ -49,4 +49,8 @@ export class CategoryRepository {
 			}
 		});
 	}
+
+	public async findAll() {
+		return this.prismaService.category.findMany();
+	}
 }

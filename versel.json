@@ -1,10 +1,38 @@
 {
+	"buildCommand": "yarn vercel-build",
+	"installCommand": "yarn install",
+	"outputDirectory": "dist",
+	"devCommand": "yarn start:dev",
+	"env": [
+		"POSTGRES_URL",
+		"PRISMA_DATABASE_URL",
+		"TELEGRAM_BOT_TOKEN",
+		"APPLICATION_PORT",
+		"ALLOWED_ORIGIN",
+		"COOKIES_SECRET",
+		"VERCEL",
+		"VERCEL_ENV",
+		"VERCEL_URL",
+		"NODE_ENV"
+	],
+	"functions": {
+		"src/main.ts": {
+			"runtime": "@vercel/node@3.0.0",
+			"memory": 1024,
+			"maxDuration": 30
+		}
+	},
 	"builds": [
 		{
 			"src": "src/main.ts",
 			"use": "@vercel/node",
 			"config": {
-				"includeFiles": ["src/**/*", "prisma/**/*"]
+				"includeFiles": [
+					"src/**/*",
+					"prisma/**/*",
+					"dist/**/*"
+				],
+				"zeroConfig": true
 			}
 		}
 	],

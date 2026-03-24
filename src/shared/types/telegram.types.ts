@@ -1,4 +1,4 @@
-import { User } from "@/generated";
+import { User } from "@prisma/client";
 
 export interface TelegramUser {
 	id: number;

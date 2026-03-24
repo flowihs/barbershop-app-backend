@@ -1,8 +1,11 @@
+import { Category, Provision, Slot, User } from "@prisma/client";
+
 import { CategoryMapper } from "./category.mapper";
 import { SlotMapper } from "./slot.mapper";
 import { UserMapper } from "./user.mapper";
-import { Category, Provision, Slot, User } from "@/generated";
 import { CreateProvisionResponseDto } from "@/src/modules/provision/dto/create-provision-response.dto";
+import { UpdateProvisionRequestDto } from "@/src/modules/provision/dto/update-provision-request.dto";
+import { UpdateData } from "@/src/shared/types/provision.types";
 
 export class ProvisionMapper {
 	static toResponse(
@@ -34,5 +37,56 @@ export class ProvisionMapper {
 		>
 	): CreateProvisionResponseDto[] {
 		return provisions.map(provision => this.toResponse(provision));
+	}
+
+	static toSlotsCreateData(
+		timeStrings: string[]
+	): Array<{ time: Date; isBooking: boolean }> {
+		const now = new Date();
+		const uniqueTimes = new Set<string>();
+		const slotsData: Array<{ time: Date; isBooking: boolean }> = [];
+
+		for (const timeStr of timeStrings) {
+			const slotDate = new Date(timeStr);
+
+			if (slotDate < now) {
+				throw new Error(
+					"Вы не можете создать слот со временем в прошлом"
+				);
+			}
+
+			if (uniqueTimes.has(timeStr)) {
+				throw new Error("Время в слоте должно быть уникальным");
+			}
+
+			uniqueTimes.add(timeStr);
+			slotsData.push({ time: slotDate, isBooking: false });
+		}
+
+		return slotsData;
+	}
+
+	static toUpdateData(dto: UpdateProvisionRequestDto): UpdateData {
+		const updateData: UpdateData = {
+			id: dto.id
+		};
+
+		if (dto.title) {
+			updateData.title = dto.title;
+		}
+
+		if (dto.description) {
+			updateData.description = dto.description;
+		}
+
+		if (dto.price) {
+			updateData.price = dto.price;
+		}
+
+		if (dto.image) {
+			updateData.image = dto.image;
+		}
+
+		return updateData;
 	}
 }

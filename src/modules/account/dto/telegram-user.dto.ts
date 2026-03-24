@@ -12,6 +12,6 @@ export class TelegramUserDto {
 
 	@IsOptional()
 	@IsString()
-	@ApiProperty({ example: "alexdev", required: false })
+	@ApiProperty({ example: "@dev", required: false })
 	username?: string;
 }
