@@ -126,7 +126,7 @@ model Like {
   userId BigInt @map("user_id")
 
   targetType LikeTargetType @map("target_type")
-  targetId   BigInt         @map("target_id")gfdsfd
+  targetId   BigInt         @map("target_id")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
