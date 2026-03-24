@@ -9,6 +9,7 @@ import { createHmac } from "crypto";
 import { Request } from "express";
 
 import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
+import { EnvironmentConfigService } from "@/src/core/config/environment-config.service";
 
 interface RequestWithTg extends Request {
 	tgUser?: TelegramUserDto;
@@ -16,7 +17,10 @@ interface RequestWithTg extends Request {
 
 @Injectable()
 export class TelegramAuthGuard implements CanActivate {
-	constructor(private readonly configService: ConfigService) {}
+	constructor(
+		private readonly configService: ConfigService,
+		private readonly envConfig: EnvironmentConfigService
+	) {}
 
 	canActivate(context: ExecutionContext): boolean {
 		const request = context.switchToHttp().getRequest<RequestWithTg>();
@@ -33,40 +37,33 @@ export class TelegramAuthGuard implements CanActivate {
 		let initData: Record<string, any> = {};
 
 		try {
-			if (
-				process.env.NODE_ENV === "development" &&
-				(data === "dev-token" || data === "admin-token")
-			) {
-				initData = {
-					user: {
-						id: data === "admin-token" ? 1 : 123456789,
-						first_name: "DevUser",
-						username: "devuser"
-					}
-				};
-			} else {
-				const params = new URLSearchParams(data);
-
-				const user = params.get("user");
-				const authDate = params.get("auth_date");
-				const hash = params.get("hash");
-				const queryId = params.get("query_id");
-
-				if (!user || !authDate || !hash) {
-					throw new UnauthorizedException(
-						"Missing required auth parameters"
-					);
-				}
-
-				this.validateTelegramSignature(data, hash);
-
-				initData = {
-					query_id: queryId,
-					auth_date: authDate,
-					hash: hash,
-					user: JSON.parse(user)
-				};
+			// Dev mode: allow simple token-based auth
+			if (this.envConfig.isDevelopment && this.isDevToken(data)) {
+				return this.handleDevAuth(request, data);
 			}
+
+			// Production mode: validate real Telegram signature
+			const params = new URLSearchParams(data);
+
+			const user = params.get("user");
+			const authDate = params.get("auth_date");
+			const hash = params.get("hash");
+			const queryId = params.get("query_id");
+
+			if (!user || !authDate || !hash) {
+				throw new UnauthorizedException(
+					"Missing required auth parameters"
+				);
+			}
+
+			this.validateTelegramSignature(data, hash);
+
+			initData = {
+				query_id: queryId,
+				auth_date: authDate,
+				hash: hash,
+				user: JSON.parse(user)
+			};
 		} catch (e) {
 			if (e instanceof UnauthorizedException) {
 				throw e;
@@ -87,6 +84,32 @@ export class TelegramAuthGuard implements CanActivate {
 		return true;
 	}
 
+	/**
+	 * Проверить если это dev токен
+	 */
+	private isDevToken(token: string): boolean {
+		return token === "dev-token" || token === "admin-token";
+	}
+
+	/**
+	 * Обработать dev аутентификацию
+	 */
+	private handleDevAuth(request: RequestWithTg, token: string): boolean {
+		const userId = token === "admin-token" ? 1 : 123456789;
+
+		request.tgUser = {
+			id: userId,
+			first_name: "DevUser",
+			username: "devuser"
+		};
+
+		console.log(`🔐 DEV AUTH: Logged in as ${request.tgUser.username} (ID: ${userId})`);
+		return true;
+	}
+
+	/**
+	 * Валидировать подпись Telegram (production only)
+	 */
 	private validateTelegramSignature(
 		initData: string,
 		receivedHash: string

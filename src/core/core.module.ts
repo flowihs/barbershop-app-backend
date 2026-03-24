@@ -2,17 +2,19 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import { PrismaModule } from "@/src/core/prisma/prisma.module";
-import { RedisModule } from "@/src/core/redis/redis.module";
+import { EnvironmentConfigService } from "@/src/core/config/environment-config.service";
+
+const envFile = process.env.NODE_ENV === "production" ? ".env.production" : ".env.local";
 
 @Module({
 	imports: [
 		PrismaModule,
 		ConfigModule.forRoot({
 			isGlobal: true,
-			envFilePath: [".env", ".env.local"]
-		}),
-		RedisModule
+			envFilePath: [envFile, ".env"]
+		})
 	],
-	exports: [PrismaModule, RedisModule]
+	providers: [EnvironmentConfigService],
+	exports: [PrismaModule, EnvironmentConfigService]
 })
 export class CoreModule {}

@@ -4,8 +4,8 @@ import {
 	Injectable,
 	NotFoundException
 } from "@nestjs/common";
-
 import { Roles } from "@prisma/client";
+
 import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
 import { AccountRepository } from "@/src/modules/account/repositories/account.repository";
 import { CreateProvisionRequestDto } from "@/src/modules/provision/dto/create-provision-request.dto";
@@ -44,9 +44,7 @@ export class ProvisionMutationService {
 			if (error instanceof Error) {
 				throw new BadRequestException(error.message);
 			}
-			throw new BadRequestException(
-				"Ошибка валидации времени слотов"
-			);
+			throw new BadRequestException("Ошибка валидации времени слотов");
 		}
 
 		try {
