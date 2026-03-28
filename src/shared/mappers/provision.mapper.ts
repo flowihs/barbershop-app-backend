@@ -1,4 +1,4 @@
-import { Category, Provision, Slot, User } from "@prisma/client";
+import { Category, Provision, Review, Slot, User } from "@prisma/client";
 
 import { CategoryMapper } from "./category.mapper";
 import { SlotMapper } from "./slot.mapper";
@@ -13,6 +13,7 @@ export class ProvisionMapper {
 			user: User;
 			category: Category;
 			slots: Slot[];
+			review: Review[];
 		}
 	): CreateProvisionResponseDto {
 		return {
@@ -23,7 +24,8 @@ export class ProvisionMapper {
 			image: provision.image,
 			user: UserMapper.toResponse(provision.user),
 			category: CategoryMapper.toResponse(provision.category),
-			slots: SlotMapper.toResponseList(provision.slots)
+			slots: SlotMapper.toResponseList(provision.slots),
+
 		};
 	}
 
@@ -33,6 +35,7 @@ export class ProvisionMapper {
 				user: User;
 				category: Category;
 				slots: Slot[];
+				review: Review[];
 			}
 		>
 	): CreateProvisionResponseDto[] {

@@ -17,15 +17,15 @@ export class LikeService {
 		private readonly likeRepository: LikeRepository
 	) {}
 
-	public async toggleLiked(dto: ToggleLikeRequestDto) {
-		const userId = BigInt(dto.userId);
+	public async toggleLiked(userId: number, dto: ToggleLikeRequestDto) {
 		const targetId = BigInt(dto.targetId);
+		const userBigInt = BigInt(userId);
 
 		try {
 			const existingLike =
 				await this.likeRepository.findByTargetIdAndUserId(
 					targetId,
-					userId
+					userBigInt
 				);
 
 			if (existingLike) {
@@ -36,7 +36,7 @@ export class LikeService {
 			console.error(error);
 		}
 
-		await this.addToLiked(dto as unknown as CreateLikeRequestDto);
+		await this.addToLiked(userId, dto as unknown as CreateLikeRequestDto);
 		return { liked: true };
 	}
 
@@ -56,18 +56,18 @@ export class LikeService {
 		return true;
 	}
 
-	public async addToLiked(dto: CreateLikeRequestDto) {
-		const userId = BigInt(dto.userId);
+	public async addToLiked(userId: number, dto: CreateLikeRequestDto) {
 		const targetId = BigInt(dto.targetId);
+		const userBigInt = BigInt(userId);
 		const createData = {
-			userId: BigInt(dto.userId),
-			targetId: BigInt(dto.targetId),
+			userId: userBigInt,
+			targetId: targetId,
 			targetType: dto.targetType
 		};
 
-		await this.accountService.findById(userId);
+		await this.accountService.findById(userBigInt);
 
-		if (await this.findByTargetIdAndUserId(targetId, userId)) {
+		if (await this.likeRepository.findByTargetIdAndUserId(targetId, userBigInt)) {
 			throw new BadRequestException(
 				"Данный обьект и так находится у пользователя в понравившихся"
 			);
@@ -94,6 +94,10 @@ export class LikeService {
 		}
 
 		return like;
+	}
+
+	public async findByUserId(userId: bigint) {
+		return this.likeRepository.findByUserId(userId);
 	}
 
 	public async findByTargetIdAndUserId(targetId: bigint, userId: bigint) {

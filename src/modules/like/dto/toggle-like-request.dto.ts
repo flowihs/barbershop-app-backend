@@ -3,11 +3,6 @@ import { LikeTargetType } from "@prisma/client";
 import { IsEnum, IsInt, IsNotEmpty } from "class-validator";
 
 export class ToggleLikeRequestDto {
-	@ApiProperty({ example: "12345678", description: "ID пользователя" })
-	@IsInt()
-	@IsNotEmpty()
-	userId: number;
-
 	@ApiProperty({
 		example: "PROVISION",
 		description: "Тип лайкнутой сущности"

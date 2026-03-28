@@ -42,6 +42,14 @@ export class LikeRepository {
 		});
 	}
 
+	public async findByUserId(userId: bigint) {
+		return this.prismaService.like.findMany({
+			where: {
+				userId: userId
+			}
+		});
+	}
+
 	public async deleteById(id: bigint) {
 		return this.prismaService.like.delete({
 			where: {

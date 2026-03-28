@@ -133,11 +133,11 @@ export class ProvisionController {
 		return this.provisionQueryService.findAllSortedByPrice(query);
 	}
 
-	@Get("sorted-by-price")
+	@Get("sorted-by-updated-at")
 	@ApiOperation({
-		summary: "Получение услуг с сортировкой по цене",
+		summary: "Получение услуг с сортировкой по дате",
 		description:
-			"Позволяет отсортировать все услуги по возрастанию (asc) или убыванию (desc) цены."
+			"Позволяет отсортировать все услуги по возрастанию (asc) или убыванию (desc) даты обновления."
 	})
 	@ApiQuery({
 		name: "order",
@@ -153,7 +153,7 @@ export class ProvisionController {
 	public async findAllBySortByUpdatedAt(
 		@Query() query: SortProvisionRequestDto
 	): Promise<ProvisionResponseDto[]> {
-		return this.provisionQueryService.findAllSortedByPrice(query);
+		return this.provisionQueryService.findAllSortedByUpdatedAt(query);
 	}
 
 	@Get("my")

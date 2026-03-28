@@ -17,9 +17,11 @@ import {
 
 import { LikeService } from "../services/like.service";
 
+import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
 import { ToggleLikeRequestDto } from "@/src/modules/like/dto/toggle-like-request.dto";
 import { ToggleLikeResponseDto } from "@/src/modules/like/dto/toggle-like-response.dto";
 import { Authorization } from "@/src/shared/decorators/authorization.decorator";
+import { UserInfo } from "@/src/shared/decorators/user.decorator";
 import { TelegramAuthGuard } from "@/src/shared/guards/auth.guard";
 import { ParseBigIntPipe } from "@/src/shared/pipes/parse-bigint.pipe";
 
@@ -57,13 +59,35 @@ export class LikeController {
 		description: "Пользователь с указанным ID не найден"
 	})
 	public async toggleLiked(
+		@UserInfo() user: TelegramUserDto,
 		@Body() dto: ToggleLikeRequestDto
 	): Promise<ToggleLikeResponseDto> {
-		return this.likeService.toggleLiked(dto);
+		return this.likeService.toggleLiked(user.id, dto);
 	}
 
-	@Get(":userId")
-	public async findByUser(@Param("userId", ParseBigIntPipe) userId: bigint) {
-		return this.likeService.findById(userId);
+	@Get("my")
+	@ApiOperation({
+		summary: "Получить все свои лайки",
+		description: "Возвращает список всех лайков текущего пользователя"
+	})
+	public async findMyLikes(@UserInfo() user: TelegramUserDto) {
+		return this.likeService.findByUserId(BigInt(user.id));
+	}
+
+	@Get(":id")
+	public async findById(@Param("id", ParseBigIntPipe) id: bigint) {
+		return this.likeService.findById(id);
+	}
+
+	@Get("target/:targetId")
+	@ApiOperation({
+		summary: "Проверить лайк",
+		description: "Проверяет наличие лайка у текущего пользователя для указанного обьекта"
+	})
+	public async checkLike(
+		@UserInfo() user: TelegramUserDto,
+		@Param("targetId", ParseBigIntPipe) targetId: bigint
+	) {
+		return this.likeService.findByTargetIdAndUserId(targetId, BigInt(user.id));
 	}
 }

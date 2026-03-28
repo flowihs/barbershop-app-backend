@@ -2,6 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 
 import { TelegramProfileDto } from "@/src/modules/account/dto/telegram-profile.dto";
 import { CategoryResponseDto } from "@/src/modules/category/dto/category-response.dto";
+import { LikeResponseDto } from "@/src/modules/like/dto/like-response.dto";
 import { SlotResponseDto } from "@/src/modules/slot/dto/slot-response.dto";
 
 export class ProvisionResponseDto {
@@ -50,4 +51,12 @@ export class ProvisionResponseDto {
 		required: false
 	})
 	slots?: SlotResponseDto[];
+
+	@ApiProperty({
+		type: LikeResponseDto,
+		isArray: false,
+		description: "Понравившееся",
+		required: false
+	})
+	like?: LikeResponseDto;
 }

@@ -1,21 +1,23 @@
 import { Injectable } from "@nestjs/common";
+import { Prisma } from "@prisma/client";
 
 import { PrismaService } from "@/src/core/prisma/prisma.service";
 import { UpdateData } from "@/src/shared/types/provision.types";
 
-const DEFAULT_INCLUDE = {
+const DEFAULT_INCLUDE = Prisma.validator<Prisma.ProvisionInclude>()({
 	user: true,
 	category: true,
+	review: true,
 	slots: {
 		orderBy: {
-			time: "asc" as const
+			time: "asc"
 		}
 	}
-};
+});
 
 @Injectable()
 export class ProvisionRepository {
-	constructor(private readonly prismaService: PrismaService) {}
+	constructor(private readonly prismaService: PrismaService) { }
 
 	public async create(
 		data: {
@@ -107,6 +109,7 @@ export class ProvisionRepository {
 			include: {
 				user: true,
 				category: true,
+				review: true,
 				slots: {
 					where: { isBooking: false },
 					orderBy: { time: order }
@@ -262,6 +265,12 @@ export class ProvisionRepository {
 				...data
 			},
 			include: DEFAULT_INCLUDE
+		});
+	}
+
+	public async findByUserAndLiked() {
+		return this.prismaService.provision.findMany({
+			where: {}
 		});
 	}
 }

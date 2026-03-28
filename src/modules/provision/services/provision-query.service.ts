@@ -50,7 +50,7 @@ export class ProvisionQueryService {
 				query.order
 			);
 
-		if (provisions.length) {
+		if (!provisions.length) {
 			throw new NotFoundException("список услуг пуст");
 		}
 
@@ -103,4 +103,8 @@ export class ProvisionQueryService {
 
 		return provisions;
 	}
+	// provisions
+	// 	public async findByUserAndLiked() {
+	// 		provisions = await this.provisionRepository.
+	// 	}
 }

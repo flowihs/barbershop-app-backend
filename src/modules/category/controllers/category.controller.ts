@@ -1,10 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from "@nestjs/common";
+import { Roles } from "@prisma/client";
 
 import { CategoryResponseDto } from "../dto/category-response.dto";
 import { CategoryService } from "../services/category.service";
 
 import { CategoryCreateRequestDto } from "@/src/modules/category/dto/category-create-request.dto";
 import { CategoryCreateResponseDto } from "@/src/modules/category/dto/category-create-response.dto";
+import { Authorization } from "@/src/shared/decorators/authorization.decorator";
+import { Roles as RolesDecorator } from "@/src/shared/decorators/roles.decorator";
+import { TelegramAuthGuard } from "@/src/shared/guards/auth.guard";
+import { RolesGuard } from "@/src/shared/guards/roles.guard";
 import { ParseBigIntPipe } from "@/src/shared/pipes/parse-bigint.pipe";
 
 @Controller("category")
@@ -12,6 +17,9 @@ export class CategoryController {
 	constructor(private readonly categoryService: CategoryService) {}
 
 	@Post("create")
+	@Authorization()
+	@UseGuards(TelegramAuthGuard, RolesGuard)
+	@RolesDecorator(Roles.ADMIN)
 	public async create(
 		@Body() dto: CategoryCreateRequestDto
 	): Promise<CategoryCreateResponseDto> {
@@ -19,6 +27,9 @@ export class CategoryController {
 	}
 
 	@Delete(":id")
+	@Authorization()
+	@UseGuards(TelegramAuthGuard, RolesGuard)
+	@RolesDecorator(Roles.ADMIN)
 	public async deleteById(
 		@Param("id", ParseBigIntPipe) id: bigint
 	): Promise<boolean> {

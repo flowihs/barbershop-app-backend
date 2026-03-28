@@ -1,4 +1,4 @@
-import { ValidationPipe, Logger } from "@nestjs/common";
+import { Logger, ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import cookieParser from "cookie-parser";
@@ -44,7 +44,6 @@ async function bootstrap() {
 		const port = config.get<number>("APPLICATION_PORT") ?? 3000;
 		await app.listen(port);
 
-		// Log environment configuration
 		envConfig.logEnvironmentConfig();
 
 		logger.log(`✅ Server running on ${envConfig.appUrl}`);

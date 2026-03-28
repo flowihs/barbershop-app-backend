@@ -8,8 +8,8 @@ import { ConfigService } from "@nestjs/config";
 import { createHmac } from "crypto";
 import { Request } from "express";
 
-import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
 import { EnvironmentConfigService } from "@/src/core/config/environment-config.service";
+import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
 
 interface RequestWithTg extends Request {
 	tgUser?: TelegramUserDto;
@@ -37,12 +37,10 @@ export class TelegramAuthGuard implements CanActivate {
 		let initData: Record<string, any> = {};
 
 		try {
-			// Dev mode: allow simple token-based auth
 			if (this.envConfig.isDevelopment && this.isDevToken(data)) {
 				return this.handleDevAuth(request, data);
 			}
 
-			// Production mode: validate real Telegram signature
 			const params = new URLSearchParams(data);
 
 			const user = params.get("user");
@@ -84,16 +82,10 @@ export class TelegramAuthGuard implements CanActivate {
 		return true;
 	}
 
-	/**
-	 * Проверить если это dev токен
-	 */
 	private isDevToken(token: string): boolean {
 		return token === "dev-token" || token === "admin-token";
 	}
 
-	/**
-	 * Обработать dev аутентификацию
-	 */
 	private handleDevAuth(request: RequestWithTg, token: string): boolean {
 		const userId = token === "admin-token" ? 1 : 123456789;
 
@@ -103,13 +95,12 @@ export class TelegramAuthGuard implements CanActivate {
 			username: "devuser"
 		};
 
-		console.log(`🔐 DEV AUTH: Logged in as ${request.tgUser.username} (ID: ${userId})`);
+		console.log(
+			`🔐 DEV AUTH: Logged in as ${request.tgUser.username} (ID: ${userId})`
+		);
 		return true;
 	}
 
-	/**
-	 * Валидировать подпись Telegram (production only)
-	 */
 	private validateTelegramSignature(
 		initData: string,
 		receivedHash: string
