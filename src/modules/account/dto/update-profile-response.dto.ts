@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-import { TelegramProfileDto } from "@/src/modules/account/dto/telegram-profile.dto";
+import { TelegramProfileDto } from "./telegram-profile.dto";
 
 export class ErrorResponseDto {
 	@ApiProperty({ example: false })

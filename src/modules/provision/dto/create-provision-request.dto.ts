@@ -9,7 +9,7 @@ import {
 	Min
 } from "class-validator";
 
-import { validationMessages } from "@/src/shared/utils/validation-messages";
+import { validationMessages } from "../../../shared/utils/validation-messages";
 
 export class CreateProvisionRequestDto {
 	@ApiProperty({

@@ -4,11 +4,11 @@ import {
 	NotFoundException
 } from "@nestjs/common";
 
-import { AccountService } from "@/src/modules/account/services/account.service";
-import { CreateLikeRequestDto } from "@/src/modules/like/dto/create-like-request.dto";
-import { DeleteLikeRequestDto } from "@/src/modules/like/dto/delete-like-request.dto";
-import { ToggleLikeRequestDto } from "@/src/modules/like/dto/toggle-like-request.dto";
-import { LikeRepository } from "@/src/modules/like/repositories/like.repository";
+import { AccountService } from "../../account/services/account.service";
+import { CreateLikeRequestDto } from "../dto/create-like-request.dto";
+import { DeleteLikeRequestDto } from "../dto/delete-like-request.dto";
+import { ToggleLikeRequestDto } from "../dto/toggle-like-request.dto";
+import { LikeRepository } from "../repositories/like.repository";
 
 @Injectable()
 export class LikeService {

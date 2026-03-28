@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 
-import { TelegramProfileDto } from "@/src/modules/account/dto/telegram-profile.dto";
-import type { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
-import { UpdateProfileRequestDto } from "@/src/modules/account/dto/update-profile-request.dto";
-import { UpdateProfileResponseDto } from "@/src/modules/account/dto/update-profile-response.dto";
-import { AccountRepository } from "@/src/modules/account/repositories/account.repository";
-import { UserMapper } from "@/src/shared/mappers/user.mapper";
+import { TelegramProfileDto } from "../dto/telegram-profile.dto";
+import type { TelegramUserDto } from "../dto/telegram-user.dto";
+import { UpdateProfileRequestDto } from "../dto/update-profile-request.dto";
+import { UpdateProfileResponseDto } from "../dto/update-profile-response.dto";
+import { AccountRepository } from "../repositories/account.repository";
+import { UserMapper } from "../../../shared/mappers/user.mapper";
 
 @Injectable()
 export class AccountService {

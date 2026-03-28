@@ -6,15 +6,15 @@ import {
 } from "@nestjs/common";
 import { Roles } from "@prisma/client";
 
-import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
-import { AccountRepository } from "@/src/modules/account/repositories/account.repository";
-import { CreateProvisionRequestDto } from "@/src/modules/provision/dto/create-provision-request.dto";
-import { CreateProvisionResponseDto } from "@/src/modules/provision/dto/create-provision-response.dto";
-import { ProvisionDeleteResponseDto } from "@/src/modules/provision/dto/provision-delete-response.dto";
-import { UpdateProvisionRequestDto } from "@/src/modules/provision/dto/update-provision-request.dto";
-import { ProvisionRepository } from "@/src/modules/provision/repositories/provision.repository";
-import { ProvisionQueryService } from "@/src/modules/provision/services/provision-query.service";
-import { ProvisionMapper } from "@/src/shared/mappers/provision.mapper";
+import { TelegramUserDto } from "../../account/dto/telegram-user.dto";
+import { AccountRepository } from "../../account/repositories/account.repository";
+import { CreateProvisionRequestDto } from "../dto/create-provision-request.dto";
+import { CreateProvisionResponseDto } from "../dto/create-provision-response.dto";
+import { ProvisionDeleteResponseDto } from "../dto/provision-delete-response.dto";
+import { UpdateProvisionRequestDto } from "../dto/update-provision-request.dto";
+import { ProvisionRepository } from "../repositories/provision.repository";
+import { ProvisionQueryService } from "./provision-query.service";
+import { ProvisionMapper } from "../../../shared/mappers/provision.mapper";
 
 @Injectable()
 export class ProvisionMutationService {

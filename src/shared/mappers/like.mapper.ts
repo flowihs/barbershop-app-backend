@@ -1,5 +1,5 @@
 import { Like } from "@prisma/client";
-import { LikeResponseDto } from "@/src/modules/like/dto/like-response.dto";
+import { LikeResponseDto } from "../../modules/like/dto/like-response.dto";
 
 export class LikeMapper {
 	static toResponse(like: Like): LikeResponseDto {

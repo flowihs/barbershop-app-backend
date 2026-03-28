@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import { AppModule } from "./app.module";
 import { setupSwagger } from "./core/swagger";
 import { GlobalExceptionFilter } from "./shared/filters/global-exception.filter";
-import { EnvironmentConfigService } from "@/src/core/config/environment-config.service";
+import { EnvironmentConfigService } from "./core/config/environment-config.service";
 
 (BigInt.prototype as any).toJSON = function () {
 	return this.toString();

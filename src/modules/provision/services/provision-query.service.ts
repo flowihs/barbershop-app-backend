@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 
-import { CategoryService } from "@/src/modules/category/services/category.service";
-import { ProvisionResponseDto } from "@/src/modules/provision/dto/provision-response.dto";
-import { SortProvisionRequestDto } from "@/src/modules/provision/dto/sort-provision-request.dto";
-import { ProvisionRepository } from "@/src/modules/provision/repositories/provision.repository";
-import { ProvisionMapper } from "@/src/shared/mappers/provision.mapper";
+import { CategoryService } from "../../category/services/category.service";
+import { ProvisionResponseDto } from "../dto/provision-response.dto";
+import { SortProvisionRequestDto } from "../dto/sort-provision-request.dto";
+import { ProvisionRepository } from "../repositories/provision.repository";
+import { ProvisionMapper } from "../../../shared/mappers/provision.mapper";
 
 @Injectable()
 export class ProvisionQueryService {
