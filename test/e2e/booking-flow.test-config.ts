@@ -194,7 +194,7 @@ export const errorScenarios = [
 	},
 	{
 		name: "Invalid Telegram signature",
-		shouldThrow: "Invalid Telegram signature",
+		shouldThrow: "Invalid T elegram signature",
 		expectedStatus: 401
 	}
 ];
