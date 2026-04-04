@@ -4,11 +4,11 @@ import {
 	NotFoundException
 } from "@nestjs/common";
 
+import { SlotMapper } from "../../../shared/mappers";
 import { ProvisionRepository } from "../../provision/repositories/provision.repository";
 import { CreateSlotRequestDto } from "../dto/create-slot-request.dto";
 import { CreateSlotResponseDto } from "../dto/create-slot-response.dto";
 import { SlotRepository } from "../repositories/slot.repository";
-import { SlotMapper } from "../../../shared/mappers";
 
 @Injectable()
 export class SlotService {

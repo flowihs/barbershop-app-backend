@@ -1,5 +1,7 @@
 import { Booking, Slot, User } from "@prisma/client";
+
 import { BookingResponseDto } from "../../modules/booking/dto/booking-response.dto";
+
 import { SlotMapper } from "./slot.mapper";
 import { UserMapper } from "./user.mapper";
 

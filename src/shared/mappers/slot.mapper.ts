@@ -1,4 +1,5 @@
 import { Provision, Slot } from "@prisma/client";
+
 import { CreateSlotRequestDto } from "../../modules/slot/dto/create-slot-request.dto";
 import { CreateSlotResponseDto } from "../../modules/slot/dto/create-slot-response.dto";
 import { SlotResponseDto } from "../../modules/slot/dto/slot-response.dto";

@@ -3,6 +3,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { TelegramProfileDto } from "../../account/dto/telegram-profile.dto";
 import { CategoryResponseDto } from "../../category/dto/category-response.dto";
 import { LikeResponseDto } from "../../like/dto/like-response.dto";
+import { ReviewResponseDto } from "../../review/dto/review-response.dto";
 import { SlotResponseDto } from "../../slot/dto/slot-response.dto";
 
 export class ProvisionResponseDto {
@@ -59,4 +60,12 @@ export class ProvisionResponseDto {
 		required: false
 	})
 	like?: LikeResponseDto;
+
+	@ApiProperty({
+		type: () => ReviewResponseDto,
+		isArray: true,
+		description: "Отзывы",
+		required: false
+	})
+	reviews?: ReviewResponseDto[];
 }

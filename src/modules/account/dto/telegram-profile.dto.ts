@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Roles } from "@prisma/client";
 
 export class TelegramProfileDto {
 	@ApiProperty({ example: 123456789, description: "Telegram ID" })
@@ -15,6 +16,9 @@ export class TelegramProfileDto {
 
 	@ApiProperty({ example: "user@example.com", nullable: true })
 	email: string | null;
+
+	@ApiProperty({ example: "Роль пользователя", nullable: false })
+	role: Roles;
 
 	@ApiProperty({ example: "2024-01-01T00:00:00Z" })
 	createdAt?: Date;

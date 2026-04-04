@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 
+import { ProvisionMapper } from "../../../shared/mappers/provision.mapper";
 import { CategoryService } from "../../category/services/category.service";
 import { ProvisionResponseDto } from "../dto/provision-response.dto";
 import { SortProvisionRequestDto } from "../dto/sort-provision-request.dto";
 import { ProvisionRepository } from "../repositories/provision.repository";
-import { ProvisionMapper } from "../../../shared/mappers/provision.mapper";
 
 @Injectable()
 export class ProvisionQueryService {
@@ -103,8 +103,4 @@ export class ProvisionQueryService {
 
 		return provisions;
 	}
-	// provisions
-	// 	public async findByUserAndLiked() {
-	// 		provisions = await this.provisionRepository.
-	// 	}
 }

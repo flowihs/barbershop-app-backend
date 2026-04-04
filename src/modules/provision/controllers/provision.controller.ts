@@ -21,22 +21,22 @@ import {
 } from "@nestjs/swagger";
 import { Roles } from "@prisma/client";
 
-import { TelegramProfileDto } from "../../account/dto/telegram-profile.dto";
-import { TelegramUserDto } from "../../account/dto/telegram-user.dto";
-import { CategoryResponseDto } from "../../category/dto/category-response.dto";
-import { CreateProvisionRequestDto } from "../dto/create-provision-request.dto";
-import { CreateProvisionResponseDto } from "../dto/create-provision-response.dto";
-import { ProvisionDeleteResponseDto } from "../dto/provision-delete-response.dto";
-import { ProvisionResponseDto } from "../dto/provision-response.dto";
-import { SortProvisionRequestDto } from "../dto/sort-provision-request.dto";
-import { ProvisionMutationService } from "../services/provision-mutation.service";
-import { ProvisionQueryService } from "../services/provision-query.service";
-import { SlotResponseDto } from "../../slot/dto/slot-response.dto";
 import { Roles as RolesDecorator } from "../../../shared/decorators/roles.decorator";
 import { UserInfo } from "../../../shared/decorators/user.decorator";
 import { TelegramAuthGuard } from "../../../shared/guards/auth.guard";
 import { RolesGuard } from "../../../shared/guards/roles.guard";
 import { ParseBigIntPipe } from "../../../shared/pipes/parse-bigint.pipe";
+import { TelegramProfileDto } from "../../account/dto/telegram-profile.dto";
+import { TelegramUserDto } from "../../account/dto/telegram-user.dto";
+import { CategoryResponseDto } from "../../category/dto/category-response.dto";
+import { SlotResponseDto } from "../../slot/dto/slot-response.dto";
+import { CreateProvisionRequestDto } from "../dto/create-provision-request.dto";
+
+import { ProvisionDeleteResponseDto } from "../dto/provision-delete-response.dto";
+import { ProvisionResponseDto } from "../dto/provision-response.dto";
+import { SortProvisionRequestDto } from "../dto/sort-provision-request.dto";
+import { ProvisionMutationService } from "../services/provision-mutation.service";
+import { ProvisionQueryService } from "../services/provision-query.service";
 
 @ApiTags("Provision (Услуги)")
 @ApiBearerAuth()
@@ -65,7 +65,7 @@ export class ProvisionController {
 	@ApiResponse({
 		status: HttpStatus.CREATED,
 		description: "Услуга успешно создана",
-		type: CreateProvisionResponseDto
+		type: ProvisionResponseDto
 	})
 	@ApiResponse({
 		status: HttpStatus.BAD_REQUEST,
@@ -87,7 +87,7 @@ export class ProvisionController {
 	public async create(
 		@UserInfo() user: TelegramUserDto,
 		@Body() dto: CreateProvisionRequestDto
-	): Promise<CreateProvisionResponseDto> {
+	): Promise<ProvisionResponseDto> {
 		return this.provisionMutationService.create(dto, user);
 	}
 
@@ -183,7 +183,7 @@ export class ProvisionController {
 		description:
 			"Возвращает услугу по ID, фильтруя только те слоты, которые еще не забронированы (isBooking = false)."
 	})
-	@ApiParam({ name: "id", required: true, description: "BigInt ID услуги" })
+	@ApiParam({ name: "id", required: true, description: "ID услуги" })
 	@ApiQuery({
 		name: "order",
 		required: false,

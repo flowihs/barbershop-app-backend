@@ -80,13 +80,13 @@ model Booking {
   id BigInt @id @default(autoincrement())
 
   slot   Slot   @relation(fields: [slotId], references: [id], onDelete: Cascade)
-  slotId BigInt @unique
+  slotId BigInt @unique @map("slot_id")
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId BigInt
+  userId BigInt @map("user_id")
 
   status     BookingStatus @default(CONFIRMED)
-  totalPrice Int?
+  totalPrice Int?          @map("total_price")
 
   cancelledAt DateTime? @map("cancelled_at")
 
@@ -149,10 +149,13 @@ model Review {
   rating      Float
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId BigInt
+  userId BigInt @map("user_id")
 
   provision   Provision @relation(fields: [provisionId], references: [id], onDelete: Cascade)
-  provisionId BigInt
+  provisionId BigInt    @map("provision_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@unique([userId, provisionId])
 }

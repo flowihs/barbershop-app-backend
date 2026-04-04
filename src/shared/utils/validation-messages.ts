@@ -4,5 +4,7 @@ export const validationMessages = {
 	number: (field: string) => `Поле ${field} должно быть числом`,
 	int: (field: string) => `Поле ${field} должно быть целым числом`,
 	array: (field: string) => `Поле ${field} должно быть массивом`,
-	date: (field: string) => `Поле ${field} должно быть валидной датой`
+	date: (field: string) => `Поле ${field} должно быть валидной датой`,
+	email: (field: string) => `Поле ${field} должно быть почтовым адресом`,
+	enum: (field: string) => `Поле ${field} должно являться енамом`
 };

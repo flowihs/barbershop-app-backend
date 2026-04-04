@@ -1,9 +1,10 @@
 import { Module } from "@nestjs/common";
 
-import { CategoryService } from "./services/category.service";
 import { CoreModule } from "../../core/core.module";
+
 import { CategoryController } from "./controllers/category.controller";
 import { CategoryRepository } from "./repositories/category.repository";
+import { CategoryService } from "./services/category.service";
 
 @Module({
 	imports: [CoreModule],

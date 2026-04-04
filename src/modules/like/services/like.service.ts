@@ -67,7 +67,12 @@ export class LikeService {
 
 		await this.accountService.findById(userBigInt);
 
-		if (await this.likeRepository.findByTargetIdAndUserId(targetId, userBigInt)) {
+		if (
+			await this.likeRepository.findByTargetIdAndUserId(
+				targetId,
+				userBigInt
+			)
+		) {
 			throw new BadRequestException(
 				"Данный обьект и так находится у пользователя в понравившихся"
 			);

@@ -12,7 +12,7 @@ export function Authorization() {
 			description: "Telegram Mini App authentication token",
 			required: true,
 			example:
-				"tma query_id=test&user={\"id\":123456}&auth_date=1234567890&hash=abc123"
+				'tma query_id=test&user={"id":123456}&auth_date=1234567890&hash=abc123'
 		})
 	);
 }

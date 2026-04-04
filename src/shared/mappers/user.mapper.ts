@@ -1,4 +1,5 @@
 import { User } from "@prisma/client";
+
 import { TelegramProfileDto } from "../../modules/account/dto/telegram-profile.dto";
 
 export class UserMapper {
@@ -8,7 +9,8 @@ export class UserMapper {
 			firstName: user.firstName,
 			username: user.username,
 			description: user.description,
-			email: user.email
+			email: user.email,
+			role: user.role
 		};
 	}
 }

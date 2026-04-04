@@ -1,11 +1,13 @@
 import { Category, Provision, Review, Slot, User } from "@prisma/client";
 
-import { CategoryMapper } from "./category.mapper";
-import { SlotMapper } from "./slot.mapper";
-import { UserMapper } from "./user.mapper";
-import { CreateProvisionResponseDto } from "../../modules/provision/dto/create-provision-response.dto";
+import { ProvisionResponseDto } from "../../modules/provision/dto/provision-response.dto";
 import { UpdateProvisionRequestDto } from "../../modules/provision/dto/update-provision-request.dto";
 import { UpdateData } from "../types/provision.types";
+
+import { CategoryMapper } from "./category.mapper";
+import { ReviewMapper } from "./review.mapper";
+import { SlotMapper } from "./slot.mapper";
+import { UserMapper } from "./user.mapper";
 
 export class ProvisionMapper {
 	static toResponse(
@@ -13,9 +15,11 @@ export class ProvisionMapper {
 			user: User;
 			category: Category;
 			slots: Slot[];
-			review: Review[];
+			review?: (Review & {
+				user: User;
+			})[];
 		}
-	): CreateProvisionResponseDto {
+	): ProvisionResponseDto {
 		return {
 			id: Number(provision.id),
 			title: provision.title,
@@ -25,7 +29,7 @@ export class ProvisionMapper {
 			user: UserMapper.toResponse(provision.user),
 			category: CategoryMapper.toResponse(provision.category),
 			slots: SlotMapper.toResponseList(provision.slots),
-
+			reviews: ReviewMapper.toResponseList(provision.review)
 		};
 	}
 
@@ -35,10 +39,11 @@ export class ProvisionMapper {
 				user: User;
 				category: Category;
 				slots: Slot[];
-				review: Review[];
+				review: (Review & { user: User })[];
 			}
 		>
-	): CreateProvisionResponseDto[] {
+	): ProvisionResponseDto[] {
+		if (!provisions) return [];
 		return provisions.map(provision => this.toResponse(provision));
 	}
 
@@ -53,9 +58,7 @@ export class ProvisionMapper {
 			const slotDate = new Date(timeStr);
 
 			if (slotDate < now) {
-				throw new Error(
-					"Вы не можете создать слот со временем в прошлом"
-				);
+				throw new Error("Вы не можете создать слот в прошлом");
 			}
 
 			if (uniqueTimes.has(timeStr)) {
@@ -74,21 +77,10 @@ export class ProvisionMapper {
 			id: dto.id
 		};
 
-		if (dto.title) {
-			updateData.title = dto.title;
-		}
-
-		if (dto.description) {
-			updateData.description = dto.description;
-		}
-
-		if (dto.price) {
-			updateData.price = dto.price;
-		}
-
-		if (dto.image) {
-			updateData.image = dto.image;
-		}
+		if (dto.title) updateData.title = dto.title;
+		if (dto.description) updateData.description = dto.description;
+		if (dto.price) updateData.price = dto.price;
+		if (dto.image) updateData.image = dto.image;
 
 		return updateData;
 	}

@@ -7,7 +7,9 @@ import { UpdateData } from "../../../shared/types/provision.types";
 const DEFAULT_INCLUDE = Prisma.validator<Prisma.ProvisionInclude>()({
 	user: true,
 	category: true,
-	review: true,
+	review: {
+		include: { user: true }
+	},
 	slots: {
 		orderBy: {
 			time: "asc"
@@ -17,7 +19,7 @@ const DEFAULT_INCLUDE = Prisma.validator<Prisma.ProvisionInclude>()({
 
 @Injectable()
 export class ProvisionRepository {
-	constructor(private readonly prismaService: PrismaService) { }
+	constructor(private readonly prismaService: PrismaService) {}
 
 	public async create(
 		data: {
@@ -109,7 +111,9 @@ export class ProvisionRepository {
 			include: {
 				user: true,
 				category: true,
-				review: true,
+				review: {
+					include: { user: true }
+				},
 				slots: {
 					where: { isBooking: false },
 					orderBy: { time: order }
@@ -271,6 +275,18 @@ export class ProvisionRepository {
 	public async findByUserAndLiked() {
 		return this.prismaService.provision.findMany({
 			where: {}
+		});
+	}
+
+	public async updateProvisionRating(provisionId: bigint, rating: number) {
+		return this.prismaService.provision.update({
+			where: {
+				id: provisionId
+			},
+			data: {
+				rating: rating
+			},
+			include: DEFAULT_INCLUDE
 		});
 	}
 }

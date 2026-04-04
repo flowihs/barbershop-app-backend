@@ -7,9 +7,9 @@ import {
 import { Test, TestingModule } from "@nestjs/testing";
 import { Roles } from "@prisma/client";
 
-import { AccountService } from "@/src/modules/account/services/account.service";
 import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
 import { AccountRepository } from "@/src/modules/account/repositories/account.repository";
+import { AccountService } from "@/src/modules/account/services/account.service";
 import { CategoryRepository } from "@/src/modules/category/repositories/category.repository";
 import { CreateProvisionRequestDto } from "@/src/modules/provision/dto/create-provision-request.dto";
 import { ProvisionRepository } from "@/src/modules/provision/repositories/provision.repository";

@@ -15,15 +15,14 @@ import {
 	ApiTags
 } from "@nestjs/swagger";
 
-import { LikeService } from "../services/like.service";
-
-import { TelegramUserDto } from "../../account/dto/telegram-user.dto";
-import { ToggleLikeRequestDto } from "../dto/toggle-like-request.dto";
-import { ToggleLikeResponseDto } from "../dto/toggle-like-response.dto";
 import { Authorization } from "../../../shared/decorators/authorization.decorator";
 import { UserInfo } from "../../../shared/decorators/user.decorator";
 import { TelegramAuthGuard } from "../../../shared/guards/auth.guard";
 import { ParseBigIntPipe } from "../../../shared/pipes/parse-bigint.pipe";
+import { TelegramUserDto } from "../../account/dto/telegram-user.dto";
+import { ToggleLikeRequestDto } from "../dto/toggle-like-request.dto";
+import { ToggleLikeResponseDto } from "../dto/toggle-like-response.dto";
+import { LikeService } from "../services/like.service";
 
 @ApiTags("Likes (Лайки)")
 @ApiBearerAuth()
@@ -82,12 +81,16 @@ export class LikeController {
 	@Get("target/:targetId")
 	@ApiOperation({
 		summary: "Проверить лайк",
-		description: "Проверяет наличие лайка у текущего пользователя для указанного обьекта"
+		description:
+			"Проверяет наличие лайка у текущего пользователя для указанного обьекта"
 	})
 	public async checkLike(
 		@UserInfo() user: TelegramUserDto,
 		@Param("targetId", ParseBigIntPipe) targetId: bigint
 	) {
-		return this.likeService.findByTargetIdAndUserId(targetId, BigInt(user.id));
+		return this.likeService.findByTargetIdAndUserId(
+			targetId,
+			BigInt(user.id)
+		);
 	}
 }

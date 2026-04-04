@@ -1,13 +1,13 @@
 import { Body, Controller, Get, HttpStatus, Patch } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 
-import { AccountService } from "../services/account.service";
+import { Authorization } from "../../../shared/decorators/authorization.decorator";
+import { UserInfo } from "../../../shared/decorators/user.decorator";
 import { TelegramProfileDto } from "../dto/telegram-profile.dto";
 import type { TelegramUserDto } from "../dto/telegram-user.dto";
 import { UpdateProfileRequestDto } from "../dto/update-profile-request.dto";
 import { UpdateProfileResponseDto } from "../dto/update-profile-response.dto";
-import { Authorization } from "../../../shared/decorators/authorization.decorator";
-import { UserInfo } from "../../../shared/decorators/user.decorator";
+import { AccountService } from "../services/account.service";
 
 @ApiTags("Account")
 @Controller("account")

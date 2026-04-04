@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+
 import { TelegramProfileDto } from "../../account/dto/telegram-profile.dto";
 import { SlotResponseDto } from "../../slot/dto/slot-response.dto";
 

@@ -8,13 +8,12 @@ import {
 } from "@nestjs/common";
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 
-import { BookingResponseDto } from "../dto/booking-response.dto";
-import { BookingService } from "../services/booking.service";
-
-import { TelegramUserDto } from "../../account/dto/telegram-user.dto";
 import { Authorization } from "../../../shared/decorators/authorization.decorator";
 import { UserInfo } from "../../../shared/decorators/user.decorator";
 import { ParseBigIntPipe } from "../../../shared/pipes/parse-bigint.pipe";
+import { TelegramUserDto } from "../../account/dto/telegram-user.dto";
+import { BookingResponseDto } from "../dto/booking-response.dto";
+import { BookingService } from "../services/booking.service";
 
 @Authorization()
 @ApiTags("Booking")

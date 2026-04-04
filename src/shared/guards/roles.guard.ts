@@ -6,13 +6,12 @@ import {
 	UnauthorizedException
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
-
-import { ROLES_KEY } from "../decorators/roles.decorator";
-
 import { Roles as RoleEnum } from "@prisma/client";
 import { User } from "@prisma/client";
+
 import { PrismaService } from "../../core/prisma/prisma.service";
 import { TelegramUserDto } from "../../modules/account/dto/telegram-user.dto";
+import { ROLES_KEY } from "../decorators/roles.decorator";
 
 interface RequestWithTg {
 	tgUser?: TelegramUserDto;

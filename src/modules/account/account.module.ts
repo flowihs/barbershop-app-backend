@@ -1,9 +1,10 @@
 import { Module } from "@nestjs/common";
 
-import { AccountService } from "./services/account.service";
 import { CoreModule } from "../../core/core.module";
+
 import { AccountController } from "./controllers/account.controller";
 import { AccountRepository } from "./repositories/account.repository";
+import { AccountService } from "./services/account.service";
 
 @Module({
 	imports: [CoreModule],

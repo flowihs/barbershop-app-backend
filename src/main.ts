@@ -6,9 +6,9 @@ import cookieParser from "cookie-parser";
 
 
 import { AppModule } from "./app.module";
+import { EnvironmentConfigService } from "./core/config/environment-config.service";
 import { setupSwagger } from "./core/swagger";
 import { GlobalExceptionFilter } from "./shared/filters/global-exception.filter";
-import { EnvironmentConfigService } from "./core/config/environment-config.service";
 
 
 

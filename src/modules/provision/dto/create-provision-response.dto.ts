@@ -3,7 +3,6 @@ import { ApiProperty } from "@nestjs/swagger";
 import { TelegramProfileDto } from "../../account/dto/telegram-profile.dto";
 import { CategoryResponseDto } from "../../category/dto/category-response.dto";
 import { SlotResponseDto } from "../../slot/dto/slot-response.dto";
-import { LikeResponseDto } from "../../like/dto/like-response.dto";
 
 export class CreateProvisionResponseDto {
 	@ApiProperty({ example: 123, description: "ID услуги" })
