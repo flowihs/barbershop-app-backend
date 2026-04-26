@@ -25,7 +25,7 @@ export class CategoryController {
 		return this.categoryService.deleteById(id);
 	}
 
-	@Get("")
+	@Get("/all")
 	public async findAll(): Promise<CategoryResponseDto[]> {
 		return this.categoryService.findAll();
 	}

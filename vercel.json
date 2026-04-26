@@ -1,0 +1,16 @@
+{
+	"version": 2,
+	"buildCommand": "yarn vercel-build",
+	"installCommand": "yarn install",
+	"functions": {
+		"dist/main.js": {
+			"maxDuration": 30
+		}
+	},
+	"routes": [
+		{
+			"src": "/(.*)",
+			"dest": "dist/main.js"
+		}
+	]
+}

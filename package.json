@@ -11,7 +11,7 @@
 		"start": "node -r tsconfig-paths/register dist/main",
 		"start:dev": "nest start --exec \"node -r tsconfig-paths/register\" --watch",
 		"start:debug": "nest start --exec \"node -r tsconfig-paths/register\" --debug --watch",
-		"start:prod": "node dist/main",
+		"start:prod": "node -r tsconfig-paths/register dist/main",
 		"lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
 		"test": "jest",
 		"test:watch": "jest --watch",
@@ -47,7 +47,8 @@
 		"ioredis": "^5.9.3",
 		"reflect-metadata": "^0.2.2",
 		"rxjs": "^7.8.1",
-		"swagger-ui-express": "^5.0.1"
+		"swagger-ui-express": "^5.0.1",
+		"tsconfig-paths": "^4.2.0"
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.2.0",
