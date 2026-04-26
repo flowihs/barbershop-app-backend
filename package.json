@@ -6,9 +6,9 @@
 	"private": true,
 	"license": "UNLICENSED",
 	"scripts": {
-		"build": "nest build && tsc-alias",
+		"build": "nest build && tsc-alias -p tsconfig.build.json",
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-		"start": "nest start --exec \"node -r tsconfig-paths/register\"",
+		"start": "node -r tsconfig-paths/register dist/main",
 		"start:dev": "nest start --exec \"node -r tsconfig-paths/register\" --watch",
 		"start:debug": "nest start --exec \"node -r tsconfig-paths/register\" --debug --watch",
 		"start:prod": "node dist/main",

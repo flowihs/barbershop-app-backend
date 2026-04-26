@@ -2,11 +2,11 @@ import { Body, Controller, Delete, Param, Post } from "@nestjs/common";
 
 import { SlotService } from "../services/slot.service";
 
-import { CreateSlotRequestDto } from "@/src/modules/slot/dto/create-slot-request.dto";
-import { CreateSlotResponseDto } from "@/src/modules/slot/dto/create-slot-response.dto";
-import { DeleteSlotResponseDto } from "@/src/modules/slot/dto/delete-slot-response.dto";
-import { Authorization } from "@/src/shared/decorators/authorization.decorator";
-import { ParseBigIntPipe } from "@/src/shared/pipes/parse-bigint.pipe";
+import { CreateSlotRequestDto } from "@/modules/slot/dto/create-slot-request.dto";
+import { CreateSlotResponseDto } from "@/modules/slot/dto/create-slot-response.dto";
+import { DeleteSlotResponseDto } from "@/modules/slot/dto/delete-slot-response.dto";
+import { Authorization } from "@/shared/decorators/authorization.decorator";
+import { ParseBigIntPipe } from "@/shared/pipes/parse-bigint.pipe";
 
 @Authorization()
 @Controller("slot")

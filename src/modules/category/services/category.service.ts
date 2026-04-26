@@ -4,11 +4,11 @@ import {
 	NotFoundException
 } from "@nestjs/common";
 
-import { CategoryCreateRequestDto } from "@/src/modules/category/dto/category-create-request.dto";
-import { CategoryCreateResponseDto } from "@/src/modules/category/dto/category-create-response.dto";
-import { CategoryResponseDto } from "@/src/modules/category/dto/category-response.dto";
-import { CategoryRepository } from "@/src/modules/category/repositories/category.repository";
-import { CategoryMapper } from "@/src/shared/mappers";
+import { CategoryCreateRequestDto } from "@/modules/category/dto/category-create-request.dto";
+import { CategoryCreateResponseDto } from "@/modules/category/dto/category-create-response.dto";
+import { CategoryResponseDto } from "@/modules/category/dto/category-response.dto";
+import { CategoryRepository } from "@/modules/category/repositories/category.repository";
+import { CategoryMapper } from "@/shared/mappers";
 
 @Injectable()
 export class CategoryService {

@@ -1,7 +1,7 @@
 import { applyDecorators, UseGuards } from "@nestjs/common";
 import { ApiHeader, ApiSecurity } from "@nestjs/swagger";
 
-import { TelegramAuthGuard } from "@/src/shared/guards/auth.guard";
+import { TelegramAuthGuard } from "@/shared/guards/auth.guard";
 
 export function Authorization() {
 	return applyDecorators(

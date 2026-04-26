@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-import { ProvisionResponseDto } from "@/src/modules/provision/dto/provision-response.dto";
+import { ProvisionResponseDto } from "@/modules/provision/dto/provision-response.dto";
 
 export class CategoryResponseDto {
 	@ApiProperty({ example: "123" })

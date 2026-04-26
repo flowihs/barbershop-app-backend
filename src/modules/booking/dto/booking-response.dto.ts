@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { TelegramProfileDto } from "@/src/modules/account/dto/telegram-profile.dto";
-import { SlotResponseDto } from "@/src/modules/slot/dto/slot-response.dto";
+import { TelegramProfileDto } from "@/modules/account/dto/telegram-profile.dto";
+import { SlotResponseDto } from "@/modules/slot/dto/slot-response.dto";
 
 export class BookingResponseDto {
 	@ApiProperty({ example: 1, description: "Unique booking ID" })

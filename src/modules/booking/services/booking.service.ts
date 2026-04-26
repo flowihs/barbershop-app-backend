@@ -5,12 +5,12 @@ import {
 } from "@nestjs/common";
 
 import { $Enums } from "@prisma/client";
-import { AccountService } from "@/src/modules/account/services/account.service";
-import { BookingResponseDto } from "@/src/modules/booking/dto/booking-response.dto";
-import { BookingRepository } from "@/src/modules/booking/repositories/booking.repository";
-import { ProvisionQueryService } from "@/src/modules/provision/services/provision-query.service";
-import { SlotService } from "@/src/modules/slot/services/slot.service";
-import { BookingMapper } from "@/src/shared/mappers/booking.mapper";
+import { AccountService } from "@/modules/account/services/account.service";
+import { BookingResponseDto } from "@/modules/booking/dto/booking-response.dto";
+import { BookingRepository } from "@/modules/booking/repositories/booking.repository";
+import { ProvisionQueryService } from "@/modules/provision/services/provision-query.service";
+import { SlotService } from "@/modules/slot/services/slot.service";
+import { BookingMapper } from "@/shared/mappers/booking.mapper";
 
 import BookingStatus = $Enums.BookingStatus;
 

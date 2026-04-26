@@ -1,5 +1,5 @@
 {
-	"buildCommand": "yarn vercel-build",
+	"buildCommand": "yarn prisma:generate && yarn build && yarn tsc-alias -p tsconfig.build.json",
 	"installCommand": "yarn install",
 	"outputDirectory": "dist",
 	"devCommand": "yarn start:dev",
@@ -14,32 +14,5 @@
 		"VERCEL_ENV",
 		"VERCEL_URL",
 		"NODE_ENV"
-	],
-	"functions": {
-		"src/main.ts": {
-			"runtime": "@vercel/node@3.0.0",
-			"memory": 1024,
-			"maxDuration": 30
-		}
-	},
-	"builds": [
-		{
-			"src": "src/main.ts",
-			"use": "@vercel/node",
-			"config": {
-				"includeFiles": [
-					"src/**/*",
-					"prisma/**/*",
-					"dist/**/*"
-				],
-				"zeroConfig": true
-			}
-		}
-	],
-	"routes": [
-		{
-			"src": "/(.*)",
-			"dest": "src/main.ts"
-		}
 	]
 }

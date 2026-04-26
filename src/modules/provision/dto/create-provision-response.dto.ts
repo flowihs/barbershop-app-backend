@@ -1,8 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-import { TelegramProfileDto } from "@/src/modules/account/dto/telegram-profile.dto";
-import { CategoryResponseDto } from "@/src/modules/category/dto/category-response.dto";
-import { SlotResponseDto } from "@/src/modules/slot/dto/slot-response.dto";
+import { TelegramProfileDto } from "@/modules/account/dto/telegram-profile.dto";
+import { CategoryResponseDto } from "@/modules/category/dto/category-response.dto";
+import { SlotResponseDto } from "@/modules/slot/dto/slot-response.dto";
 
 export class CreateProvisionResponseDto {
 	@ApiProperty({ example: 123, description: "ID услуги" })

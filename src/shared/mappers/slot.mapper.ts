@@ -1,7 +1,7 @@
 import { Provision, Slot } from "@prisma/client";
-import { CreateSlotRequestDto } from "@/src/modules/slot/dto/create-slot-request.dto";
-import { CreateSlotResponseDto } from "@/src/modules/slot/dto/create-slot-response.dto";
-import { SlotResponseDto } from "@/src/modules/slot/dto/slot-response.dto";
+import { CreateSlotRequestDto } from "@/modules/slot/dto/create-slot-request.dto";
+import { CreateSlotResponseDto } from "@/modules/slot/dto/create-slot-response.dto";
+import { SlotResponseDto } from "@/modules/slot/dto/slot-response.dto";
 
 export class SlotMapper {
 	static toResponseList(slots: Slot[]): SlotResponseDto[] {

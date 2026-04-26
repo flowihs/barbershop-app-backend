@@ -3,9 +3,9 @@ import { Category, Provision, Slot, User } from "@prisma/client";
 import { CategoryMapper } from "./category.mapper";
 import { SlotMapper } from "./slot.mapper";
 import { UserMapper } from "./user.mapper";
-import { CreateProvisionResponseDto } from "@/src/modules/provision/dto/create-provision-response.dto";
-import { UpdateProvisionRequestDto } from "@/src/modules/provision/dto/update-provision-request.dto";
-import { UpdateData } from "@/src/shared/types/provision.types";
+import { CreateProvisionResponseDto } from "@/modules/provision/dto/create-provision-response.dto";
+import { UpdateProvisionRequestDto } from "@/modules/provision/dto/update-provision-request.dto";
+import { UpdateData } from "@/shared/types/provision.types";
 
 export class ProvisionMapper {
 	static toResponse(

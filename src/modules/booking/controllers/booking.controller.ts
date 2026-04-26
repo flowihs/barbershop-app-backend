@@ -11,10 +11,10 @@ import { ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { BookingResponseDto } from "../dto/booking-response.dto";
 import { BookingService } from "../services/booking.service";
 
-import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
-import { Authorization } from "@/src/shared/decorators/authorization.decorator";
-import { UserInfo } from "@/src/shared/decorators/user.decorator";
-import { ParseBigIntPipe } from "@/src/shared/pipes/parse-bigint.pipe";
+import { TelegramUserDto } from "@/modules/account/dto/telegram-user.dto";
+import { Authorization } from "@/shared/decorators/authorization.decorator";
+import { UserInfo } from "@/shared/decorators/user.decorator";
+import { ParseBigIntPipe } from "@/shared/pipes/parse-bigint.pipe";
 
 @Authorization()
 @ApiTags("Booking")

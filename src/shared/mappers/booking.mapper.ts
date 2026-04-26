@@ -1,7 +1,7 @@
 import { Booking, Slot, User } from "@prisma/client";
-import { BookingResponseDto } from "@/src/modules/booking/dto/booking-response.dto";
-import { SlotMapper } from "@/src/shared/mappers/slot.mapper";
-import { UserMapper } from "@/src/shared/mappers/user.mapper";
+import { BookingResponseDto } from "@/modules/booking/dto/booking-response.dto";
+import { SlotMapper } from "@/shared/mappers/slot.mapper";
+import { UserMapper } from "@/shared/mappers/user.mapper";
 
 export class BookingMapper {
 	static toResponse(

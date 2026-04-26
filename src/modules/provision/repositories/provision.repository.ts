@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 
-import { PrismaService } from "@/src/core/prisma/prisma.service";
-import { UpdateData } from "@/src/shared/types/provision.types";
+import { PrismaService } from "@/core/prisma/prisma.service";
+import { UpdateData } from "@/shared/types/provision.types";
 
 const DEFAULT_INCLUDE = {
 	user: true,

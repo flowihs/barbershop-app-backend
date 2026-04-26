@@ -3,9 +3,9 @@ import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { CategoryResponseDto } from "../dto/category-response.dto";
 import { CategoryService } from "../services/category.service";
 
-import { CategoryCreateRequestDto } from "@/src/modules/category/dto/category-create-request.dto";
-import { CategoryCreateResponseDto } from "@/src/modules/category/dto/category-create-response.dto";
-import { ParseBigIntPipe } from "@/src/shared/pipes/parse-bigint.pipe";
+import { CategoryCreateRequestDto } from "@/modules/category/dto/category-create-request.dto";
+import { CategoryCreateResponseDto } from "@/modules/category/dto/category-create-response.dto";
+import { ParseBigIntPipe } from "@/shared/pipes/parse-bigint.pipe";
 
 @Controller("category")
 export class CategoryController {

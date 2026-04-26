@@ -21,22 +21,22 @@ import {
 } from "@nestjs/swagger";
 import { Roles } from "@prisma/client";
 
-import { TelegramProfileDto } from "@/src/modules/account/dto/telegram-profile.dto";
-import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
-import { CategoryResponseDto } from "@/src/modules/category/dto/category-response.dto";
-import { CreateProvisionRequestDto } from "@/src/modules/provision/dto/create-provision-request.dto";
-import { CreateProvisionResponseDto } from "@/src/modules/provision/dto/create-provision-response.dto";
-import { ProvisionDeleteResponseDto } from "@/src/modules/provision/dto/provision-delete-response.dto";
-import { ProvisionResponseDto } from "@/src/modules/provision/dto/provision-response.dto";
-import { SortProvisionRequestDto } from "@/src/modules/provision/dto/sort-provision-request.dto";
-import { ProvisionMutationService } from "@/src/modules/provision/services/provision-mutation.service";
-import { ProvisionQueryService } from "@/src/modules/provision/services/provision-query.service";
-import { SlotResponseDto } from "@/src/modules/slot/dto/slot-response.dto";
-import { Roles as RolesDecorator } from "@/src/shared/decorators/roles.decorator";
-import { UserInfo } from "@/src/shared/decorators/user.decorator";
-import { TelegramAuthGuard } from "@/src/shared/guards/auth.guard";
-import { RolesGuard } from "@/src/shared/guards/roles.guard";
-import { ParseBigIntPipe } from "@/src/shared/pipes/parse-bigint.pipe";
+import { TelegramProfileDto } from "@/modules/account/dto/telegram-profile.dto";
+import { TelegramUserDto } from "@/modules/account/dto/telegram-user.dto";
+import { CategoryResponseDto } from "@/modules/category/dto/category-response.dto";
+import { CreateProvisionRequestDto } from "@/modules/provision/dto/create-provision-request.dto";
+import { CreateProvisionResponseDto } from "@/modules/provision/dto/create-provision-response.dto";
+import { ProvisionDeleteResponseDto } from "@/modules/provision/dto/provision-delete-response.dto";
+import { ProvisionResponseDto } from "@/modules/provision/dto/provision-response.dto";
+import { SortProvisionRequestDto } from "@/modules/provision/dto/sort-provision-request.dto";
+import { ProvisionMutationService } from "@/modules/provision/services/provision-mutation.service";
+import { ProvisionQueryService } from "@/modules/provision/services/provision-query.service";
+import { SlotResponseDto } from "@/modules/slot/dto/slot-response.dto";
+import { Roles as RolesDecorator } from "@/shared/decorators/roles.decorator";
+import { UserInfo } from "@/shared/decorators/user.decorator";
+import { TelegramAuthGuard } from "@/shared/guards/auth.guard";
+import { RolesGuard } from "@/shared/guards/roles.guard";
+import { ParseBigIntPipe } from "@/shared/pipes/parse-bigint.pipe";
 
 @ApiTags("Provision (Услуги)")
 @ApiBearerAuth()

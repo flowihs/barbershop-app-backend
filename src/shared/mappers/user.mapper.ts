@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import { TelegramProfileDto } from "@/src/modules/account/dto/telegram-profile.dto";
+import { TelegramProfileDto } from "@/modules/account/dto/telegram-profile.dto";
 
 export class UserMapper {
 	static toResponse(user: User): TelegramProfileDto {

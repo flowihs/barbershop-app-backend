@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
-import { PrismaModule } from "@/src/core/prisma/prisma.module";
-import { EnvironmentConfigService } from "@/src/core/config/environment-config.service";
+import { PrismaModule } from "@/core/prisma/prisma.module";
+import { EnvironmentConfigService } from "@/core/config/environment-config.service";
 
 const envFile = process.env.NODE_ENV === "production" ? ".env.production" : ".env.local";
 

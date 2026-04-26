@@ -17,11 +17,11 @@ import {
 
 import { LikeService } from "../services/like.service";
 
-import { ToggleLikeRequestDto } from "@/src/modules/like/dto/toggle-like-request.dto";
-import { ToggleLikeResponseDto } from "@/src/modules/like/dto/toggle-like-response.dto";
-import { Authorization } from "@/src/shared/decorators/authorization.decorator";
-import { TelegramAuthGuard } from "@/src/shared/guards/auth.guard";
-import { ParseBigIntPipe } from "@/src/shared/pipes/parse-bigint.pipe";
+import { ToggleLikeRequestDto } from "@/modules/like/dto/toggle-like-request.dto";
+import { ToggleLikeResponseDto } from "@/modules/like/dto/toggle-like-response.dto";
+import { Authorization } from "@/shared/decorators/authorization.decorator";
+import { TelegramAuthGuard } from "@/shared/guards/auth.guard";
+import { ParseBigIntPipe } from "@/shared/pipes/parse-bigint.pipe";
 
 @ApiTags("Likes (Лайки)")
 @ApiBearerAuth()

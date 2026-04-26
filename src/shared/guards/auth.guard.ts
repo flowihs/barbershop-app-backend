@@ -8,8 +8,8 @@ import { ConfigService } from "@nestjs/config";
 import { createHmac } from "crypto";
 import { Request } from "express";
 
-import { TelegramUserDto } from "@/src/modules/account/dto/telegram-user.dto";
-import { EnvironmentConfigService } from "@/src/core/config/environment-config.service";
+import { TelegramUserDto } from "@/modules/account/dto/telegram-user.dto";
+import { EnvironmentConfigService } from "@/core/config/environment-config.service";
 
 interface RequestWithTg extends Request {
 	tgUser?: TelegramUserDto;
